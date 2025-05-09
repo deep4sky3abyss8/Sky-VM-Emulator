@@ -1,0 +1,65 @@
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+# OS Ram :
+
+cells type : int 
+
+   ___    ___              ___                                                                     
+  |___|  |___|            |___|     6                                                               
+  |___|  |___|   ....     |___|     5                                                                
+  |___|  |___|            |___|     4                                                                
+  |   |  |   |            |   |     3                                                                
+  |   |  |   |            |   |     2                                                                
+__|   |__|   |____________|   |___  1
+| |___|  |___|   ....     |___|  |  0
+|   0      1     ....      max   |
+==================================
+
+Row array : every block in row array (every rows) include a line of Os src code (index show line number that need for jumps) .
+
+column array : first 4 cells of every column inlclude a character of src assembly opertators ,
+				|__ 4, 5, 6 th cells include address of variables ram in a Hex int number .
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+# Programs Ram :
+     |__________ totally likes os ram .
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+# Variables Ram : 
+
+Note : this part sliced but code writer must handel , interperter doesn't check validation of pointer's address .
+         |__ it means if you save '\n' in fisrt part , and print it , interperter will print 10 ( '\n' ascii num ) , so check them !
+
+cells type : int ( we save char also into but no problem , we use them by pointting to them ) . 
+
+ ___________________________________________
+ |0  ...  |250   ...    |500   ...   20,000|                                               
+ |        |             |                  |              
+ =====|==========|==============|===========
+      |          |              |___ 500 - endof array : str memory part to saving str characters in each cell (overwrite on elder strs every time) . 
+      |          |
+      |          |____ 250 - 499 : character memory part to saving single char.s in each cell .
+      |
+      |_____ 0 - 249 : intergers memory part to saving decimal-signed-ints in each cell (for str looping , save char index in a cell and the address of that cell in another cell , then increase address one more ) .                       
+
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------

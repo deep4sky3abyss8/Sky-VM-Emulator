@@ -1,8 +1,17 @@
 
-Exp) Pn : 0x0001 = index: 1 which in ints range.
-Exp) ASSN 0x0001 100 -> Ram[1] = 100 ;
+___________________________________________________________________________________________________________________________
+ _________________
+|				  |
+|      NOTE       | 	array[Pn] type will represent by range of indexes . it works like subnet mask !
+|_________________|
 
-array[Pn] type will represent by range of indexes . it works like subnet mask!
+
+ _________________________________
+|			     			      |
+|   basic proggramming language   |_________________________________________________________________________________________
+|_________________________________|
+
+
 
 ASSN Pn Value // array[Pn] = Value , Value only is an decimal int , if you want to assign char , assign it's ascii code .
 
@@ -23,10 +32,11 @@ HALT // finish program , if reached program RAM which commands wrote in it , bec
 PUTC Pn // to print char or int print(array[Pn]) if in int domane print as int and if in char domain print as char .
 
 PUTS Pn // to print a character of str . Pn refer to index thats a int in it . this int refer to index of str array.
-//    |___ when you need to loop to print a str : Pn is the address of index which in that index is address of the character of str you want to print ,
-//       |___ so to print you must putchar(array[index]) not array[Pn] . 
-//          |___ then for next character increase array[Pn] 1 more because Pn point to the value of index .
-//             |___ writer must know whats the start point of str and put it into another index to make index for printing .
+      |___ when you need to loop to print a str : Pn is the address of index which in that index is address of the character of str you want to print ,
+         |___ so to print you must putchar(array[index]) not array[Pn] . 
+            |___ then for next character increase array[Pn] 1 more because Pn point to the value of index .
+               |___ writer must know whats the start point of str and put it into another index to make index for printing .
+
 
 PUTI Pn // printf("%d", array[Pn] )
 
@@ -35,12 +45,14 @@ PRNT Pn Pm // print every characters between index n and m of array until charac
 ADDN Pn Pm Pz // array[Pz] = (array[Pn] + array[Pm])
 
 ADDO Pn // array[Pn]++ --> exactly to printing a str char by char ;
-//    |__ first ASSN Pn 0 then after any print and befor any check for '\0' use it to increase Pn as 1
+      |__ first ASSN Pn 0 then after any print and befor any check for '\0' use it to increase Pn as 1
+
 
 MULT Pn Pm Pz // array[Pz] = (array[Pn] x array[Pm])
 
 GETC Pn type// get input from stdin and save it to array[Pn] if it's int or char , and save it start from Pn in array if it's str .
-//        |__ type only can be s for str / i for int / c for char ,  only and only by this syntax.(mean simple character)
+          |__ type only can be s for str / i for int / c for char ,  only and only by this syntax.(mean simple character) .
+
 
 STCK Pn // Push array[Pn] to stack
 
@@ -54,8 +66,10 @@ NOTC Pn // not array[Pn]
 
 
 
-
-to windows & program run :
+ ____________________________
+|						     |
+| to windows & program run : |___________________________________________________________________________________________________
+|____________________________|
 
 
 MKFL name.type // make file.type
@@ -70,9 +84,22 @@ REDF name.type // read file.type and save it by protocol into App's RAM
 
 RUNF name.type // run file.type , from App's RAM index
 
+
+
+___________________________________________________________________________________________
+
+Exp) Pn : 0x0001 = index: 1 which in ints range.
+Exp) ASSN 0x0001 100 -> Ram[1] = 100 ;
+
+
+EXP :
+
 char a[]="ali" ;
 for (int i =0 ; a[i]!= EOF ; i++){
 putchar(a[i]) ; }
 putchar('\n') ;
 
 printf ("%s\n",a) ;
+
+
+___________________________________________________________________________________________
