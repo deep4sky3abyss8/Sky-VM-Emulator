@@ -40,8 +40,6 @@ PUTS Pn // to print a character of str . Pn refer to index thats a int in it . t
 
 PUTI Pn // printf("%d", array[Pn] )
 
-PRNT Pn Pm // print every characters between index n and m of array until characters is null . in str range .
-
 ADDN Pn Pm Pz // array[Pz] = (array[Pn] + array[Pm])
 
 ADDO Pn // array[Pn]++ --> exactly to printing a str char by char ;
@@ -54,7 +52,7 @@ GETC Pn type// get input from stdin and save it to array[Pn] if it's int or char
           |__ type only can be s for str / i for int / c for char ,  only and only by this syntax.(mean simple character) .
 
 
-STCK Pn // Push array[Pn] to stack
+STCK Pn // Push array[Pn] to stack (not EIP registers stack)
 
 PICK Pn // pop stack last index into array[Pn]
 

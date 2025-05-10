@@ -16,6 +16,9 @@ void read_from_file(const char *filename ){
 
 int main(void) {
 	const char *filename="s.txt" ;
+	filename = "ali.txt" ;
 	read_from_file(filename) ;
-	return 0 ;
+scanf("%d",&filename);
+putchar(a);
+
 }

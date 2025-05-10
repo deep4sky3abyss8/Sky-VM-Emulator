@@ -3,8 +3,24 @@
 --------------------------------------------------------------------------------------------
 
 
+# OS BootLoader address :
 
-# OS Ram :
+Note : a str whih saved address of Os and ..... this address to machine to start reading from addressed file - which is OS -
+
+
+cells type : const char pointer 
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+# OS Ram : (OS_Ram)
+
+Note ; after starting machine , machine will boot OS and write it in this ram to don't need to every time readd from Os src file .
+
+
 
 cells type : int 
 
@@ -16,7 +32,7 @@ cells type : int
   |   |  |   |            |   |     2                                                                
 __|   |__|   |____________|   |___  1
 | |___|  |___|   ....     |___|  |  0
-|   0      1     ....      max   |
+|   0      1     ....      tmp   | tmp : after writing OS src this will define .
 ==================================
 
 Row array : every block in row array (every rows) include a line of Os src code (index show line number that need for jumps) .
@@ -30,21 +46,36 @@ column array : first 4 cells of every column inlclude a character of src assembl
 --------------------------------------------------------------------------------------------
 
 
-
-# Programs Ram :
+# Program's Runnig Ram : (PR_Ram)
+     |
      |__________ totally likes os ram .
 
+
+
+cells type : int 
+
+   ___    ___              ___                                                                     
+  |___|  |___|            |___|     6                                                               
+  |___|  |___|   ....     |___|     5                                                                
+  |___|  |___|            |___|     4                                                                
+  |   |  |   |            |   |     3                                                                
+  |   |  |   |            |   |     2                                                                
+__|   |__|   |____________|   |___  1
+| |___|  |___|   ....     |___|  |  0
+|   0      1     ....      tmp   | tmp : after writing OS src this will define .
+==================================
 
 
 ---------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------
 
 
-
-# Variables Ram : 
+# Variables Memory : 
 
 Note : this part sliced but code writer must handel , interperter doesn't check validation of pointer's address .
          |__ it means if you save '\n' in fisrt part , and print it , interperter will print 10 ( '\n' ascii num ) , so check them !
+
+
 
 cells type : int ( we save char also into but no problem , we use them by pointting to them ) . 
 
@@ -63,3 +94,59 @@ cells type : int ( we save char also into but no problem , we use them by pointt
 
 ---------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------
+
+
+# Stack Memory :
+
+Note : No need to tell how does it work ! (last push -> first pop)
+
+
+
+
+cells type : int
+
+ ________________________________________________
+|  0  |  1  |      ....                   |  99  |
+|     |     |      ....                   |      |
+=================================================+
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
+
+
+# EIP Registers Memroy :
+
+Note : we know after any commant the infinit loop os will jump to first step , but our machine doesn't ,
+       |____ so in every step (line of program - also os -) we have to save next step location (here I mean line Number).
+
+
+Note : in first step machine boot os , in every program run command from os , os just tell machine run this program and let control to him ,
+       |___ so after quiting program src , machine must know in which of os line been . so we use this !
+
+
+Note : EIP registers here working on stack method in sevral program run . 
+
+Note : os doesn't have any control on EIP registers , so no need to push it by OS . machine must handel it by itself !
+
+
+
+cells type : int (line number -indexes of OS_Ram & PR_Ram- in every cell)
+
+ _______________________________________
+ |   0   |    1   |    ...  |    10    |                                               
+ |       |        |         |          |              
+ \===|========|==================|=====/
+     |        |                  |___ 10 th program EIP .
+     |        |
+     |        |____ first program EIP .
+     |
+     |_____ OS EIP .
+
+
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+
