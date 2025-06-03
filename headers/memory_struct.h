@@ -1,19 +1,32 @@
 #ifndef memory_struct_h
 #define memory_struct_h
+#define OS 1
 //
-extern struct ram OS_Ram[] ;
-extern struct ram PR_Ram[] ;
-extern int Var_Mem[] ;
-extern int Stck_Mem[] ;
-extern int Eip_Mem[] ;  // point to line of ram which read .
-extern int reg[] ;
-extern int os_pr_flag ;
+extern const struct ram os_ram[] ;
+extern struct ram pr_ram[] ;
+extern struct heap_s heap ;
+/* heap memory of programs and os . access by register pointers .
+ * [+] passing address of them by assembly command : MOVE {register number} {heap index} {type:str/int/chr}
+*/
+extern int stck_mem[] ;
+extern int eip_mem[] ;  // point to line of ram which read .
+extern int which_ram ;
+extern struct regs reg[] ;
 /*
-struct memory_struct{
-    char command[5] ;
-    int v1 ,
-        v2 ,
-        v3 ;
+struct ram {
+    char command[5];
+    int reg1,
+        reg2,
+        reg3;
+};
+struct heap_s { // short for heap segment .
+    int ints[100];
+    char chrs[100],
+         strs[1000];
+};
+struct regs {  // a register which is a pointer to a place in memory .
+    void * address ;
+    char type[4]; // type of address of memory , when we want to cast void reg . use it to check typeof cast .
 };
 */
 #endif

@@ -70,7 +70,7 @@ __|   |__|   |____________|   |___  1
 --------------------------------------------------------------------------------------------
 
 
-# Variables Memory : 
+# Variables Memory : X X X X [-][+] this is also removed and update to a struct heap .
 
 Note : this part sliced but code writer must handel , interperter doesn't check validation of pointer's address .
          |__ it means if you save '\n' in fisrt part , and print it , interperter will print 10 ( '\n' ascii num ) , so check them !
@@ -80,7 +80,7 @@ Note : this part sliced but code writer must handel , interperter doesn't check 
 cells type : int ( we save char also into but no problem , we use them by pointting to them ) . 
 
  ___________________________________________
- |0  ...  |250   ...    |500   ...   20,000|                                               
+ |0  ...  |100   ...    |200   ...   1000  |                                               
  |        |             |                  |              
  =====|==========|==============|===========
       |          |              |___ 500 - endof array : str memory part to saving str characters in each cell (overwrite on elder strs every time) . 
