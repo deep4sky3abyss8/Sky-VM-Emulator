@@ -1,4 +1,4 @@
-# include <stdio.h>
+#include <stdio.h>
 #include "machine_lan.h" // commands msut check here so here will include , no need otherplace .
 #include "memory_struct.h" // include for global memory arrays .
 
@@ -8,7 +8,7 @@
 
 int command_cmp( int line , const char *pointer ){
 	for(int index=0 ; index<4 ; index++){
-		if(OS_Ram[line][index] != *(pointer+index)){
+		if(OS_Ram[line].command[index] != *(pointer+index)){
 			return 0 ;
 		}
 	}
