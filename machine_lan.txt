@@ -15,7 +15,9 @@ ________________________________________________________________________________
 
 ASSN reg(number) Value // array[Pn] = Value , Value only is an decimal int , if you want to assign char , assign it's ascii code .
 
-ASSV Pn Pm // array[Pn] = array[Pm] , now can assign pointer to a variable as index then index++ 
+MOVE reg(number) ram_address // move a value from register to ram address .
+
+ASSV reg(number1) reg(number2) // array[Pn] = array[Pm] , now can assign pointer to a variable as index then index++ 
 
 COMP Px Py Pz // array[Px]> array[Py] ? array[Pz]=1 : array[Pz]=0 ; if you want to use < change parameters order .
 

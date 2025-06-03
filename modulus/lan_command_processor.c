@@ -3,6 +3,10 @@
 #include "memory_struct.h" // include for global memory arrays .
 
 
+//--------------------------------------------------------------------
+#define _os_ 1
+//--------------------------------------------------------------------
+
 
 //-------| CHECK |--------//
 
@@ -15,15 +19,23 @@ int command_cmp( int line , const char *pointer ){
 	return 1 ;
 }// useed to checking every line commands . -> use in main src , as if condition , befor func call for comand .
 
-
-
 //--------| ASSN |--------//
 
-void assigne( int lineNumber /* -> index of loop move troght Rams array*/ ){
-	int variable_hex_address = OS_Ram[lineNumber][4]; // -> no need to define this variable, but for reading simpifying.
-	int value = OS_Ram[lineNumber][5] ;
-	Var_Mem[variable_hex_address] = value ;
+void assigne( int lineNumber ){
+	if(memory == _os_){
+		int reg_index = OS_Ram[lineNumber].v1 ,
+		value = PR_Ram[lineNumber].v2 ;
+		reg[reg_index]= value ;
+		return ;
+	}
+	else{
+		int reg_index = PR_Ram[lineNumber].v1 ,
+		value = PR_Ram[lineNumebr].v2 ;
+		reg[reg_index]= value ;
+		return ;
+	}
 }
+//--------| MOVE |--------//
 
 
 //--------| ASSV |--------//

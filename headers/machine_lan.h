@@ -2,6 +2,7 @@
 #define MACHINE_LAN_H
 
 const char *_ASSN_ = "ASSN";
+const char *_MOVE_ = "MOVE";
 const char *_ASSV_ = "ASSV";
 const char *_COMP_ = "COMP";
 const char *_EQAL_ = "EQAL";
