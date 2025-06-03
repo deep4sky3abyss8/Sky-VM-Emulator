@@ -22,7 +22,7 @@ Note ; after starting machine , machine will boot OS and write it in this ram to
 
 
 
-cells type : int 
+cells type : int X X X X this structure removed . -> now we use struct memory_struct { char command[5] ; int v1,v2,v3 ;}
 
    ___    ___              ___                                                                     
   |___|  |___|            |___|     6                                                               
@@ -52,7 +52,7 @@ column array : first 4 cells of every column inlclude a character of src assembl
 
 
 
-cells type : int 
+cells type : int  X X X X this also changed like os ram .
 
    ___    ___              ___                                                                     
   |___|  |___|            |___|     6                                                               
