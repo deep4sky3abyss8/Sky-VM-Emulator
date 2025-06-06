@@ -1,7 +1,7 @@
 #ifndef memory_struct_h
 #define memory_struct_h
 //
-extern const struct ram os_ram[] ;
+extern struct ram os_ram[] ;
 extern struct ram pr_ram[] ;
 extern struct heap_s heap ;
 /* heap memory of programs and os . access by register pointers .

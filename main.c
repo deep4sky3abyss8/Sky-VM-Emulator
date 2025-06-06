@@ -19,7 +19,7 @@ struct heap_s { // short for heap segment .
          strs[1000];//-> 1000 cell for strings .
 };
 //------------------------------------------------ GLOBALS ---------------
-const struct ram os_ram[1000];
+struct ram os_ram[1000];
 struct ram pr_ram[1000];
 struct heap_s heap ;
 /* heap memory of programs and os . access by register pointers .

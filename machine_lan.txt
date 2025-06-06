@@ -15,7 +15,7 @@ ________________________________________________________________________________
 
 ASSN reg(number) Value // array[Pn] = Value , Value only is an decimal int , if you want to assign char , assign it's ascii code .
 
-MOVE reg(number) ram_address // move a value from register to ram address .
+MOVE reg(number) ram_address  type(I/C/S)    // move a value from register to ram address .
 
 ASSV reg(number1) reg(number2) // *reg(number1) = *reg(number2) , now can assign pointer to a variable as index then index++
 

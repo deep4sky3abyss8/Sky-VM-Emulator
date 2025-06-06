@@ -5,7 +5,7 @@
 #include "../headers/typing-wellcome.h" // for halt command .
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-//-------| CHECK |--------//
+//-------| CHECK |--------// OK
 int command_cmp( int line , const char *pointer ) {
 	for (int index = 0; index < 4; index++) {
 		if (os_ram[line].command[index] != *(pointer + index)) {
@@ -14,11 +14,11 @@ int command_cmp( int line , const char *pointer ) {
 	}
 	return 1;
 } // useed to checking every line commands . -> use in main src , as if condition , befor func call for comand .
-//--------| ASSN |--------//
-void assigne_num( int lineNumber ){
+//--------| ASSN |--------// OK
+void assigne_num( int eip ){
 	if(which_ram == OS){
-		int reg_index = os_ram[lineNumber].v1 ,
-		value = os_ram[lineNumber].v2 ;
+		int reg_index = os_ram[eip].v1 ,
+		value = os_ram[eip].v2 ;
 		switch (registers[reg_index].type) {
 			case 'I':
 				*((int * )registers[reg_index].address)= value ;
@@ -30,8 +30,8 @@ void assigne_num( int lineNumber ){
 		os_eip++ ;
 	}
 	else{
-		int reg_index = pr_ram[lineNumber].v1 ,
-		value = pr_ram[lineNumebr].v2 ;
+		int reg_index = pr_ram[eip].v1 ,
+		value = pr_ram[eip].v2 ;
 		switch (registers[reg_index].type) {
 			case 'I':
 				*((int * )registers[reg_index].address)= value ;
@@ -43,24 +43,44 @@ void assigne_num( int lineNumber ){
 		pr_eip++ ;
 	}
 }
-//--------| MOVE |--------//
+//--------| MOVE |--------// OK
 void move_to_reg ( int eip) {
 	if(which_ram == OS) {
 		int index = os_ram[eip].v1 ;
 		int target =  os_ram[eip].v2 ;
-		registers[index].address = &(heap.ints[target]) ;
+		switch (os_ram[eip].v3) {
+			case 'I':
+				registers[index].address = &(heap.ints[target]) ;
+				break;
+			case 'C':
+				registers[index].address = &(heap.chrs[target]) ;
+				break;
+			case 'S' :
+				registers[index].address = &(heap.strs[target]) ;
+				break;
+		}
 		registers[index].type = os_ram[eip].v3 ;
 		os_eip++ ;
 	}
 	else {
 		int index = pr_ram[eip].v1 ;
 		int target =  pr_ram[eip].v2 ;
-		registers[index].address = &(heap.ints[target]) ;
+		switch (pr_ram[eip].v3) {
+			case 'I':
+				registers[index].address = &(heap.ints[target]) ;
+				break;
+			case 'C':
+				registers[index].address = &(heap.chrs[target]) ;
+				break;
+			case 'S' :
+				registers[index].address = &(heap.strs[target]) ;
+				break;
+		}
 		registers[index].type = pr_ram[eip].v3 ;
 		pr_eip++ ;
 	}
 }
-//--------| ASSV |--------//
+//--------| ASSV |--------// OK
 void assign_var ( int eip) {
 	if(which_ram == OS) {
 		int des = os_ram[eip].v1 ;
@@ -343,8 +363,10 @@ int jump (int eip) {
 //--------| HALT |--------//
 int halt (int eip ){   // --> if in future we allocate any memory , here we must free them all .
 	if(which_ram == OS) {
-		printf("\e[H\e[J");
-		printbydilay("|\tWe are going to shutdown ...\n|\tSmile please !" , 70 , 2000 );
+		system("cls");
+		printbydilay("|\tWe are going to shutdown ...\n|\tSmile please !\n" , 70 , 2000 );
+		printbydilay("|\tevery day every time ...\n|\tSmile please !\n" , 70 , 2000 );
+		printbydilay("|\twe will see you soon ...\n|\tSmile please !\n" , 70 , 2000 );
 		exit(0);
 	}
 	which_ram = OS ;
@@ -358,12 +380,54 @@ char print_char(int eip ) {
 	if (which_ram == OS) {
 		int reg = os_ram[eip].v1 ;
 		char c = *((char*)registers[reg].address) ;
+		os_eip++ ;
 		putchar(c);
 		return c ;
 	}
 	int reg = pr_ram[eip].v1 ;
 	char c = *((char*)registers[reg].address) ;
+	pr_eip++ ;
 	putchar(c);
 	return c ;
 }
-//--------| PUTC |--------//
+//--------| PUTS |--------//
+char * print_str(int eip ) {
+	if (which_ram == OS) {
+		int reg = os_ram[eip].v1 ;
+		char * c = (char*)registers[reg].address ,
+			 * srast = c ;
+		while (*c) {
+			putchar(*c);
+			c++ ;
+		}
+		putchar('\n');
+		os_eip++ ;
+		return srast ;
+	}
+	int reg = pr_ram[eip].v1 ;
+	char * c = (char*)registers[reg].address ,
+		 * srast = c ;
+	while (*c) {
+		putchar(*c);
+		c++ ;
+	}
+	putchar('\n');
+	os_eip++ ;
+	return srast ;
+}
+//--------| PUTI |--------//
+int print_int(int eip ) {
+	if (which_ram == OS) {
+		int reg = os_ram[eip].v1 ,
+			d = *((int *)registers[reg].address) ;
+		os_eip++ ;
+		printf("%d",d);
+		return d ;
+	}
+	int reg = pr_ram[eip].v1 ,
+		d = *((int *)registers[reg].address) ;
+	pr_eip++ ;
+	printf("%d",d);
+	return d ;
+}
+//--------| ADDN |--------//
