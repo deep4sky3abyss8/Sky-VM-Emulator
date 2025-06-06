@@ -2,6 +2,7 @@
 # include <stdlib.h>
 #include "headers/typing-wellcome.h"
 #include "headers/machine_lan.h"
+#include "headers/disassmbly.h"
 //------------------------------------------------ STRUCTS ---------------
 struct regs {  // a register which is a pointer to a place in memory .
     void * address ;
@@ -37,5 +38,12 @@ struct regs registers[5];
  */
 //--------------------------------------------           -----------------
 int main(void) {
-    //wellcome() ; // need fix from tea lib to hamda project .
+    // wellcome() ; // need fix from tea lib to hamda project .
+    // fixing boot protocol and way .
+    // we need to define a const char string for booting os as rom .
+    // need opening file , split , parse , ... FILEs function implement .
+    // need protocole to filling rams first for os and after api disassbly func for programs .
+    // need infinit loop for checking commmands and work by rams .
+    // many if and else in loop for command checking .
+    // api implement disassembly funcs .
 }

@@ -67,8 +67,8 @@ NOTC Pn // not array[Pn]
 
 
  ____________________________
-|			     |
-| API mother OS & program run : |___________________________________________________________________________________________________
+|			                 |
+|API mother OS & program run |___________________________________________________________________________________________________
 |____________________________|
 
 
@@ -89,7 +89,7 @@ RUNF name.type // run file.type , from App's RAM index
 ___________________________________________________________________________________________
 
 Exp) reg number :1 = index: 1 in registers list.
-Exp) ASSN 1 100 -> reg[1] = 100 ; assign value 100 to register 1 .
+Exp) ASSN 1 100 -> *reg[1] = 100 ; assign value 100 to register 1 .
 
 
 EXP :
