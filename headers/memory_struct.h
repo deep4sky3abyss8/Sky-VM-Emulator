@@ -1,6 +1,5 @@
 #ifndef memory_struct_h
 #define memory_struct_h
-#define OS 1
 //
 extern const struct ram os_ram[] ;
 extern struct ram pr_ram[] ;

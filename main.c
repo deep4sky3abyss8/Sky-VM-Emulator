@@ -1,7 +1,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 #include "headers/typing-wellcome.h"
-#define OS 1
+#include "headers/machine_lan.h"
 //------------------------------------------------ STRUCTS ---------------
 struct regs {  // a register which is a pointer to a place in memory .
     void * address ;
@@ -37,5 +37,5 @@ struct regs registers[5];
  */
 //--------------------------------------------           -----------------
 int main(void) {
-    wellcome() ; // need fix from tea lib to hamda project .
+    //wellcome() ; // need fix from tea lib to hamda project .
 }

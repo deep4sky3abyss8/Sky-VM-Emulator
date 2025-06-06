@@ -1,5 +1,6 @@
 #ifndef MACHINE_LAN_H
 #define MACHINE_LAN_H
+#define OS 1
 
 const char *_ASSN_ = "ASSN";
 const char *_MOVE_ = "MOVE";

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "../headers/machine_lan.h" // commands msut check here so here will include , no need otherplace .
 #include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/typing-wellcome.h" // for halt command .
@@ -26,6 +27,7 @@ void assigne_num( int lineNumber ){
 				*((char * )registers[reg_index].address)= (char)value ;
 				break;
 		}
+		os_eip++ ;
 	}
 	else{
 		int reg_index = pr_ram[lineNumber].v1 ,
@@ -38,6 +40,7 @@ void assigne_num( int lineNumber ){
 				*((char * )registers[reg_index].address)= (char)value ;
 				break;
 		}
+		pr_eip++ ;
 	}
 }
 //--------| MOVE |--------//
@@ -47,12 +50,14 @@ void move_to_reg ( int eip) {
 		int target =  os_ram[eip].v2 ;
 		registers[index].address = &(heap.ints[target]) ;
 		registers[index].type = os_ram[eip].v3 ;
+		os_eip++ ;
 	}
 	else {
 		int index = pr_ram[eip].v1 ;
 		int target =  pr_ram[eip].v2 ;
 		registers[index].address = &(heap.ints[target]) ;
 		registers[index].type = pr_ram[eip].v3 ;
+		pr_eip++ ;
 	}
 }
 //--------| ASSV |--------//
@@ -69,6 +74,7 @@ void assign_var ( int eip) {
 				break;
 		}
 		registers[des].type = registers[src].type ;
+		os_eip++ ;
 	}
 	else {
 		int des = pr_ram[eip].v1 ;
@@ -82,6 +88,7 @@ void assign_var ( int eip) {
 				break;
 		}
 		registers[des].type = registers[src].type ;
+		pr_eip++ ;
 	}
 }
 //--------| COMP |--------//
@@ -110,6 +117,7 @@ void compare ( int eip) {
 		else {
 			*(int*)registers[res].address = 0 ;
 		}
+		os_eip++ ;
 	}
 	else {
 		int src = pr_ram[eip].v1 ,
@@ -135,6 +143,7 @@ void compare ( int eip) {
 		else {
 			*(int*)registers[res].address = 0 ;
 		}
+		pr_eip++ ;
 	}
 }
 //--------| EQAL |--------//
@@ -176,6 +185,7 @@ void equal(int eip) {
 					break;
 			}
 		}
+		os_eip++ ;
 	}
 	else {
 		int src = os_ram[eip].v1 ,
@@ -214,6 +224,7 @@ void equal(int eip) {
 					break;
 			}
 		}
+		pr_eip++ ;
 	}
 }
 //--------| NEQL |--------//
@@ -255,6 +266,7 @@ void not_equal(int eip) {
 					break;
 			}
 		}
+		os_eip++ ;
 	}
 	else {
 		int src = os_ram[eip].v1 ,
@@ -293,29 +305,28 @@ void not_equal(int eip) {
 					break;
 			}
 		}
+		pr_eip++ ;
 	}
 }
 //--------| CJMP |--------//
-int con_jump(int eip) {
+void con_jump(int eip) {
 	if(which_ram == OS) {
 		int reg = os_ram[eip].v1 ,
 			line = os_ram[eip].v2 ;
 		if ( *(int*)registers[reg].address) {
 			os_eip = line ;
-			return line ;
+			return;
 		}
-		os_eip = eip ;
-		return eip ;
+		os_eip++ ;
 	}
 	else {
 		int reg = pr_ram[eip].v1 ,
 			line = pr_ram[eip].v2 ;
 		if ( *(int*)registers[reg].address) {
 			pr_eip = line ;
-			return line ;
+			return ;
 		}
-		pr_eip = eip ;
-		return eip ;
+		pr_eip++ ;
 	}
 }
 //--------| JUMP |--------//
@@ -330,9 +341,29 @@ int jump (int eip) {
 		return line ;
 }
 //--------| HALT |--------//
-void halt (int eip ){
+int halt (int eip ){   // --> if in future we allocate any memory , here we must free them all .
 	if(which_ram == OS) {
 		printf("\e[H\e[J");
-		printbydilay("We are going to shutdown ...\n\tPlease smile !" , 70 , 2000 );
+		printbydilay("|\tWe are going to shutdown ...\n|\tSmile please !" , 70 , 2000 );
+		exit(0);
 	}
+	which_ram = OS ;
+	pr_eip = 0 ; // program is finish so we reset every thing to start a new program .
+	os_eip++ ;
+	printbydilay("|\tGetting back to terminal !\n|\tIhope see you soon !" , 70 , 1000 );
+	return 0 ;
 }
+//--------| PUTC |--------//
+char print_char(int eip ) {
+	if (which_ram == OS) {
+		int reg = os_ram[eip].v1 ;
+		char c = *((char*)registers[reg].address) ;
+		putchar(c);
+		return c ;
+	}
+	int reg = pr_ram[eip].v1 ;
+	char c = *((char*)registers[reg].address) ;
+	putchar(c);
+	return c ;
+}
+//--------| PUTC |--------//

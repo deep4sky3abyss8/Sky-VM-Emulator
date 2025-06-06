@@ -50,9 +50,11 @@ ADDO Pn // array[Pn]++ --> exactly to printing a str char by char ;
 
 MULT Pn Pm Pz // array[Pz] = (array[Pn] x array[Pm])
 
-GETC Pn type// get input from stdin and save it to array[Pn] if it's int or char , and save it start from Pn in array if it's str .
-          |__ type only can be s for str / i for int / c for char ,  only and only by this syntax.(mean simple character) .
+GETC Pn  // get character and put in pn .
 
+GETI Pn  // get int and put it to pn .
+
+GETS Pn Pm // put str start from Pn and save how many chars got to Pm .
 
 STCK Pn // Push array[Pn] to stack (not EIP registers stack)
 
@@ -68,7 +70,7 @@ NOTC Pn // not array[Pn]
 
  ____________________________
 |			     |
-| to windows & program run : |___________________________________________________________________________________________________
+| API mother OS & program run : |___________________________________________________________________________________________________
 |____________________________|
 
 

@@ -28,7 +28,7 @@ void wellcome(void){
     printf("\r                                                     \r");
     Sleep(1000);
 }
-int main(void){
+/*int main(void){
     wellcome();
     return 0;}
-// Created by SkyAbyss on 6/6/2025.
+// Created by SkyAbyss on 6/6/2025.*/
