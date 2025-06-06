@@ -3,6 +3,7 @@
 #include "../headers/machine_lan.h" // commands msut check here so here will include , no need otherplace .
 #include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/typing-wellcome.h" // for halt command .
+#include "../headers/readfuncs.h" // for read int and read str funcs since now
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 //-------| CHECK |--------// OK
@@ -376,7 +377,7 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 	return 0 ;
 }
 //--------| PUTC |--------//
-char print_char(int eip ) {
+char put_char(int eip ) {
 	if (which_ram == OS) {
 		int reg = os_ram[eip].v1 ;
 		char c = *((char*)registers[reg].address) ;
@@ -391,7 +392,7 @@ char print_char(int eip ) {
 	return c ;
 }
 //--------| PUTS |--------//
-char * print_str(int eip ) {
+char * put_str(int eip ) {
 	if (which_ram == OS) {
 		int reg = os_ram[eip].v1 ;
 		char * c = (char*)registers[reg].address ,
@@ -416,7 +417,7 @@ char * print_str(int eip ) {
 	return srast ;
 }
 //--------| PUTI |--------//
-int print_int(int eip ) {
+int put_int(int eip ) {
 	if (which_ram == OS) {
 		int reg = os_ram[eip].v1 ,
 			d = *((int *)registers[reg].address) ;
@@ -431,3 +432,109 @@ int print_int(int eip ) {
 	return d ;
 }
 //--------| ADDN |--------//
+int add_ints(int eip) {
+	if (which_ram == OS) {
+		int r1 = os_ram[eip].v1 ,
+			r2 = os_ram[eip].v2 ,
+			res= os_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a+b ;
+		os_eip++ ;
+		return res ;
+	}
+	else {
+		int r1 = pr_ram[eip].v1 ,
+			r2 = pr_ram[eip].v2 ,
+			res= pr_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a+b ;
+		pr_eip++ ;
+		return res ;
+	}
+}
+//--------| ADDO |--------//
+void plus_one(int eip) {
+	if (which_ram == OS) {
+		int r = os_ram[eip].v1 ,
+			a = *(int *)registers[r].address ;
+		a++ ;
+		*(int *)registers[r].address = a ;
+		os_eip++ ;
+		return;
+	}
+	int r = pr_ram[eip].v1 ,
+		a = *(int *)registers[r].address ;
+	a++ ;
+	*(int *)registers[r].address = a ;
+	pr_eip++ ;
+}
+//--------| MULT |--------//
+int mult_ints(int eip) {
+	if (which_ram == OS) {
+		int r1 = os_ram[eip].v1 ,
+			r2 = os_ram[eip].v2 ,
+			res= os_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a*b ;
+		os_eip++ ;
+		return res ;
+	}
+	else {
+		int r1 = pr_ram[eip].v1 ,
+			r2 = pr_ram[eip].v2 ,
+			res= pr_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a*b ;
+		pr_eip++ ;
+		return res ;
+	}
+}
+//--------| GETC |--------//
+char get_char(int eip) {
+	if (which_ram == OS) {
+		int reg = os_ram[eip].v1 ;
+		char character = getchar() ;
+		*(char *)registers[reg].address = character ;
+		os_eip++ ;
+		return character ;
+	}
+	else {
+		int reg = pr_ram[eip].v1 ;
+		char character = getchar() ;
+		*(char *)registers[reg].address = character ;
+		pr_eip++ ;
+		return character ;
+	}
+}
+//--------| GETI |--------//
+int get_int(int eip) {
+	if (which_ram == OS) {
+		int reg = os_ram[eip].v1 ;
+			num = read_int();
+		*(char *)registers[reg].address = num ;
+		os_eip++ ;
+		return num ;
+	}
+	else {
+		int reg = pr_ram[eip].v1 ;
+			num = read_int() ;
+		*(char *)registers[reg].address = num ;
+		pr_eip++ ;
+		return num ;
+	}
+}
+
+
+
+
+
+
+/*
+int main() {
+	puts("l");
+	return 0 ;
+}*/
