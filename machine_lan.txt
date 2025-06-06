@@ -56,10 +56,8 @@ GETI Pn  // get int and put it to pn .
 
 GETS Pn Pm // put str start from Pn and save how many chars got to Pm .
 
-STCK Pn // Push array[Pn] to stack (not EIP registers stack)
 
-PICK Pn // pop stack last index into array[Pn]
-
+---------------------------------------------------------- implenent right here .
 ANDC Pn Pm Pz// array[Pz] = (array[Pn] and array[Pm])
 
 ORLC Pn Pm Pz// array[Pz] = (array[Pn] or array[Pm])

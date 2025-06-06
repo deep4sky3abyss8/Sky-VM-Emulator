@@ -47,127 +47,16 @@ int read_int(void){
 }
 //----------------------f2-----------------------------------------------
 //-----------------------------------------------------------------------
-float read_float(void){
-	float num=0.0 , digit;
-	int digit_seen = _n_seen , num_is_negetive=0 ;
-	if(_something_in_cache_){
-		digit=cache ;
-		_something_in_cache_= 0 ;
-		if(digit<'9' && digit>'0'){
-			num = num*10 + (digit-'0') ;
-			digit_seen = _seen ;
-		}
-	}
-	while((digit=getchar())!=EOF){
-		if( (digit>'9' || digit<'0') && !digit_seen){
-			if(digit=='-'){
-				num_is_negetive = _NEGETIVE_ ;
-			}
-			continue ;
-		}
-		else if((digit>'9' || digit<'0') && digit_seen){
-			break ;
-		}
-		else{
-			num = num*10 + (digit-'0') ;
-			digit_seen = _seen ;
-		}
-	}
-	if(digit!=EOF){
-		cache = digit ;
-		_something_in_cache_= 1 ;
-	}
-	if (digit!='.'){
-        if(num_is_negetive){
-            return num*(-1);
-        }
-		return num ;
-	}
-    float float_part=0.0 ;
-    int ten_power=1 ;
-    digit_seen = _n_seen ;
-    if(_something_in_cache_){
-		digit=cache ;
-		_something_in_cache_= 0 ;
-		if(digit<'9' && digit>'0'){
-			float_part = float_part*10 + (digit-'0') ;
-            digit_seen = _seen ;
-            ten_power*=10 ;
-		}
-	}
-	while((digit=getchar())!=EOF){
-        if( (digit>'9' || digit<'0') && !digit_seen){
-            continue ;
-        }
-        else if((digit>'9' || digit<'0') && digit_seen){
-            break ;
-        }
-        else{
-            float_part = float_part*10 + (digit-'0') ;
-            digit_seen = _seen ;
-            ten_power*=10 ;
-        }
-    }
-    if(digit!=EOF){
-		cache = digit ;
-		_something_in_cache_= 1 ;
-	}
-    if(num_is_negetive){
-        return (num+(float_part/ten_power))*-1 ;
-    }
-    return num+(float_part/ten_power) ;
-}
 //-------------------------f3-----------------------------------------
 //--------------------------------------------------------------------
-int read_binary_int(void){
-	int bits[32]={0} ,bin_nam=0 ,pow_2=1 ;
-	int digit, digit_seen=_n_seen, num_is_negetive=0, local_index=0 ;
-	if(_something_in_cache_){
-		digit=cache ;
-		_something_in_cache_= 0 ;
-		if(digit<'9' && digit>'0'){
-			bits[local_index]= digit-'0' ;
-			local_index++ ;
-			digit_seen = _seen ;
-		}
-	}
-	while((digit=getchar())!=EOF){
-		if((digit>'9' || digit<'0') && !digit_seen){
-			continue ;
-		}
-		else if(((digit>'9' || digit<'0') && digit_seen) || local_index>31 ){
-			break ;
-		}
-		else{
-			bits[local_index]= digit-'0' ;
-			local_index++ ;
-			digit_seen = _seen ;
-		}
-	}
-	if(digit!=EOF){
-		cache = digit ;
-		_something_in_cache_= 1 ;
-	}
-	if(bits[0]){
-		num_is_negetive = _NEGETIVE_ ;
-	}
-	for(local_index-- ; local_index>-1 ; local_index-- ){
-		bin_nam += pow_2*bits[local_index] ;
-		pow_2 *= 2 ;
-	}
-	if(num_is_negetive){
-		return bin_nam* -1 ;
-	}
-	return bin_nam ;
-}
 //-------------------------f4----------------------------------------
 //-------------------------------------------------------------------
-void read_str(char *result, char delim){
+int read_str(char *result, char delim){
 	int character , char_seen = _n_seen , index=0 ;
 	if(_something_in_cache_){
 		character = cache ;
 		_something_in_cache_= 0 ;
-		if(character!=delim){
+		if(character!=delim && character!='\n'){
 			result[index]=character ;
 			index++ ;
 			char_seen = _seen ;
@@ -191,6 +80,7 @@ void read_str(char *result, char delim){
 		cache = character ;//          |__like this : stdio = 1111Hi1Ali111 => read_str(my_str , '1');
 		_something_in_cache_= 1 ;
 	}
+	return index-1 ;
 }
 //-----------------------f5--------------------------------------------
 //---------------------------------------------------------------------

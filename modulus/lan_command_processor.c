@@ -513,23 +513,48 @@ char get_char(int eip) {
 //--------| GETI |--------//
 int get_int(int eip) {
 	if (which_ram == OS) {
-		int reg = os_ram[eip].v1 ;
+		int reg = os_ram[eip].v1 ,
 			num = read_int();
 		*(char *)registers[reg].address = num ;
 		os_eip++ ;
 		return num ;
 	}
 	else {
-		int reg = pr_ram[eip].v1 ;
+		int reg = pr_ram[eip].v1 ,
 			num = read_int() ;
 		*(char *)registers[reg].address = num ;
 		pr_eip++ ;
 		return num ;
 	}
 }
+//--------| GETS |--------//  befor using this func user must call MOVE and move his register on strs heap segment .
+int get_str(int eip) {
+	if (which_ram == OS) {
+		int r1 = os_ram[eip].v1 ,
+			reg = os_ram[eip].v2 ,
+			count =0 ;
+		char * str = (char *)registers[r1].address ;
+		count = read_str(str , ' ') ;
+		*(int *) registers[reg].address = count ;
+		os_eip++ ;
+		return count ;
+	}
+	else {
+		int r1 = pr_ram[eip].v1 ,
+			reg = pr_ram[eip].v2 ,
+			count =0 ;
+		char * str = (char *)registers[r1].address ;
+		count = read_str(str , ' ') ;
+		*(int *) registers[reg].address = count ;
+		pr_eip++ ;
+		return count ;
+	}
+}
+//--------| ANDC |--------//
 
+void and (int eip){
 
-
+}
 
 
 
