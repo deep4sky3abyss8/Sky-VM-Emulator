@@ -2,7 +2,7 @@
 ___________________________________________________________________________________________________________________________
  _________________
 |		  |
-|      NOTE    Pn , Pm , ... short for register number n or m. for Exp) ASSN R1 100, mean put 100 into address which register R1 point to .
+|      NOTE    Pn , Pm , ... short for register number n or m. for Exp) ASSN 1 100, mean put 100 into address which register 1 point to .
 |_________________|
 
 
