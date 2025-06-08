@@ -558,12 +558,14 @@ void and (int eip){
 			r2 = os_ram[eip].v2 ,
 			r3 = os_ram[eip].v3 ;
 		*(int *)registers[r3].address = *(int *)registers[r2].address && *(int *)registers[r1].address ;
+        os_eip++ ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
 			r3 = pr_ram[eip].v3 ;
 		*(int *)registers[r3].address = *(int *)registers[r2].address && *(int *)registers[r1].address ;
+        pr_eip++ ;
 	}
 }
 //--------| ORLC |--------//
@@ -573,12 +575,14 @@ void or (int eip){
 			r2 = os_ram[eip].v2 ,
 			r3 = os_ram[eip].v3 ;
 		*(int *)registers[r3].address = *(int *)registers[r2].address || *(int *)registers[r1].address ;
+        os_eip++ ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
 			r3 = pr_ram[eip].v3 ;
 		*(int *)registers[r3].address = *(int *)registers[r2].address || *(int *)registers[r1].address ;
+        pr_eip++ ;
 	}
 }
 //--------| NOTC |--------//
@@ -588,12 +592,14 @@ void not(int eip){
 			tmp ;
 		tmp = *(int *)registers[r1].address ;
 		*(int *)registers[r1].address = !tmp ;
+        os_eip++ ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			tmp ;
 		tmp = *(int *)registers[r1].address ;
 		*(int *)registers[r1].address = !tmp ;
+        pr_eip++ ;
 	}
 }
 //------------------------- WINDOWS API COMMANDS ------------------------------
