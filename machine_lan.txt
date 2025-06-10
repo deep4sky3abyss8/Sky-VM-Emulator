@@ -25,7 +25,7 @@ EQAL Pn Pm Pz // array[Pz] = (array[Pn] == array[Pm]) , if there's value be same
 
 NEQL Pn Pm Pz // array[Pz] = (array[Pn] != array[Pm] ) , domain check like EQAL
 
-CJUM Pn LINE// if(array[Pn]==1) goto to line LINE( line is int)
+CJMP Pn LINE// if(array[Pn]==1) goto to line LINE( line is int)
 
 JUMP LINE // goto line LINE (LINE is a int)
 
