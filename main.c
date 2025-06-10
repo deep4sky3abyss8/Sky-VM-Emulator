@@ -1,5 +1,5 @@
-# include <stdio.h>
-# include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "headers/typing-wellcome.h"
 #include "headers/machine_lan.h"
 #include "headers/disassmbly.h"
@@ -31,7 +31,7 @@ int stck_mem[100] , // short for stack memory segment .
     pr_eip=0 ,
     which_ram= OS ; // -> it's the global flag which tell us now we are using os ram or programs ram ?!
 //
-struct regs registers[5];
+struct regs registers[10];
 /*read heap_M to understand about it .
  * [+] in worse case our command has 3 argoments so we need 3 registers for handel it .
  * [+] in C for command ASSN Rn Index Type : reg[Rn].address = &(heap
