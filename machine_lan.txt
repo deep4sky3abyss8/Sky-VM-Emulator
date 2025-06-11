@@ -52,6 +52,8 @@ MULT Pn Pm Pz // array[Pz] = (array[Pn] x array[Pm])
 
 DIVI Pn Pm Pz // array[Pz] = (array[Pn] / array[Pm])
 
+MODE Pn Pm Pz // Pz = Pn % Pm ;
+
 GETC Pn  // get character and put in pn .
 
 GETI Pn  // get int and put it to pn .
