@@ -50,6 +50,8 @@ ADDO Pn // array[Pn]++ --> exactly to printing a str char by char ;
 
 MULT Pn Pm Pz // array[Pz] = (array[Pn] x array[Pm])
 
+DIVI Pn Pm Pz // array[Pz] = (array[Pn] / array[Pm])
+
 GETC Pn  // get character and put in pn .
 
 GETI Pn  // get int and put it to pn .

@@ -494,6 +494,29 @@ int mult_ints(int eip) {
 		return res ;
 	}
 }
+//--------| DIVI |--------//
+int div_ints(int eip) {
+	if (which_ram == OS) {
+		int r1 = os_ram[eip].v1 ,
+			r2 = os_ram[eip].v2 ,
+			res= os_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a/b ;
+		os_eip++ ;
+		return res ;
+	}
+	else {
+		int r1 = pr_ram[eip].v1 ,
+			r2 = pr_ram[eip].v2 ,
+			res= pr_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a/b ;
+		pr_eip++ ;
+		return res ;
+	}
+}
 //--------| GETC |--------//
 char get_char(int eip) {
 	if (which_ram == OS) {
@@ -515,19 +538,19 @@ char get_char(int eip) {
 int get_int(int eip) {
 	if (which_ram == OS) {
 		int reg = os_ram[eip].v1 ,
-			num = read_int();
+			num = getchar()-'0';
 		*(char *)registers[reg].address = num ;
 		os_eip++ ;
 		return num ;
 	}
 	else {
 		int reg = pr_ram[eip].v1 ,
-			num = read_int() ;
+			num = getchar()-'0' ;
 		*(char *)registers[reg].address = num ;
 		pr_eip++ ;
 		return num ;
 	}
-}
+} // it take only one digit from stdin .
 //--------| GETS |--------//  befor using this func user must call MOVE and move his register on strs heap segment .
 int get_str(int eip) {
 	if (which_ram == OS) {

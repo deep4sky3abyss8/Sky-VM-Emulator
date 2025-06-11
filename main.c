@@ -6,6 +6,7 @@
 #include "headers/memory_struct.h"
 //--------------------------------------------           -----------------
 int main(void) {
+
     // wellcome() ; // need fix from tea lib to hamda project .
     // fixing boot protocol and way .
     // we need to define a const char string for booting os as rom .

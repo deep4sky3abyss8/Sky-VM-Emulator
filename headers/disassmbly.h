@@ -17,6 +17,7 @@ int put_int(int eip );
 int add_ints(int eip);
 void plus_one(int eip);
 int mult_ints(int eip);
+int div_ints(int eip) ;
 char get_char(int eip);
 char * get_str(int eip);
 int get_int (int eip);
