@@ -9,8 +9,8 @@
 #define BOOT_ADDRESS "DisassemblyPograms/os.txt"
 //--------------------------------------------  main src   -----------------
 int main(void) {
-    printbydilay("|\tAssb machine : preparing to boot ..." , 70 , 1000);
-    system("cls");
+    printbydilay("Assb machine : preparing to boot ...\n\n\n" , 70 , 1000);
+    printf("----------------------------------------------------------\n");
     loader(BOOT_ADDRESS);
     Sleep(1000);
     os_eip=0 ;
@@ -21,6 +21,7 @@ int main(void) {
     // need infinit loop for checking commmands and work by rams .
     // many if and else in loop for command checking .
     // api implement disassembly funcs .
-    printbydilay("|\tGood by ...\n" , 70 , 1000);
+    printf("----------------------------------------------------------\n");
+    printbydilay("Good by ...\n" , 70 , 1000);
     return 0;
 }
