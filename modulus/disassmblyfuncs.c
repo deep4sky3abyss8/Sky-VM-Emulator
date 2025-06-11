@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
 #include "../headers/machine_lan.h" // commands msut check here so here will include , no need otherplace .
 #include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/loader.h" // for halt command .
@@ -369,6 +370,8 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 		printbydilay("|\tWe are going to shutdown ...\n|\tSmile please !\n" , 70 , 2000 );
 		printbydilay("|\tevery day every time ...\n|\tSmile please !\n" , 70 , 2000 );
 		printbydilay("|\twe will see you soon ...\n|\tSmile please !\n" , 70 , 2000 );
+		system("cls");
+		Sleep(500);
 		exit(0);
 	}
 	which_ram = OS ;
@@ -513,6 +516,29 @@ int div_ints(int eip) {
 			a= *(int *)registers[r1].address ,
 			b= *(int *)registers[r2].address ;
 		*(int *)registers[res].address = a/b ;
+		pr_eip++ ;
+		return res ;
+	}
+}
+//--------| MODE |--------//
+int mode_ints(int eip) {
+	if (which_ram == OS) {
+		int r1 = os_ram[eip].v1 ,
+			r2 = os_ram[eip].v2 ,
+			res= os_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a%b ;
+		os_eip++ ;
+		return res ;
+	}
+	else {
+		int r1 = pr_ram[eip].v1 ,
+			r2 = pr_ram[eip].v2 ,
+			res= pr_ram[eip].v3 ,
+			a= *(int *)registers[r1].address ,
+			b= *(int *)registers[r2].address ;
+		*(int *)registers[res].address = a%b ;
 		pr_eip++ ;
 		return res ;
 	}
