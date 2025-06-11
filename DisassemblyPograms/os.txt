@@ -1,0 +1,4 @@
+PRIT Wellcome to Assb OS v1.0.0 , 2025 Best OS Implement
+PRIT Exit for shutdown
+ASSN 0 10 C   // this is test line
+

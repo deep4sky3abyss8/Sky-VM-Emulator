@@ -25,5 +25,5 @@ void and (int eip);
 void or (int eip);
 void not(int eip);
 
-#endif //DISASSMBLY_H
+#endif DISASSMBLY_H
 // Created by SkyAbyss on 6/6/2025.

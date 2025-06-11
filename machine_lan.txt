@@ -13,7 +13,7 @@ ________________________________________________________________________________
 
 
 
-ASSN reg(number) Value // array[Pn] = Value , Value only is an decimal int , if you want to assign char , assign it's ascii code .
+ASSN reg(number) Value // array[Pn] = Value , Value only is an decimal int , if you want to assign char , feel free !
 
 MOVE reg(number) ram_address  type(I/C/S)    // move a value from register to ram address .
 
@@ -57,6 +57,10 @@ GETC Pn  // get character and put in pn .
 GETI Pn  // get int and put it to pn .
 
 GETS Pn Pm // put str start from Pn and save how many chars got to Pm .
+
+PRIT str : this command will not save in ram . only to straight printing a string to shell  .
+[NOTE ] : it will print when program loading . befor program runnung .
+[Note ] just use it at start of program wen you want to say hello or get info .
 
 
 ---------------------------------------------------------- implenent right here .

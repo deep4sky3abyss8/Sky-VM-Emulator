@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "../headers/machine_lan.h" // commands msut check here so here will include , no need otherplace .
 #include "../headers/memory_struct.h" // include for global memory arrays .
-#include "../headers/typing-wellcome.h" // for halt command .
+#include "../headers/loader.h" // for halt command .
 #include "../headers/readfuncs.h" // for read int and read str funcs since now
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------

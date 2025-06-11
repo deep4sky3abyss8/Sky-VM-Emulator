@@ -1,6 +1,7 @@
 #ifndef memory_struct_h
 #define memory_struct_h
-//
+
+#define OS 1
 //------------------------------------------------ STRUCTS ---------------
 struct regs {  // a register which is a pointer to a place in memory .
     void * address ;
@@ -39,4 +40,4 @@ struct regs registers[15];
  * [+] in worse case our command has 3 argoments so we need 3 registers for handel it .
  * [+] in C for command ASSN Rn Index Type : reg[Rn].address = &(heap
  */
-#endif
+#endif memory_struct_h

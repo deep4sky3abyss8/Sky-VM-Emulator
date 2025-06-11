@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/typing-wellcome.h"
+#include "headers/loader.h"
 #include "headers/machine_lan.h"
 #include "headers/disassmbly.h"
 #include "headers/memory_struct.h"
-//--------------------------------------------           -----------------
+//--------------------------------------------  define   -------------------
+#define BOOT_ADDRESS "DisassemblyPograms/os.txt"
+//--------------------------------------------  main src   -----------------
 int main(void) {
-
-    // wellcome() ; // need fix from tea lib to hamda project .
+    printbydilay("|\tAssb machine : preparing to boot ...\n\n" , 70 , 1000);
+    system("cls");
+    loader(BOOT_ADDRESS);
+    os_eip=0 ;
+    wellcome() ; // need fix from tea lib to hamda project .
     // fixing boot protocol and way .
     // we need to define a const char string for booting os as rom .
     // need opening file , split , parse , ... FILEs function implement .
