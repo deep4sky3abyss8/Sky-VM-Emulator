@@ -53,6 +53,7 @@ static int load(char * line , int index ){
         if (!(i=skip_space(i , line)))
             return 1;
         read_int(&os_ram[index].v3 , i , line) ;
+        return 1 ;
     }
     else {
         int i=0 ;
@@ -75,13 +76,13 @@ static int load(char * line , int index ){
         if (!(i=skip_space(i , line)))
             return 1;
         read_int(&pr_ram[index].v3 , i , line) ;
+        return 1 ;
     }
 }
 //--------------------------------------------------------------------------------------------------------
 int loader( const char* address ) {   // OPEN disassembly command like this but in method "a+"
     FILE* file = fopen( address, "r" );
-    int index = 0 ,
-        print = 0 ;
+    int index = 0 ;
     if ( which_ram == OS ) {
         if (file==NULL) {
             perror("[!][!][!]  Fatal Error : Boot Failed  [!][!][!]");
@@ -99,8 +100,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
                 continue;
             }
             else {
-                print=load( buffer , index );
-                if (print)
+                if (load( buffer , index ))
                     index++ ;
             }
         }
@@ -131,8 +131,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
                 continue;
             }
             else {
-                print = load( buffer , index );
-                if (print)
+                if (load( buffer , index ))
                     index++ ;
             }
         }
