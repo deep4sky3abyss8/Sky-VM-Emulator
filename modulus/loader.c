@@ -158,22 +158,14 @@ void printbydilay(char str[] , int firsdilay , int secenddilay ){
     Sleep(secenddilay);
 }
 //--------------------------------------------------------------------------------------------------------
-/*void wellcome(void){
-    printf("----------------------------------------------------------------------\n");
-    Sleep(2000);
-    printbydilay( "|\tWellcome to AssbOS_v1.0.0 , 2025 Best Os\n|\n" , 70 , 1000 );
-    printbydilay("|\tWhat You Want ? Just Tell Us !\n|\n" , 70 , 1000);
-    printbydilay("|\t1. Info : For all Tea(books) we have\n",60,900);
-    printbydilay("|\t2. FindTea : For finding a tea(book) in Our lib \n" , 60 , 900);
-    printbydilay("|\t3. AddTea : For adding a tea into Our lib  \n|\n",60 , 900 );
-    printbydilay("|\t4. Exit\n",60,900);
-    printf("----------------------------------------------------------------------\n");
+void wellcome(void){
+    printbydilay("Assb machine : preparing to boot ...\n\n\n" , 70 , 1000);
     printbydilay("loading ",200,0);
     printf(" ____________________________________________\rloading ");
     Sleep(500);
     printbydilay("#############################################",500,0);
     printf("\r                                                     \r");
-    Sleep(1000);
-}*/
+    printf("----------------------------------------------------------\n");
+}
 //--------------------------------------------------------------------------------------------------------
 // Created by SkyAbyss on 6/6/2025.
