@@ -2,7 +2,7 @@
 ___________________________________________________________________________________________________________________________
  _________________
 |		  |
-|      NOTE    Pn , Pm , ... short for register number n or m. for Exp) ASSN 1 100, mean put 100 into address which register 1 point to .
+|      NOTE    Rn , Rm , Pn , Pm , ... short for index of registers. for Exp) ASSN 1 100, mean put 100 into address which register 1 point to .
 |_________________|
 
 
@@ -11,52 +11,52 @@ ________________________________________________________________________________
 |   basic proggramming language   |_________________________________________________________________________________________
 |_________________________________|
 
+there is not any character in front of commands except in type or value.
 
+Rn mean register number between 0 to 14 .
+ram address for ints between 0 to 99 . (99 is ok)
+ram address for chars between 0 to 99.
+ram address for strs between 0 to 999 .
+value can be single char or an int .
 
-ASSN reg(number) Value // array[Pn] = Value , Value only is an decimal int , if you want to assign char , feel free !
+ASSN Rn Value // register[Rn] = value ;
 
-MOVE reg(number) ram_address  type(I/C/S)    // move a value from register to ram address .
+MOVE Rn ram_address  type(I/C/S)    // register[Rn]=heap.type[ram_address] ;
 
-ASSV reg(number1) reg(number2) // *reg(number1) = *reg(number2) , now can assign pointer to a variable as index then index++
+ASSV Rn Rm // reg[Rn] = reg[Rm] ;
 
-COMP Px Py Pz // array[Px]> array[Py] ? array[Pz]=1 : array[Pz]=0 ; if you want to use < change parameters order .
+COMP Rn Rm Rz // reg[Rz] = reg[Rn] < reg[Rm] ? 1 : 0 ;
 
-EQAL Pn Pm Pz // array[Pz] = (array[Pn] == array[Pm]) , if there's value be same but indexes weren't in same domain , array[Pz] will 0 .
+EQAL Pn Pm Pz //  reg[Rz] = reg[Rn] == reg[Rm] ? 1 : 0 ;
 
-NEQL Pn Pm Pz // array[Pz] = (array[Pn] != array[Pm] ) , domain check like EQAL
+NEQL Pn Pm Pz //  reg[Rz] = reg[Rn] != reg[Rm] ? 1 : 0 ;
 
-CJMP Pn LINE// if(array[Pn]==1) goto to line LINE( line is int)
+CJMP Pn LINE// if(reg[Pn]==1) goto to line LINE( line is int) exp : CJMP 0 100 mean if value in reg[0] was True jump to line 100 .
 
 JUMP LINE // goto line LINE (LINE is a int)
 
 HALT // finish program , if reached program RAM which commands wrote in it , become clear and control get back to simple os .
 
-PUTC Pn // to print char or int print(array[Pn]) if in int domane print as int and if in char domain print as char .
+PUTC Pn // putchar(reg[P ]);
 
-PUTS Pn // to print a character of str . Pn refer to index thats a int in it . this int refer to index of str array.
-      |___ when you need to loop to print a str : Pn is the address of index which in that index is address of the character of str you want to print ,
-         |___ so to print you must putchar(array[index]) not array[Pn] . 
-            |___ then for next character increase array[Pn] 1 more because Pn point to the value of index .
-               |___ writer must know whats the start point of str and put it into another index to make index for printing .
+PUTS Pn // print str which register Pn point to until '\0' . 
 
 
-PUTI Pn // printf("%d", array[Pn] )
+PUTI Pn // printf("%d", reg[Pn] )
 
-ADDN Pn Pm Pz // array[Pz] = (array[Pn] + array[Pm])
+ADDN Pn Pm Pz // reg[Pz] = (reg[Pn] + reg[Pm]) ;
 
-ADDO Pn // array[Pn]++ --> exactly to printing a str char by char ;
-      |__ first ASSN Pn 0 then after any print and befor any check for '\0' use it to increase Pn as 1
+ADDO Pn // reg[Pn]++ ;
 
+MULT Pn Pm Pz // reg[Pz] = reg[Pn] * reg[Pm]) ;
 
-MULT Pn Pm Pz // array[Pz] = (array[Pn] x array[Pm])
+DIVI Pn Pm Pz // reg[Pz] = (reg[Pn] / reg[Pm]) ;
 
-DIVI Pn Pm Pz // array[Pz] = (array[Pn] / array[Pm])
+MODE Pn Pm Pz //  reg[Pz] = (reg[Pn] % reg[Pm]) ;
 
-MODE Pn Pm Pz // Pz = Pn % Pm ;
+GETC Pn  // reg[Pn] = getchar() ;
 
-GETC Pn  // get character and put in pn .
-
-GETI Pn  // get int and put it to pn .
+GETI Pn  // reg[Pn] = getchar() - '0' ; only one digit .
 
 GETS Pn Pm // put str start from Pn and save how many chars got to Pm .
 
@@ -66,12 +66,11 @@ PRIT str : this command will not save in ram . only to straight printing a strin
 
 
 ---------------------------------------------------------- implenent right here .
-ANDC Pn Pm Pz// array[Pz] = (array[Pn] and array[Pm])
+ANDC Pn Pm Pz// reg[Pz] = (reg[Pn] && reg[Pm]) ;
 
-ORLC Pn Pm Pz// array[Pz] = (array[Pn] or array[Pm])
+ORLC Pn Pm Pz// reg [Pz] = (reg[Pn] || reg[Pm]) ;
 
-NOTC Pn // not array[Pn]
-
+NOTC Pn // reg[Pn] = !reg[Pn] ;
 
 
  ____________________________
@@ -79,12 +78,14 @@ NOTC Pn // not array[Pn]
 |API mother OS & program run |___________________________________________________________________________________________________
 |____________________________|
 
+this part not implement right now so skip it .
+
+
+TIME Pn type(S/M/H) // save current time sec or min or hour in reg[Pn]
 
 MKFL name.type // make file.type
 
 MKDR name // make directory by name
-
-SPCE // get me space for app running. make index of App's RAM zero .
 
 OPNF name.type // open file.type
 
