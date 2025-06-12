@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "headers/loader.h"
-#include <windows.h> // for Sleep(timeByMiliSec); function to make runtime more slowdown
 #include "headers/machine_lan.h"
 #include "headers/disassmbly.h"
 #include "headers/memory_struct.h"
