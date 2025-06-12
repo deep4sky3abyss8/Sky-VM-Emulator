@@ -382,7 +382,7 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 }
 //--------| PUTC |--------//
 char put_char(int eip ) {
-	if (which_ram == OS) {
+	if(which_ram == OS) {
 		int reg = os_ram[eip].v1 ;
 		char c = *((char*)registers[reg].address) ;
 		os_eip++ ;
@@ -398,27 +398,49 @@ char put_char(int eip ) {
 //--------| PUTS |--------//
 char * put_str(int eip ) {
 	if (which_ram == OS) {
-		int reg = os_ram[eip].v1 ;
-		char * c = (char*)registers[reg].address ,
-			 * srast = c ;
-		while (*c) {
-			putchar(*c);
-			c++ ;
-		}
-		putchar('\n');
+		int r1 = os_ram[eip].v1 ,
+            r2 = os_ram[eip].v2 ;
+        switch(registers[r1].type){
+            case 'S':
+                break;
+            default :
+                perror("[!] invalid register type for register point to string\n");
+                return NULL ;
+        }
+        switch(registers[r2].type){
+            case 'I':
+                break;
+            default :
+                perror("[!] invalid register type for register point to integer\n");
+                return NULL ;
+        }
+        int len = *((int*)registers[r2].address);
+		char * str = (char*)registers[r1].address ;
+        putchar(*(str+len));
 		os_eip++ ;
-		return srast ;
+		return str ;
 	}
-	int reg = pr_ram[eip].v1 ;
-	char * c = (char*)registers[reg].address ,
-		 * srast = c ;
-	while (*c) {
-		putchar(*c);
-		c++ ;
-	}
-	putchar('\n');
-	os_eip++ ;
-	return srast ;
+	int r1 = pr_ram[eip].v1 ,
+        r2 = pr_ram[eip].v2 ;
+    switch(registers[r1].type){
+        case 'S':
+            break;
+        default :
+            perror("[!] invalid register type for register point to string\n" );
+            return NULL ;
+    }
+    switch(registers[r2].type){
+        case 'I':
+            break;
+        default :
+            perror("[!] invalid register type for register point to integer\n" );
+            return NULL ;
+    }   
+    int len = *((int*)registers[r2].address);
+    char * str = (char*)registers[r1].address ;
+    putchar(*(str+len));
+    pr_eip++ ;
+	return str ;
 }
 //--------| PUTI |--------//
 int put_int(int eip ) {
