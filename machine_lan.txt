@@ -23,6 +23,8 @@ ASSN Rn Value // register[Rn] = value ;
 
 MOVE Rn ram_address  type(I/C/S)    // register[Rn]=heap.type[ram_address] ;
 
+//Note : registers work on pointer base , so befor any use you most move a pointer on a ram cell . 
+
 ASSV Rn Rm // reg[Rn] = reg[Rm] ;
 
 COMP Rn Rm Rz // reg[Rz] = reg[Rn] < reg[Rm] ? 1 : 0 ;
