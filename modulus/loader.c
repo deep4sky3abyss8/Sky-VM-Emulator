@@ -51,7 +51,7 @@ static int load(char * line , int index ){
         if (! (i=read_int(&os_ram[index].v2 , i , line)))
             return 1;
         if (!(i=skip_space(i , line)))
-            return 11;
+            return 1;
         read_int(&os_ram[index].v3 , i , line) ;
     }
     else {
