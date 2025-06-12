@@ -39,7 +39,7 @@ HALT // finish program , if reached program RAM which commands wrote in it , bec
 
 PUTC Pn // putchar(reg[P ]);
 
-PUTS Pn // print str which register Pn point to until '\0' . 
+PUTS Pn Pm // assume a is an int in register Pm. Pn point to start of a str . so PUTS will putchar a character after where Pn point to
 
 
 PUTI Pn // printf("%d", reg[Pn] )
