@@ -405,6 +405,7 @@ char * put_str(int eip ) {
                 break;
             default :
                 perror("[!] invalid register type for register point to string\n");
+		printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);   
                 return NULL ;
         }
         switch(registers[r2].type){
@@ -412,6 +413,7 @@ char * put_str(int eip ) {
                 break;
             default :
                 perror("[!] invalid register type for register point to integer\n");
+		printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);       
                 return NULL ;
         }
         int len = *((int*)registers[r2].address);
@@ -427,6 +429,7 @@ char * put_str(int eip ) {
             break;
         default :
             perror("[!] invalid register type for register point to string\n" );
+	printf ("[!] line %d %s %d %d\n",eip,pr_ram[eip].command,r1,r2);   
             return NULL ;
     }
     switch(registers[r2].type){
@@ -434,6 +437,7 @@ char * put_str(int eip ) {
             break;
         default :
             perror("[!] invalid register type for register point to integer\n" );
+		printf ("[!] line %d %s %d %d\n",eip,pr_ram[eip].command,r1,r2);   
             return NULL ;
     }   
     int len = *((int*)registers[r2].address);
