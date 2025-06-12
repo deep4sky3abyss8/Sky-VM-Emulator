@@ -8,7 +8,7 @@
 //-------------------------------------------------------------------------------------------------------
 static int read_int(int *num , int index ,char * line) {
     *num = 0 ;
-    for ( index ; line[index]!=' ' || line[index]!='\t' ; index++) {
+    for ( index ; line[index]!=' ' && line[index]!='\t' ; index++) {
         if (line[index] == '\n' || line[index] == '\0') {
             return 0 ;
         }
