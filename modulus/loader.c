@@ -23,10 +23,11 @@ static int read_int(int *num , int index ,char * line) {
 //-------------------------------------------------------------------------------------------------------
 static int skip_space(int index , char * line) {
     while(line[index]==' ' || line[index]=='\t') {
-        if (line[index] == '\n' || line[index] == '\0')
-            return 0 ;
         index++ ;
     }
+   if (line[index] == '\n' || line[index] == '\0'){
+       return 0 ;
+   }
     return index;
 }
 //-------------------------------------------------------------------------------------------------------
