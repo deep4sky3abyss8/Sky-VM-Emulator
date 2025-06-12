@@ -10,6 +10,11 @@
 //--------------------------------------------  main src   -----------------
 int main(void) {
     printbydilay("Assb machine : preparing to boot ...\n\n\n" , 70 , 1000);
+    printbydilay("loading ",200,0);
+    printf(" ____________________________________________\rloading ");
+    Sleep(500);
+    printbydilay("#############################################",500,0);
+    printf("\r                                                     \r");
     printf("----------------------------------------------------------\n");
     loader(BOOT_ADDRESS);
     Sleep(1000);
@@ -21,7 +26,6 @@ int main(void) {
     // need infinit loop for checking commmands and work by rams .
     // many if and else in loop for command checking .
     // api implement disassembly funcs .
-    printf("----------------------------------------------------------\n");
-    printbydilay("Good by ...\n" , 70 , 1000);
+    
     return 0;
 }
