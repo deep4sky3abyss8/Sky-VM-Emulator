@@ -8,6 +8,6 @@ void str_cpy(char dest[], char source[]);
 void str_cat(char dest[], char source[]);
 int str_str( char str[] , char substr[] );
 
-#endif READFUNCS_H
+#endif //READFUNCS_H
 
 // Created by SkyAbyss on 6/6/2025.

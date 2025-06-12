@@ -17,20 +17,23 @@
 #define _ADDO_ "ADDO"
 #define _MULT_ "MULT"
 #define _DIVI_ "DIV"
+#define _MODE_ "MODE"
 #define _GETC_ "GETC"
 #define _GETS_ "GETS"
 #define _GETI_ "GETI"
+/*
 #define _PUSH_ "PUSH"
 #define _PULL_ "PULL"
+*/
 #define _ANDC_ "ANDC"
 #define _ORLC_ "ORLC"
 #define _NOTC_ "NOTC"
-
+/*
 #define _MKFL_ "MKFL"
 #define _MKDR_ "MKDR"
 #define _SPCE_ "SPCE"
 #define _OPNF_ "OPNF"
 #define _REDF_ "REDF"
 #define _RUNF_ "RUNF"
-
-#endif MACHINE_LAN_H
+*/
+#endif// MACHINE_LAN_H

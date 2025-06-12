@@ -160,7 +160,8 @@ void printbydilay(char str[] , int firsdilay , int secenddilay ){
 }
 //--------------------------------------------------------------------------------------------------------
 void wellcome(void){
-    printbydilay("Assb machine : preparing to boot ...\n\n\n" , 70 , 1000);
+    perror("Sky machine : preparing to boot ...\n\n");
+    //printbydilay("Sky machine : preparing to boot ...\n\n" , 70 , 1000);
     printbydilay("loading ",200,0);
     printf(" ____________________________________________\rloading ");
     Sleep(500);

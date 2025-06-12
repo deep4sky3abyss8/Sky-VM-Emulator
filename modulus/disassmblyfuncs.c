@@ -366,13 +366,7 @@ int jump (int eip) {
 //--------| HALT |--------//
 int halt (int eip ){   // --> if in future we allocate any memory , here we must free them all .
 	if(which_ram == OS) {
-		system("cls");
-		printbydilay("|\tWe are going to shutdown ...\n|\tSmile please !\n" , 70 , 2000 );
-		printbydilay("|\tevery day every time ...\n|\tSmile please !\n" , 70 , 2000 );
-		printbydilay("|\twe will see you soon ...\n|\tSmile please !\n" , 70 , 2000 );
-		system("cls");
-		Sleep(500);
-		exit(0);
+		return 1 ;
 	}
 	which_ram = OS ;
 	pr_eip = 0 ; // program is finish so we reset every thing to start a new program .

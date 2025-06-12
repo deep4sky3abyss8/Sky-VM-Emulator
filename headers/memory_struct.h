@@ -40,4 +40,4 @@ struct regs registers[15];
  * [+] in worse case our command has 3 argoments so we need 3 registers for handel it .
  * [+] in C for command ASSN Rn Index Type : reg[Rn].address = &(heap
  */
-#endif memory_struct_h
+#endif //memory_struct_h
