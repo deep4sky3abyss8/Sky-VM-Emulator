@@ -161,11 +161,11 @@ void printbydilay(char str[] , int firsdilay , int secenddilay ){
 //--------------------------------------------------------------------------------------------------------
 void wellcome(void){
     //fprintf(stderr,"Sky machine : preparing to boot ...\n\n");
-    printbydilay("Sky machine : preparing to boot ...\n\n" , 50 , 500);
-    printbydilay("loading ",200,0);
+    printbydilay("\nSky machine : preparing to boot ...\n\n" , 30 , 300);
+    printbydilay("loading ",80,0);
     printf(" ____________________________________________\rloading ");
     Sleep(500);
-    printbydilay("#############################################",500,0);
+    printbydilay("#############################################",90,0);
     printf("\r                                                     \r");
     printf("----------------------------------------------------------\n");
 }
