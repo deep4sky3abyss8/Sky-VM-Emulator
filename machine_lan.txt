@@ -18,6 +18,9 @@ ram address for ints between 0 to 99 . (99 is ok)
 ram address for chars between 0 to 99.
 ram address for strs between 0 to 999 .
 value can be single char or an int .
+registers are pointer base . they point to ram address but not pc ram , registers here only point to virtual ram we allocate by array .
+registers work on pointer base so any assn or other command before MOVE make fatal error and crash .
+
 
 ASSN Rn Value // register[Rn] = value ;
 
