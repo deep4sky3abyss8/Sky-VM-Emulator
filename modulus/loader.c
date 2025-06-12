@@ -60,7 +60,7 @@ static int load(char * line , int index ){
             pr_ram[index].command[i] = *(line+i);
         }
         pr_ram[index].command[i] = '\0';
-        if ( command_cmp( pr_ram[index].command, "PRIT") ) {
+        if ( command_cmp( index, "PRIT") ) {
             printf("%s",line+i);
             return 0 ;
         }
@@ -160,8 +160,8 @@ void printbydilay(char str[] , int firsdilay , int secenddilay ){
 }
 //--------------------------------------------------------------------------------------------------------
 void wellcome(void){
-    perror("Sky machine : preparing to boot ...\n\n");
-    //printbydilay("Sky machine : preparing to boot ...\n\n" , 70 , 1000);
+    //fprintf(stderr,"Sky machine : preparing to boot ...\n\n");
+    printbydilay("Sky machine : preparing to boot ...\n\n" , 50 , 500);
     printbydilay("loading ",200,0);
     printf(" ____________________________________________\rloading ");
     Sleep(500);

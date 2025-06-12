@@ -20,7 +20,7 @@ int mult_ints(int eip);
 int div_ints(int eip) ;
 int mode_ints(int eip);
 char get_char(int eip);
-char * get_str(int eip);
+int get_str(int eip);
 int get_int (int eip);
 void and (int eip);
 void or (int eip);
