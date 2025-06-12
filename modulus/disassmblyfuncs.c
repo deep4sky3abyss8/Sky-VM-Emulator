@@ -401,12 +401,12 @@ char * put_str(int eip ) {
 		int r1 = os_ram[eip].v1 ,
             r2 = os_ram[eip].v2 ;
         switch(registers[r1].type){
-            case 'S':
-                break;
-            default :
-                perror("[!] invalid register type for register point to string\n");
+            case 'I':
+		    perror("[!] invalid register type for register point to string\n");
 		printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);   
                 return NULL ;
+            default :
+                break;
         }
         switch(registers[r2].type){
             case 'I':
@@ -425,12 +425,12 @@ char * put_str(int eip ) {
 	int r1 = pr_ram[eip].v1 ,
         r2 = pr_ram[eip].v2 ;
     switch(registers[r1].type){
-        case 'S':
-            break;
+        case 'I':
+		perror("[!] invalid register type for register point to string\n");
+		printf ("[!] line %d %s %d %d\n",eip,pr_ram[eip].command,r1,r2);   
+                return NULL ;
         default :
-            perror("[!] invalid register type for register point to string\n" );
-	printf ("[!] line %d %s %d %d\n",eip,pr_ram[eip].command,r1,r2);   
-            return NULL ;
+            break;
     }
     switch(registers[r2].type){
         case 'I':
