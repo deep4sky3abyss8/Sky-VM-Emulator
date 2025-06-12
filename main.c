@@ -9,15 +9,8 @@
 #define BOOT_ADDRESS "DisassemblyPograms/os.txt"
 //--------------------------------------------  main src   -----------------
 int main(void) {
-    printbydilay("Assb machine : preparing to boot ...\n\n\n" , 70 , 1000);
-    printbydilay("loading ",200,0);
-    printf(" ____________________________________________\rloading ");
-    Sleep(500);
-    printbydilay("#############################################",500,0);
-    printf("\r                                                     \r");
-    printf("----------------------------------------------------------\n");
+    welcome();
     loader(BOOT_ADDRESS);
-    Sleep(1000);
     os_eip=0 ;
     // fixing boot protocol and way .
     // we need to define a const char string for booting os as rom .
