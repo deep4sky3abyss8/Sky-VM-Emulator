@@ -81,11 +81,12 @@ int main(void) {
         }
     }
     // shut down box ->
+    Sleep(2000);
     system("cls");
     printbydilay("shutdown ",200,0);
-    printf(" ____________________________________________\rshutdown ");
+    printf(" ______\rshutdown ");
     Sleep(200);
-    printbydilay("#############################################",50,0);
+    printbydilay("######",50,0);
     system("cls");
     Sleep(500);
 
