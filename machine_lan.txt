@@ -48,7 +48,7 @@ PUTI Pn // printf("%d", reg[Pn] )
 
 ADDN Pn Pm Pz // reg[Pz] = (reg[Pn] + reg[Pm]) ;
 
-ADDO Pn // reg[Pn]++ ;
+ADDO Pn // reg[Pn] = reg[Pn]+1 ;
 
 MULT Pn Pm Pz // reg[Pz] = reg[Pn] * reg[Pm]) ;
 
