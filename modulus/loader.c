@@ -11,8 +11,7 @@ static int read_int(int *num , int index ,char * line) {
    int sign =1 ;
     for ( index ; line[index]!=' ' && line[index]!='\t' ; index++) {
         if (line[index] == '\n' || line[index] == '\0') {
-           if(sign == -1)
-              *num *= -1 ;
+           *num *= sign ;
            if(sign == -1 && num = 0)
               *num = '-' ;            // here if reach mean there's no any digit seen so just was - character.
             return 0 ;
@@ -27,6 +26,7 @@ static int read_int(int *num , int index ,char * line) {
         }
         *num = (*num)*10 + (line[index]-'0');
     }
+   *num *= sing ;
     return index;
 }
 //-------------------------------------------------------------------------------------------------------
