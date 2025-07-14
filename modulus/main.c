@@ -6,7 +6,7 @@
 #include "../headers/memory_struct.h"
 #include <windows.h>
 //--------------------------------------------  define   -------------------
-#define BOOT_ADDRESS "DisassemblyPograms/os.txt"
+#define BOOT_ADDRESS "../DisassemblyPograms/os.txt"
 //--------------------------------------------  main src   -----------------
 int main(void) {
     wellcome();
