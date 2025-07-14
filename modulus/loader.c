@@ -8,16 +8,25 @@
 //-------------------------------------------------------------------------------------------------------
 static int read_int(int *num , int index ,char * line) {
     *num = 0 ;
+   int sign =1 ;
     for ( index ; line[index]!=' ' && line[index]!='\t' ; index++) {
         if (line[index] == '\n' || line[index] == '\0') {
+           *num *= sign ;
+           if(sign == -1 && num = 0)
+              *num = '-' ;            // here if reach mean there's no any digit seen so just was - character.
             return 0 ;
         }
+       if(line[index]=='-'){
+          sign = -1 ;
+          continue;
+       }
         if (line[index]<'0' || line[index]>'9') {  // here let us to assign a character to register cell .
             *num = line[index] ;
             return 0 ;
         }
         *num = (*num)*10 + (line[index]-'0');
     }
+   *num *= sing ;
     return index;
 }
 //-------------------------------------------------------------------------------------------------------
