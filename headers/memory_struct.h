@@ -28,10 +28,10 @@ struct heap_s heap ;
 
 
 
-int stck_mem[100] , // short for stack memory segment .
-    os_eip=0 ,  // -> eip registers which tell us which line of program/os we are in .
-    pr_eip=0 ,
-    which_ram= OS ; // -> it's the global flag which tell us now we are using os ram or programs ram ?!
+extern int stck_mem[100] , // short for stack memory segment .
+    os_eip ,  // -> eip registers which tell us which line of program/os we are in .
+    pr_eip ,
+    which_ram ; // -> it's the global flag which tell us now we are using os ram or programs ram ?!
 //
 struct regs registers[15];
 
