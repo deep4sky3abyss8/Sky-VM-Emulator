@@ -7,6 +7,11 @@
 #include <windows.h>
 //--------------------------------------------  define   -------------------
 #define BOOT_ADDRESS "../DisassemblyPograms/os.txt"
+//--------------------------------------------  external var src   -----------------
+int stck_mem[100] , // short for stack memory segment .
+    os_eip=0 ,  // -> eip registers which tell us which line of program/os we are in .
+    pr_eip=0 ,
+    which_ram= OS ;
 //--------------------------------------------  main src   -----------------
 int main(void) {
     wellcome();
