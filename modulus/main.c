@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers/loader.h"
-#include "headers/machine_lan.h"
-#include "headers/disassmbly.h"
-#include "headers/memory_struct.h"
+#include "../headers/loader.h"
+#include "../headers/machine_lan.h"
+#include "../headers/disassmbly.h"
+#include "../headers/memory_struct.h"
 #include <windows.h>
 //--------------------------------------------  define   -------------------
 #define BOOT_ADDRESS "DisassemblyPograms/os.txt"
