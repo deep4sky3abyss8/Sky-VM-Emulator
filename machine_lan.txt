@@ -40,6 +40,13 @@ CJMP Pn LINE// if(reg[Pn]==1) goto to line LINE( line is int) exp : CJMP 0 100 m
 
 JUMP LINE // goto line LINE (LINE is a int)
 
+[Note ] in both jump , must use : Line_you_want - count(PRIT) .
+	exp : if you have 3 PRIT command (in lines 1 ,2 ,3 ) , and you want to JUMP or CJMP to 12 : must use 12-3 mean : JUMP 9
+
+
+
+
+
 HALT // finish program , if reached program RAM which commands wrote in it , become clear and control get back to simple os .
 
 PUTC Pn // putchar(reg[P ]);
@@ -115,7 +122,7 @@ EXP :
 MOVE 9 99 I // num
 ASSN 9 0
 MOVE 8 98 I // digit
-MOVE 7 97 C // num input terminate by char '$'
+MOVE 7 97 C // num input terminate by char ':' without any white space !
 ASSN 7 36   // putting '$' char in reg for loop check
 MOVE 6 96 I // a cell for res of loop condition
 MOVE 5 95 I // for digit * 10
@@ -132,8 +139,8 @@ also in C :
 /*
 int num = 0 ;
 int digit = 0 ;
-char terminate='$';
-while((digit=getchar())!='$'){
+char terminate=':';
+while((digit=getchar())!=':'){
     digit-='0';
     num *= 10 ;
     num += digit ;

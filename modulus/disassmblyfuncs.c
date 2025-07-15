@@ -337,7 +337,7 @@ void con_jump(int eip) {
 		int reg = os_ram[eip].v1 ,
 			line = os_ram[eip].v2 ;
 		if ( *(int*)registers[reg].address) {
-			os_eip = line ;
+			os_eip = line-1 ;
 			return;
 		}
 		os_eip++ ;
@@ -346,7 +346,7 @@ void con_jump(int eip) {
 		int reg = pr_ram[eip].v1 ,
 			line = pr_ram[eip].v2 ;
 		if ( *(int*)registers[reg].address) {
-			pr_eip = line ;
+			pr_eip = line-1 ;
 			return ;
 		}
 		pr_eip++ ;
@@ -356,11 +356,11 @@ void con_jump(int eip) {
 int jump (int eip) {
 	if(which_ram == OS) {
 		int line = os_ram[eip].v1 ;
-			os_eip = line ;
+			os_eip = line-1 ;
 			return line ;
 	}
 	int line = pr_ram[eip].v1 ;
-		pr_eip = line ;
+		pr_eip = line-1 ;
 		return line ;
 }
 //--------| HALT |--------//
@@ -446,13 +446,13 @@ int put_int(int eip ) {
 		int reg = os_ram[eip].v1 ,
 			d = *((int *)registers[reg].address) ;
 		os_eip++ ;
-		printf("%d",d);
+		printf("%d ",d);
 		return d ;
 	}
 	int reg = pr_ram[eip].v1 ,
 		d = *((int *)registers[reg].address) ;
 	pr_eip++ ;
-	printf("%d",d);
+	printf("%d ",d);
 	return d ;
 }
 //--------| ADDN |--------//
