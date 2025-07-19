@@ -22,7 +22,7 @@ registers are pointer base . they point to ram address but not pc ram , register
 registers work on pointer base so any assn or other command before MOVE make fatal error and crash .
 
 
-ASSN Rn Value // register[Rn] = value ;
+ASSN Rn Value // register[Rn] = value ; except white space and newline characters . 
 
 MOVE Rn ram_address  type(I/C/S)    // register[Rn]=heap.type[ram_address] ;
 
