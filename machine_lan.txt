@@ -1,15 +1,16 @@
 
-___________________________________________________________________________________________________________________________
- _________________
-|		  |
-|      NOTE    Rn , Rm , Pn , Pm , ... short for index of registers. for Exp) ASSN 1 100, mean put 100 into address which register 1 point to .
-|_________________|
+_______________________________________________________________________________________________________________________________________________________________
+ ___________________________________________________________________________________________________________________________________________________
+|		  																    |
+|      NOTE    Rn , Rm , Pn , Pm , ... short for index of registers. for Exp) ASSN 1 100, mean put 100 into address which register 1 point to .     |
+|___________________________________________________________________________________________________________________________________________________|
 
 
  _________________________________
 |			     	  |
-|   basic proggramming language   |_________________________________________________________________________________________
+|   basic proggramming language   |_____________________________________________________________________________________________________________________________
 |_________________________________|
+
 
 there is not any character in front of commands except in type or value.
 
@@ -22,114 +23,122 @@ registers are pointer base . they point to ram address but not pc ram , register
 registers work on pointer base so any assn or other command before MOVE make fatal error and crash .
 
 
-ASSN Rn Value // register[Rn] = value ; except white space and newline characters . 
+ASSN Rn Value 				// register[Rn] = value ; except white space and newline characters . 
 
-MOVE Rn ram_address  type(I/C/S)    // register[Rn]=heap.type[ram_address] ;
+MOVE Rn ram_address  type(I/C/S)  	// register[Rn]=heap.type[ram_address] ;
 
 //Note : registers work on pointer base , so befor any use you most move a pointer on a ram cell . 
 
 ASSV Rn Rm // reg[Rn] = reg[Rm] ;
 
-COMP Rn Rm Rz // reg[Rz] = reg[Rn] < reg[Rm] ? 1 : 0 ;
+COMP Rn Rm Rz 				// reg[Rz] = reg[Rn] < reg[Rm] ? 1 : 0 ;
 
-EQAL Pn Pm Pz //  reg[Rz] = reg[Rn] == reg[Rm] ? 1 : 0 ;
+EQAL Pn Pm Pz 				//  reg[Rz] = reg[Rn] == reg[Rm] ? 1 : 0 ;
 
-NEQL Pn Pm Pz //  reg[Rz] = reg[Rn] != reg[Rm] ? 1 : 0 ;
+NEQL Pn Pm Pz 				//  reg[Rz] = reg[Rn] != reg[Rm] ? 1 : 0 ;
 
-CJMP Pn LINE// if(reg[Pn]==1) goto to line LINE( line is int) exp : CJMP 0 100 mean if value in reg[0] was True jump to line 100 .
+CJMP Pn LINE				// if(reg[Pn]==1) goto to line LINE( line is int) exp : CJMP 0 100 mean if value in reg[0] was True jump to line 100 .
 
-JUMP LINE // goto line LINE (LINE is a int)
+JUMP LINE 				// goto line LINE (LINE is a int)
 
-HALT // finish program , if reached program RAM which commands wrote in it , become clear and control get back to simple os .
+HALT 					// finish program , if reached program RAM which commands wrote in it , become clear and control get back to simple os . which_ram = OS 
 
-PUTC Pn // putchar(reg[P ]);
+PUTC Pn 				// putchar(reg[P ]);
 
-PUTS Pn Pm // assume a is an int in register Pm. Pn point to start of a str . so PUTS will putchar a character after where Pn point to
-
-
-PUTI Pn // printf("%d", reg[Pn] )
-
-ADDN Pn Pm Pz // reg[Pz] = (reg[Pn] + reg[Pm]) ;
-
-ADDO Pn // reg[Pn] = reg[Pn]+1 ;
-
-MULT Pn Pm Pz // reg[Pz] = reg[Pn] * reg[Pm]) ;
-
-DIVI Pn Pm Pz // reg[Pz] = (reg[Pn] / reg[Pm]) ;
-
-MODE Pn Pm Pz //  reg[Pz] = (reg[Pn] % reg[Pm]) ;
-
-GETC Pn  // reg[Pn] = getchar() ;
-
-GETI Pn  // reg[Pn] = getchar() - '0' ; only one digit . num input will terminate from loop only and only by ':' after num ; like 123: mean 123
-
-GETS Pn Pm // put str start from Pn and save how many chars got to Pm .
-
-PRIT str : this command will not save in ram . only to straight printing a string to shell  .
-[NOTE ] : it will print when program loading . befor program runnung .
-[Note ] just use it at start of program wen you want to say hello or get info .
+PUTS Pn Pm 				// assume a is an int in register Pm. Pn point to start of a str . so PUTS will putchar a character after where Pn point to
 
 
----------------------------------------------------------- implenent right here .
-ANDC Pn Pm Pz// reg[Pz] = (reg[Pn] && reg[Pm]) ;
+PUTI Pn 				// printf("%d", reg[Pn] )
 
-ORLC Pn Pm Pz// reg [Pz] = (reg[Pn] || reg[Pm]) ;
+ADDN Pn Pm Pz 				// reg[Pz] = (reg[Pn] + reg[Pm]) ;
 
-NOTC Pn // reg[Pn] = !reg[Pn] ;
+ADDO Pn 				// reg[Pn] = reg[Pn]+1 ;
+
+MULT Pn Pm Pz 				// reg[Pz] = reg[Pn] * reg[Pm]) ;
+
+DIVI Pn Pm Pz 				// reg[Pz] = (reg[Pn] / reg[Pm]) ;
+
+MODE Pn Pm Pz 				//  reg[Pz] = (reg[Pn] % reg[Pm]) ;
+
+GETC Pn  				// reg[Pn] = getchar() ;
+
+GETI Pn  				// reg[Pn] = getchar() - '0' ; only one digit . num input will terminate from loop only and only by ':' after num ; like 123: mean 123
+
+GETS Pn Pm 				// put str start from Pn and save how many chars got to Pm .
+
+PRIT str				 : this command will not save in ram . only to straight printing a string to shell  .
+						[NOTE ] : it will print when program loading . befor program runnung .
+						[Note ] just use it at start of program wen you want to say hello or get info .
 
 
- ____________________________
-|			                 |
-|API mother OS & program run |___________________________________________________________________________________________________
-|____________________________|
+ANDC Pn Pm Pz				// reg[Pz] = (reg[Pn] && reg[Pm]) ;
+
+ORLC Pn Pm Pz				// reg [Pz] = (reg[Pn] || reg[Pm]) ;
+
+NOTC Pn 				// reg[Pn] = !reg[Pn] ;
+
+
+ ______________________________
+|			       |
+|  API mother OS & program run |_______________________________________________________________________________________________________________________________________
+|______________________________|
+
 
 this part not implement right now so skip it .
 
 
-TIME Pn type(S/M/H) // save current time sec or min or hour in reg[Pn]
+TIME Pn					// save current time & data in string reg[Pn] . exp : reg[R1] = "2025/1/11 21:45:56"
 
-MKFL name.type // make file.type
+OPEN R1 R2 R3 				// opening file from path which saved in reg[R1] in method which in reg[R2] and point to it by File* from R3 . reg[R3] = fopen( reg[R1] , reg[R2] );
 
-MKDR name // make directory by name
+READ R1 				// read and print file from File* in reg[R1]
 
-OPNF name.type // open file.type
+WRIT R1 R2				// write a line str* from reg[R1] to File* reg[R2]
 
-REDF name.type // read file.type and save it by protocol into App's RAM 
+APND R1 R2				// append a line str* from reg[R1] to File* reg[R2]
 
-RUNF name.type // run file.type , from App's RAM index
+CLER 					// clear screen : system("cls")
+
+MAKE R1					// make a file by name str* reg[R1]
+
+KILL R1					// delete a file by name str* reg[R1]
+
+RUN R1					// open & boot & load & run program which reg[r1] poit to : example in our prj :	char * reg[R1]="prg.txt"; loader(reg[R1]); which_ram = !OS;
 
 
+_________________________________________________________________________________________________________________________________________________________________
 
-___________________________________________________________________________________________
 
 Exp) reg number :1 = index: 1 in registers list.
-Exp) ASSN 1 100 -> *reg[1] = 100 ; assign value 100 to register 1 .
+
+Exp) ASSN 1 100 	->	 *reg[1] = 100 ; assign value 100 to register 1 .
 
 
 EXP :
  read int by disassembly.
  making num digit by digit :
 
-
 //['//'] is not comment (we can't comment). delete these before usage.
-MOVE 9 99 I // num
+
+MOVE 9 99 I	 // num
 ASSN 9 0
-MOVE 8 98 I // digit
-MOVE 7 97 C // num input terminate by char ':' without any white space !
-ASSN 7 36   // putting ':' char in reg for loop check
-MOVE 6 96 I // a cell for res of loop condition
-MOVE 5 95 I // for digit * 10
+MOVE 8 98 I 	 // digit
+MOVE 7 97 C    	 // num input terminate by char ':' without any white space !
+ASSN 7 36  	 // putting ':' char in reg for loop check
+MOVE 6 96 I	 // a cell for res of loop condition
+MOVE 5 95 I 	 // for digit * 10
 ASSN 5 10
-GETI 8      // here is start of loop -> getchar()
-EQAL 8 7 6  // loop condition 
-CJMP 6 n    // n : 1 line after JUMP line number
-MULT 9 5 9  // num *= 10
-ADDN 9 8 9  // num += digit
-JUMP m      // m : GETI line number
+GETI 8     	 // here is start of loop -> getchar()
+EQAL 8 7 6 	 // loop condition 
+CJMP 6 n   	 // n : 1 line after JUMP line number
+MULT 9 5 9  	 // num *= 10
+ADDN 9 8 9  	 // num += digit
+JUMP m     	 // m : GETI line number
 
-also in C :
 
-/*
+
+[ also in C : ] =>
+
 int num = 0 ;
 int digit = 0 ;
 char terminate=':';
@@ -137,7 +146,6 @@ while((digit=getchar())!=':'){
     digit-='0';
     num *= 10 ;
     num += digit ;
-}*/
+}
 
-
-___________________________________________________________________________________________
+_____________________________________________________________________________________________________________________________________________________________
