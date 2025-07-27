@@ -16,13 +16,16 @@ while conted :
         
         
     while True :
-        color = input(Fore.YELLOW+">>> Enter Color You Want [blue/red/green/yellow] : "+Fore.RESET)
-        if (' ' not in color) and (color.upper() in ("BLUE","RED","GREEN","YELLOW")) :
+        color = input(Fore.YELLOW+">>> Enter Color You Want [blue/red/green/yellow/0] : "+Fore.RESET)
+        if (' ' not in color) and (color.upper() in ("BLUE","RED","GREEN","YELLOW",'0')) :
             color = color[0].upper()
             break
         print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < color >"+Fore.RESET)
         
-        
+    
+    
+    
+    #string = "\n>>> Your Input Number is [  Odd  ]"
     string = input(Fore.YELLOW+">>> Enter Your Str ( terminate by Enter ) : "+Fore.RESET)
     
     print("\n\n>>> Your Str Disassembly Printing Code\n"+Fore.GREEN)

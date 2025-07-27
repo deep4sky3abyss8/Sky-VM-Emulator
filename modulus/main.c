@@ -18,6 +18,7 @@ int stck_mem[100] , // short for stack memory segment .
 int main(void) {
     wellcome();
     loader(BOOT_ADDRESS);
+    Sleep(1000);
     os_eip=0 ;
     int *eip ;
     while (1) {
@@ -120,7 +121,7 @@ int main(void) {
     // shut down box ->
     Sleep(2000);
     system("cls");
-    printbydilay("\tShutdown ",200,200);
+    printbydilay("\n\tShutdown ",100,200);
     printbydilay(". . . . .",70,0);
     system("cls");
     Sleep(600);
