@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
-#include "../headers/machine_lan.h" // commands msut check here so here will include , no need otherplace .
 #include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/loader.h" // for halt command .
 #include "../headers/readfuncs.h" // for read int and read str funcs since now
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-//--------------------- BASIC DISASSEMBLY COMMANDS ------------------------------------
+//--------------------- BASIC DISASSEMBLY COMMANDS -------------------
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
 //-------| CHECK |--------// OK
 int command_cmp( int line , const char *pointer ) {
 	for (int index = 0; index < 4; index++) {
@@ -672,19 +673,6 @@ void not(int eip){
 	}
 }
 //------------------------- WINDOWS API COMMANDS ------------------------------
-/*
-MKFL name.type // make file.type
-
-MKDR name // make directory by name
-
-SPCE // get me space for app running. make index of App's RAM zero .
-
-OPNF name.type // open file.type
-
-REDF name.type // read file.type and save it by protocol into App's RAM
-
-RUNF name.type // run file.type , from App's RAM index
-*/
 /*
 int main() {
 	puts("l");

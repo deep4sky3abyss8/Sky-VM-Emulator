@@ -1,7 +1,6 @@
 #ifndef MACHINE_LAN_H
 #define MACHINE_LAN_H
 
-
 //===================------>> usual commands
 #define _ASSN_ "ASSN"
 #define _MOVE_ "MOVE"
@@ -25,7 +24,6 @@
 #define _GETI_ "GETI"
 
 
-
 //===================------>> logical commands
 #define _ANDC_ "ANDC"
 #define _ORLC_ "ORLC"
@@ -42,9 +40,8 @@
 #define _MAKE_ "MAKE"           // MAKE A FILE
 #define _KILL_ "KILL"           // DELETE A FILE
 #define _RUNF_ "RUNF"           // RUN A PRG FILE
-
+//------------------
 #define _CTCT_ "CTCT"           // CHANG SCREEN TEXT COLORS TO ...
-
 
 
 #endif// MACHINE_LAN_H

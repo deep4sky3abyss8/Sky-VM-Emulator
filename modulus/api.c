@@ -1,4 +1,5 @@
 /*
+
 TIME Pn					// save current time & data in string reg[Pn] . exp : reg[R1] = "2025/1/11 21:45:56"
 
 OPEN R1 R2 R3 			// opening file from path which saved in reg[R1] in method which in reg[R2] and point to it by File* from R3 . reg[R3] = fopen( reg[R1] , reg[R2] );
@@ -15,27 +16,88 @@ MAKE R1					// make a file by name str* reg[R1]
 
 KILL R1					// delete a file by name str* reg[R1]
 
-RUN R1					// open & boot & load & run program which reg[r1] poit to : example in our prj :	char * reg[R1]="prg.txt"; loader(reg[R1]); which_ram = !OS;
+RUNF R1					// open & boot & load & run program which reg[r1] poit to : example in our prj :  ( reg[R1] is a char pointer )   reg[R1]="prg.txt"; loader(reg[R1]); which_ram = !OS;
 
 */
+//-----------------------| HEADERS |----------------------//
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/colorama.h" //   >>> for CTCT
+//--------------------------------------------------------//
+//--------| TIME |--------//
 
+//--------| OPEN |--------//
 
+//--------| READ |--------//
 
+//--------| WRIT |--------//
 
+//--------| APND |--------//
 
+//--------| MAKE |--------//
 
+//--------| KILL |--------//
 
+//--------| RUNF |--------//
 
-
-
-
-
-
-
-
+//--------| CLER |--------//
+void clear_screen(int eip){
+    if (which_ram == OS){
+        os_eip++ ;
+    }
+    else{
+        pr_eip++ ;
+    }
+    system("cls") ;
+}
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //CTCT color(R/G/B/Y/0)			// change terminal color to R->red , G->green ,  B->blue , Y->yellow , 0->reset		be carefull if you don't reset , it will not reset atumaticly !!!!!
 
-
-
+//--------| CTCT |--------//
+void change_terminal_color_to( int eip ){
+    if (which_ram==OS){
+        char color = os_ram[eip].v1 ;
+        switch (color) {
+        case 'R' :
+            RED
+            break; 
+        case 'G' :
+            GREEN
+            break;
+        case 'B' :
+            BLUE
+            break;
+        case 'Y' :
+            YELLOW
+            break;
+        default :
+            RESET
+            break;
+        }
+        os_eip++ ;
+    }
+    else {
+        char color = pr_ram[eip].v1 ;
+        switch (color) {
+        case 'R' :
+            RED
+            break;
+        case 'G' :
+            GREEN
+            break;
+        case 'B' :
+            BLUE
+            break;
+        case 'Y' :
+            YELLOW
+            break;
+        default :
+            RESET
+            break;
+        }
+        pr_eip++;
+    }
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

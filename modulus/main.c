@@ -4,16 +4,17 @@
 #include "../headers/machine_lan.h"
 #include "../headers/disassmbly.h"
 #include "../headers/memory_struct.h"
+#include "../headers/api.h"
 #include <windows.h>
-//--------------------------------------------  define   -------------------
-//--------------------------------------------  define   -------------------
+//--------------------------------------------[  define  ]-------------------
+//--------------------------------------------[  define  ]-------------------
 #define BOOT_ADDRESS "../DisassemblyPograms/os.txt"
-//--------------------------------------------  external var src   -----------------
+//--------------------------------------------[   external var src  ] -----------------
 int stck_mem[100] , // short for stack memory segment .
     os_eip=0 ,  // -> eip registers which tell us which line of program/os we are in .
     pr_eip=0 ,
     which_ram= OS ;
-//--------------------------------------------  main src   -----------------
+//--------------------------------------------[  main src  ]-----------------
 int main(void) {
     wellcome();
     loader(BOOT_ADDRESS);
@@ -42,7 +43,7 @@ int main(void) {
             con_jump(*eip);
         else if (command_cmp(*eip , _JUMP_ ))
             jump(*eip);
-        else if (command_cmp(*eip , _HALT_ )) {
+        else if (command_cmp(*eip , _HALT_ )){
             if (!halt(*eip))
                 continue;
             break;
@@ -67,14 +68,44 @@ int main(void) {
             get_char(*eip);
         else if (command_cmp(*eip , _GETS_ ))
             get_str(*eip);
-        else if (command_cmp(*eip , _GETI_ ))
+        else if (command_cmp(*eip , _GETI_ )){
             get_int(*eip);
+        }
+        //============[ LOGICAL ]=============
         else if (command_cmp(*eip , _ANDC_ ))
             and(*eip);
         else if (command_cmp(*eip , _ORLC_ ))
             or(*eip);
         else if (command_cmp(*eip , _NOTC_ ))
             not(*eip);
+        //==============[ API ]===============
+        /*====================================
+
+        else if (command_cmp(*eip , _TIME_ ))
+
+        else if (command_cmp(*eip , _OPEN_ ))
+
+        else if (command_cmp(*eip , _READ_ ))
+
+        else if (command_cmp(*eip , _WRIT_ ))
+
+        else if (command_cmp(*eip , _APND_ ))
+
+        else if (command_cmp(*eip , _MAKE_ ))
+
+        else if (command_cmp(*eip , _KILL_ ))
+
+        else if (command_cmp(*eip , _RUNF_ ))
+
+        */
+
+        else if (command_cmp(*eip , _CLER_ )){
+            clear_screen(*eip);
+        }
+        else if (command_cmp(*eip , _CTCT_ )){
+            change_terminal_color_to(*eip);
+        }
+        //====================================
         else {
             if (which_ram==OS) {
                 fprintf(stderr, "[!]\tFatal Error : Invalid disassembly command : %s\n",os_ram[os_eip].command);
@@ -89,14 +120,9 @@ int main(void) {
     // shut down box ->
     Sleep(2000);
     system("cls");
-    printbydilay("shutdown ",200,0);
-    printf(" ______\rshutdown ");
-    Sleep(200);
-    printbydilay("######",50,0);
+    printbydilay("\tShutdown ",200,200);
+    printbydilay(". . . . .",70,0);
     system("cls");
-    Sleep(500);
-
-    // api implement disassembly funcs .
-
+    Sleep(600);
     return 0;
 }

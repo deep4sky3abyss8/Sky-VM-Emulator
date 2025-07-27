@@ -41,22 +41,7 @@ void set_color(int color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
 }
-#else
-// برای لینوکس یا مک
-enum COLORS {
-    BLACK = 30,
-    RED = 31,
-    GREEN = 32,
-    YELLOW = 33,
-    BLUE = 34,
-    MAGENTA = 35,
-    CYAN = 36,
-    WHITE = 37,
-    RESET = 0
-};
-void set_color(int color) {
-    printf("\033[%dm", color);
-}
+
 #endif
 //-------------------------f3-----------------------------------------
 //--------------------------------------------------------------------
@@ -64,6 +49,7 @@ void set_color(int color) {
 #define GREEN set_color(GREEN);
 #define YELLOW set_color(YELLOW);
 #define RESET set_color(RESET);
+#define BLUE set_color(BLUE);
 //-------------------------f4-----------------------------------------
 //--------------------------------------------------------------------
 int read_str(char *result, char delim){
@@ -1068,6 +1054,82 @@ void str_cat(char dest[], char source[]){
     dest[dest_len + index] = '\0' ;
 }
 //---------------------------------------------------------------------
+//--------------------------------------------------------//
+//--------| TIME |--------//
+
+//--------| OPEN |--------//
+
+//--------| READ |--------//
+
+//--------| WRIT |--------//
+
+//--------| APND |--------//
+
+//--------| MAKE |--------//
+
+//--------| KILL |--------//
+
+//--------| RUNF |--------//
+
+//--------| CLER |--------//
+void clear_screen(int eip){
+    if (which_ram == OS){
+        os_eip++ ;
+    }
+    else{
+        pr_eip++ ;
+    }
+    system("cls") ;
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//CTCT color(R/G/B/Y/0)			// change terminal color to R->red , G->green ,  B->blue , Y->yellow , 0->reset		be carefull if you don't reset , it will not reset atumaticly !!!!!
+
+//--------| CTCT |--------//
+void change_terminal_color_to( int eip ){
+    if (which_ram==OS){
+        char color = os_ram[eip].v1 ;
+        switch (color) {
+        case 'R' :
+            RED
+            break; 
+        case 'G' :
+            GREEN
+            break;
+        case 'B' :
+            BLUE
+            break;
+        case 'Y' :
+            YELLOW
+            break;
+        default :
+            RESET
+            break;
+        }
+        os_eip++ ;
+    }
+    else {
+        char color = pr_ram[eip].v1 ;
+        switch (color) {
+        case 'R' :
+            RED
+            break;
+        case 'G' :
+            GREEN
+            break;
+        case 'B' :
+            BLUE
+            break;
+        case 'Y' :
+            YELLOW
+            break;
+        default :
+            RESET
+            break;
+        }
+        pr_eip++;
+    }
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------
 // Created by SkyAbyss on 6/6/2025.
 
@@ -1171,14 +1233,8 @@ int main(void) {
 	}
 	printf("-------------------------------------");
 
-	// api implement disassembly funcs .
-
 	return 0;
-    // api implement disassembly funcs .
 
 }
 
-/*
- 
 
-*/

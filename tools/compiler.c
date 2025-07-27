@@ -4,7 +4,7 @@
 #include "../headers/colorama.h"
 
 int main(void){
-    const char *compile_command = "gcc main.c disassmblyfuncs.c loader.c readfuncs.c -o ___machine___.exe" ;
+    const char *compile_command = "gcc main.c disassmblyfuncs.c api.c loader.c readfuncs.c -o ++++++MACHINE++++++.exe" ;
         
     YELLOW
     printf("-----------------\n[C&C] compiling start ...\n\n") ;
