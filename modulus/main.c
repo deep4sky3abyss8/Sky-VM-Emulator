@@ -6,6 +6,7 @@
 #include "../headers/memory_struct.h"
 #include <windows.h>
 //--------------------------------------------  define   -------------------
+//--------------------------------------------  define   -------------------
 #define BOOT_ADDRESS "../DisassemblyPograms/os.txt"
 //--------------------------------------------  external var src   -----------------
 int stck_mem[100] , // short for stack memory segment .

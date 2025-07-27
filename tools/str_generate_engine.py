@@ -4,6 +4,7 @@ import os
 init()
 conted = 1 
 while conted :
+    
     while True :
         try :
             reg = int(input(Fore.YELLOW+"\n>>> Enter Register Index/Number between 0-100 : "+Fore.RESET))
@@ -12,13 +13,27 @@ while conted :
             print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < index >"+Fore.RESET)
         except :
             print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < index >"+Fore.RESET)
+        
+        
+    while True :
+        color = input(Fore.YELLOW+">>> Enter Color You Want [blue/red/green/yellow] : "+Fore.RESET)
+        if (' ' not in color) and (color.upper() in ("BLUE","RED","GREEN","YELLOW")) :
+            color = color[0].upper()
+            break
+        print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < color >"+Fore.RESET)
+        
+        
     string = input(Fore.YELLOW+">>> Enter Your Str ( terminate by Enter ) : "+Fore.RESET)
     print("\n\n>>> Your Str Disassembly Printing Code\n"+Fore.GREEN)
     # ASSN 8 Y
     # PUTC 8
+    
+    
+    print(20*"=",f"\nCTCT {color}")
     for letter in string :
         print(f"ASSN {reg} {ord(letter)}")
         print(f"PUTC {reg}")
+    print("CTCT 0",20*"=",sep='\n')
     print(Fore.RESET+"\n\n\n>>> Copy Your Output ...\n")
     while True :
         try :

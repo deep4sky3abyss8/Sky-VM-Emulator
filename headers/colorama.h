@@ -40,6 +40,7 @@ void set_color(int color) {
 #define GREEN set_color(GREEN);
 #define YELLOW set_color(YELLOW);
 #define RESET set_color(RESET);
+#define BULE set_color(BLUE);
 //------------------------------------------------------------------
 
 

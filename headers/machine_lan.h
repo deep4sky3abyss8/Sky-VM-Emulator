@@ -1,6 +1,8 @@
 #ifndef MACHINE_LAN_H
 #define MACHINE_LAN_H
 
+
+//===================------>> usual commands
 #define _ASSN_ "ASSN"
 #define _MOVE_ "MOVE"
 #define _ASSV_ "ASSV"
@@ -21,19 +23,28 @@
 #define _GETC_ "GETC"
 #define _GETS_ "GETS"
 #define _GETI_ "GETI"
-/*
-#define _PUSH_ "PUSH"
-#define _PULL_ "PULL"
-*/
+
+
+
+//===================------>> logical commands
 #define _ANDC_ "ANDC"
 #define _ORLC_ "ORLC"
 #define _NOTC_ "NOTC"
-/*
-#define _MKFL_ "MKFL"
-#define _MKDR_ "MKDR"
-#define _SPCE_ "SPCE"
-#define _OPNF_ "OPNF"
-#define _REDF_ "REDF"
-#define _RUNF_ "RUNF"
-*/
+
+
+//===================------>> API commands
+#define _TIME_ "TIME"
+#define _OPEN_ "OPEN"
+#define _READ_ "READ"           // READ AN OPEN FILE AND PRINT IT INSTED SAVE
+#define _WRIT_ "WRIT"           // WRITE A LINE IN OPEN FILE
+#define _APND_ "APND"           // APPEND A LINE TO AN OPEN FILE
+#define _CLER_ "CLER"           // CLEAR SCREEN
+#define _MAKE_ "MAKE"           // MAKE A FILE
+#define _KILL_ "KILL"           // DELETE A FILE
+#define _RUNF_ "RUNF"           // RUN A PRG FILE
+
+#define _CTCT_ "CTCT"           // CHANG SCREEN TEXT COLORS TO ...
+
+
+
 #endif// MACHINE_LAN_H

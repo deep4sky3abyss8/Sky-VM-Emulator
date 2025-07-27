@@ -452,7 +452,7 @@ int put_int(int eip ) {
 	int reg = pr_ram[eip].v1 ,
 		d = *((int *)registers[reg].address) ;
 	pr_eip++ ;
-	printf("%d ",d);
+	printf("%d",d);
 	return d ;
 }
 //--------| ADDN |--------//

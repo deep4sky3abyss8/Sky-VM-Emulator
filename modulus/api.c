@@ -16,4 +16,26 @@ MAKE R1					// make a file by name str* reg[R1]
 KILL R1					// delete a file by name str* reg[R1]
 
 RUN R1					// open & boot & load & run program which reg[r1] poit to : example in our prj :	char * reg[R1]="prg.txt"; loader(reg[R1]); which_ram = !OS;
+
 */
+#include "../headers/colorama.h" //   >>> for CTCT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//CTCT color(R/G/B/Y/0)			// change terminal color to R->red , G->green ,  B->blue , Y->yellow , 0->reset		be carefull if you don't reset , it will not reset atumaticly !!!!!
+
+
+
