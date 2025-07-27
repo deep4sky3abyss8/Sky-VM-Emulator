@@ -7,8 +7,8 @@ while conted :
     
     while True :
         try :
-            reg = int(input(Fore.YELLOW+"\n>>> Enter Register Index/Number between 0-100 : "+Fore.RESET))
-            if 0<=reg<=100 :
+            reg = int(input(Fore.YELLOW+"\n>>> Enter Register Index/Number between 0-30 : "+Fore.RESET))
+            if 0<=reg<=30 :
                 break
             print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < index >"+Fore.RESET)
         except :
@@ -24,6 +24,7 @@ while conted :
         
         
     string = input(Fore.YELLOW+">>> Enter Your Str ( terminate by Enter ) : "+Fore.RESET)
+    
     print("\n\n>>> Your Str Disassembly Printing Code\n"+Fore.GREEN)
     # ASSN 8 Y
     # PUTC 8

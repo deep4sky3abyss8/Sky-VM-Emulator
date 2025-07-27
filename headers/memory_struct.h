@@ -33,7 +33,7 @@ extern int stck_mem[100] , // short for stack memory segment .
     pr_eip ,
     which_ram ; // -> it's the global flag which tell us now we are using os ram or programs ram ?!
 //
-struct regs registers[15];
+struct regs registers[30];
 
 
 /*read heap_M to understand about it .
