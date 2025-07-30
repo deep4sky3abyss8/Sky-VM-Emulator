@@ -14,6 +14,8 @@ CLER 					// clear screen : system("cls")
 
 MAKE R1					// make a file by name str* reg[R1]
 
+CLOS R1
+
 KILL R1					// delete a file by name str* reg[R1]
 
 RUNF R1					// open & boot & load & run program which reg[r1] poit to : example in our prj :  ( reg[R1] is a char pointer )   reg[R1]="prg.txt"; loader(reg[R1]); which_ram = !OS;
@@ -29,6 +31,32 @@ RUNF R1					// open & boot & load & run program which reg[r1] poit to : example 
 //--------| TIME |--------//
 
 //--------| OPEN |--------//
+void openFile(int eip)
+{
+    if (which_ram == OS)
+    {
+        int r1 = os_ram[eip].v1,
+            r2 = os_ram[eip].v2,
+            r3 = os_ram[eip].v3;
+        char * path = (char *)registers[r1].address ,
+             * type = (char *)registers[r2].address;
+        FILE *p = fopen(path,type);
+        registers[r3].address = (void *) p;
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1,
+            r2 = pr_ram[eip].v2,
+            r3 = pr_ram[eip].v3;
+        char * path = (char *)registers[r1].address ,
+             * type = (char *)registers[r2].address;
+        FILE *p = fopen(path,type);
+        registers[r3].address = (void *) p;
+        pr_eip++;
+    }
+}
+//--------| CLOS |--------//
 
 //--------| READ |--------//
 

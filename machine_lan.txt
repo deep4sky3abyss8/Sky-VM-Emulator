@@ -91,6 +91,8 @@ TIME Pn					// save current time & data in string reg[Pn] . exp : reg[R1] = "202
 
 OPEN R1 R2 R3 				// opening file from path which saved in reg[R1] in method which in reg[R2] and point to it by File* from R3 . reg[R3] = fopen( reg[R1] , reg[R2] );
 
+CLOS R1					// closing file from File* in reg[R1]
+
 READ R1 				// read and print file from File* in reg[R1]
 
 WRIT R1 R2				// write a line str* from reg[R1] to File* reg[R2]

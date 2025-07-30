@@ -22,7 +22,7 @@
 #define _GETC_ "GETC"
 #define _GETS_ "GETS"
 #define _GETI_ "GETI"
-
+#define _CLOS_ "CLOS"
 
 //===================------>> logical commands
 #define _ANDC_ "ANDC"

@@ -201,6 +201,32 @@ void assign_var ( int eip) {
 	}
 }
 //--------| COMP |--------//
+void openFile(int eip)
+{
+    if (which_ram == OS)
+    {
+        int r1 = os_ram[eip].v1,
+            r2 = os_ram[eip].v2,
+            r3 = os_ram[eip].v3;
+        char * path = (char *)registers[r1].address ,
+             * type = (char *)registers[r2].address;
+        FILE *p = fopen(path,type);
+        registers[r3].address = (void *) p;
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1,
+            r2 = pr_ram[eip].v2,
+            r3 = pr_ram[eip].v3;
+        char * path = (char *)registers[r1].address ,
+             * type = (char *)registers[r2].address;
+        FILE *p = fopen(path,type);
+        registers[r3].address = (void *) p;
+        pr_eip++;
+    }
+}
+
 void compare ( int eip) {
 	if(which_ram == OS) {
 		int src = os_ram[eip].v1 ,
@@ -1173,9 +1199,9 @@ int main(void) {
 				con_jump(*eip);
 			else if (command_cmp(*eip , _JUMP_ ))
 				jump(*eip);
-			else if (command_cmp(*eip , _HALT_ )) {
+			else if (command_cmp(*eip , _HALT_ )){
 				if (!halt(*eip))
-					continue ;
+					continue;
 				break;
 			}
 			else if (command_cmp(*eip , _PUTC_ ))
@@ -1198,14 +1224,47 @@ int main(void) {
 				get_char(*eip);
 			else if (command_cmp(*eip , _GETS_ ))
 				get_str(*eip);
-			else if (command_cmp(*eip , _GETI_ ))
+			else if (command_cmp(*eip , _GETI_ )){
 				get_int(*eip);
+			}
+			//============[ LOGICAL ]=============
 			else if (command_cmp(*eip , _ANDC_ ))
 				and(*eip);
 			else if (command_cmp(*eip , _ORLC_ ))
 				or(*eip);
 			else if (command_cmp(*eip , _NOTC_ ))
 				not(*eip);
+			//==============[ API ]===============
+			/*====================================
+
+			else if (command_cmp(*eip , _TIME_ ))*/
+
+			else if (command_cmp(*eip , _OPEN_ ))
+				openFile(* eip) ;
+			/*
+			else if (command_cmp(*eip , _READ_ ))
+
+			else if (command_cmp(*eip , _WRIT_ ))
+
+			else if (command_cmp(*eip , _CLOS_ ))
+
+			else if (command_cmp(*eip , _APND_ ))
+
+			else if (command_cmp(*eip , _MAKE_ ))
+
+			else if (command_cmp(*eip , _KILL_ ))
+
+			else if (command_cmp(*eip , _RUNF_ ))
+
+			*/
+
+			else if (command_cmp(*eip , _CLER_ )){
+				clear_screen(*eip);
+			}
+			else if (command_cmp(*eip , _CTCT_ )){
+				change_terminal_color_to(*eip);
+			}
+			//====================================
 			else {
 				if (which_ram==OS) {
 					fprintf(stderr, "[!]\tFatal Error : Invalid disassembly command : %s\n",os_ram[os_eip].command);

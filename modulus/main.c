@@ -82,13 +82,16 @@ int main(void) {
         //==============[ API ]===============
         /*====================================
 
-        else if (command_cmp(*eip , _TIME_ ))
+        else if (command_cmp(*eip , _TIME_ ))*/
 
         else if (command_cmp(*eip , _OPEN_ ))
-
+            openFile(* eip) ;
+        /*
         else if (command_cmp(*eip , _READ_ ))
 
         else if (command_cmp(*eip , _WRIT_ ))
+
+	    else if (command_cmp(*eip , _CLOS_ ))
 
         else if (command_cmp(*eip , _APND_ ))
 
