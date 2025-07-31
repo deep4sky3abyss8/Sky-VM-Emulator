@@ -27,7 +27,10 @@ CLER 					// clear screen : system("cls")
 #include "../headers/loader.h"
 #include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/colorama.h" //   >>> for CTCT
+//--------------------------------------------------------//
+//--------------------------------------------------------//
 #define RAW_ADDRESS "../DisassemblyPograms/"
+//--------------------------------------------------------//
 //--------------------------------------------------------//
 //--------| TIME |--------//
 void showTime(int eip)
@@ -266,28 +269,27 @@ void deleteFile(int eip)
 }
 
 //--------| RUNF |--------//
-void runProgram(int eip)
+void runProgram(int eip)    // --------> we have only one pr_ram , so can't run os and 2 prg , at most os & 1 prg ...
 {
-    if (which_ram != OS)
-    {
-        int r1 = pr_ram[eip].v1;
-        char *name = (char *) registers[r1].address;
-        int i=0;
+    int r1 = pr_ram[eip].v1;
+    char *name = (char *) registers[r1].address;
+    int i=0;
 
-        while (name[i] != '\0') i++;
-        size_t len = strlen(name);
-        size_t cap = len + 35;
-        char *newName = malloc(cap);
-        newName[0] = '\0';  // ensure the buffer starts as an empty string for safe "strcat" operations
-        strcat(newName,RAW_ADDRESS);
-        strcat(newName, name);
-        strcat(newName, ".txt");
-        loader(newName);
-        free(newName);
+    while (name[i] != '\0') i++;
+    size_t len = strlen(name);
+    size_t cap = len + 35;
+    char *newName = malloc(cap);
+    newName[0] = '\0';  // ensure the buffer starts as an empty string for safe "strcat" operations
+    strcat(newName,RAW_ADDRESS);
+    strcat(newName, name);
+    strcat(newName, ".txt");
+    loader(newName);
+    free(newName);
 
-        os_eip++;
-        pr_eip=0;
-    }
+    which_ram = (!OS) ;
+    os_eip++;
+    pr_eip=0;
+
 }
 
 //--------| CLER |--------//
@@ -349,3 +351,5 @@ void change_terminal_color_to( int eip ){
     }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Created By MmdX 21:04
+

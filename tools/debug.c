@@ -23,9 +23,7 @@ static int cache ,_something_in_cache_= 0 ;														//#
 //----------------------f2--------------------------------------------
 //--------------------------------------------------------------------
 // colorama_cross.c
-#include <stdio.h>
 #ifdef _WIN32
-#include <windows.h>
 enum COLORS {
     BLACK = 0,
     RED = 4,
@@ -1080,22 +1078,268 @@ void str_cat(char dest[], char source[]){
     dest[dest_len + index] = '\0' ;
 }
 //---------------------------------------------------------------------
+#define RAW_ADDRESS "../DisassemblyPograms/"
+//--------------------------------------------------------//
 //--------------------------------------------------------//
 //--------| TIME |--------//
+void showTime(int eip)
+{
+    if (which_ram == OS)
+    {
+        int rn = os_ram[eip].v1;
+        char *dest = (char *)registers[rn].address;
+        SYSTEMTIME t;
+//        SYSTEMTIME is a struct that define in windows.h =>>
+//        typedef struct _SYSTEMTIME {
+//        WORD wYear;         // مثلاً 2025
+//        WORD wMonth;        // از 1 تا 12
+//        WORD wDay;          // از 1 تا 31
+//        WORD wHour;         // از 0 تا 23
+//        WORD wMinute;       // از 0 تا 59
+//        WORD wSecond;       // از 0 تا 59
+//        WORD wMilliseconds; // صدم ثانیه (اینجا استفاده نشده)
+//        WORD wDayOfWeek;    // 0 (Sunday) تا 6 (Saturday) - اینم استفاده نمی‌شه
+//    } SYSTEMTIME;
+        GetLocalTime(&t); // one of the API of the WINDOWS
+
+        sprintf(dest, "%04d/%d/%d %02d:%02d:%02d",
+                t.wYear,
+                t.wMonth,
+                t.wDay,
+                t.wHour,
+                t.wMinute,
+                t.wSecond);
+        os_eip++;
+    }
+    else
+    {
+        int rn = pr_ram[eip].v1;
+        char *dest = (char *)registers[rn].address;
+        SYSTEMTIME t;
+        GetLocalTime(&t);
+
+        sprintf(dest, "%04d/%d/%d %02d:%02d:%02d",
+                t.wYear,
+                t.wMonth,
+                t.wDay,
+                t.wHour,
+                t.wMinute,
+                t.wSecond);
+        pr_eip++;
+    }
+}
 
 //--------| OPEN |--------//
+void openFile(int eip)
+{
+    if (which_ram == OS)
+    {
+        int r1 = os_ram[eip].v1,
+            r2 = os_ram[eip].v2,
+            r3 = os_ram[eip].v3;
+        char * path = (char *)registers[r1].address ,
+             * type = (char *)registers[r2].address;
+        FILE *p = fopen(path,type);
+        registers[r3].address = (void *) p;
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1,
+            r2 = pr_ram[eip].v2,
+            r3 = pr_ram[eip].v3;
+        char * path = (char *)registers[r1].address ,
+             * type = (char *)registers[r2].address;
+        FILE *p = fopen(path,type);
+        registers[r3].address = (void *) p;
+        pr_eip++;
+    }
+}
+//--------| CLOS |--------//
+void closeFile(int eip)
+{
+    if (which_ram==OS)
+    {
+        int r1 = os_ram[eip].v1;
+        FILE *p = (FILE *) registers[r1].address;
+        fclose(p);
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1;
+        FILE *p = (FILE *) registers[r1].address;
+        fclose(p);
+        pr_eip++;
+    }
+}
 
 //--------| READ |--------//
+void readFile(int eip)
+{
+    if (which_ram==OS)
+    {
+        int r1 = os_ram[eip].v1;
+        FILE *p = (FILE *) registers[r1].address;
+        int ch = fgetc(p);
+        while (ch != EOF)
+        {
+            putchar(ch);
+            ch = fgetc(p);
+        }
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1;
+        FILE *p = (FILE *) registers[r1].address;
+        int ch = fgetc(p);
+        while (ch != EOF)
+        {
+            putchar(ch);
+            ch = fgetc(p);
+        }
+        pr_eip++;
+    }
+}
 
 //--------| WRIT |--------//
+void writeFile(int eip)
+{
+    if (which_ram==OS)
+    {
+        int r1 = os_ram[eip].v1,
+            r2 = os_ram[eip].v2;
+        char *line = (char *) registers[r1].address;
+        FILE *p = (FILE *) registers[r2].address;
+        unsigned long long len = strlen(line);
+        fwrite(line, sizeof(char),len,p);
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1,
+            r2 = pr_ram[eip].v2;
+        char *line = (char *) registers[r1].address;
+        FILE *p = (FILE *) registers[r2].address;
+        unsigned long long len = strlen(line);
+        fwrite(line, sizeof(char),len,p);
+        pr_eip++;
+    }
+}
 
 //--------| APND |--------//
+// just like writeFile. when you write THE OS be careful about the type of "fopen"
+void appendFile(int eip)
+{
+    if (which_ram==OS)
+    {
+        int r1 = os_ram[eip].v1,
+            r2 = os_ram[eip].v2;
+        char *line = (char *) registers[r1].address;
+        FILE *p = (FILE *) registers[r2].address;
+        unsigned long long len = strlen(line);
+        fwrite(line, sizeof(char),len,p);
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1,
+            r2 = pr_ram[eip].v2;
+        char *line = (char *) registers[r1].address;
+        FILE *p = (FILE *) registers[r2].address;
+        unsigned long long len = strlen(line);
+        fwrite(line, sizeof(char),len,p);
+        pr_eip++;
+    }
+}
 
 //--------| MAKE |--------//
+// I changed the definition
+void makeFile(int eip)
+{
+    if (which_ram==OS)
+    {
+        int r1 = os_ram[eip].v1,
+            r2 = os_ram[eip].v2;
+        char *name = (char *) registers[r1].address;
+        FILE *p = fopen(name, "w");
+        registers[r2].address=p;
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1,
+            r2 = pr_ram[eip].v2;
+        char *name = (char *) registers[r1].address;
+        FILE *p = fopen(name, "w");
+        registers[r2].address=p;
+        pr_eip++;
+    }
+}
 
 //--------| KILL |--------//
+void deleteFile(int eip)
+{
+    if (which_ram==OS)
+    {
+        int r1 = os_ram[eip].v1;
+        char *name = (char *) registers[r1].address;
+        int isAvailable = remove(name);
+
+        if(isAvailable == 0)
+        {
+            printf("Successfully removed a file\n");
+        }
+        else
+        {
+            printf("Error in removing. please check if the file exists in directory\n");
+        }
+
+        os_eip++;
+    }
+    else
+    {
+        int r1 = pr_ram[eip].v1;
+        char *name = (char *) registers[r1].address;
+        int isAvailable = remove(name);
+
+        if(isAvailable == 0)
+        {
+            printf("Successfully removed a file\n");
+        }
+        else
+        {
+            printf("Error in removing. please check if the file exists in directory\n");
+        }
+
+        pr_eip++;
+    }
+}
 
 //--------| RUNF |--------//
+void runProgram(int eip)    // --------> we have only one pr_ram , so can't run os and 2 prg , at most os & 1 prg ...
+{
+    int r1 = pr_ram[eip].v1;
+    char *name = (char *) registers[r1].address;
+    int i=0;
+
+    while (name[i] != '\0') i++;
+    size_t len = strlen(name);
+    size_t cap = len + 35;
+    char *newName = malloc(cap);
+    newName[0] = '\0';  // ensure the buffer starts as an empty string for safe "strcat" operations
+    strcat(newName,RAW_ADDRESS);
+    strcat(newName, name);
+    strcat(newName, ".txt");
+    loader(newName);
+    free(newName);
+
+    which_ram = (!OS) ;
+    os_eip++;
+    pr_eip=0;
+
+}
 
 //--------| CLER |--------//
 void clear_screen(int eip){
@@ -1156,8 +1400,7 @@ void change_terminal_color_to( int eip ){
     }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------
-// Created by SkyAbyss on 6/6/2025.
+// Created By MmdX 21:04
 
 //--------------------------------------------  define   -------------------
 #define BOOT_ADDRESS "../DisassemblyPograms/prg.txt"
@@ -1235,29 +1478,25 @@ int main(void) {
 			else if (command_cmp(*eip , _NOTC_ ))
 				not(*eip);
 			//==============[ API ]===============
-			/*====================================
-
-			else if (command_cmp(*eip , _TIME_ ))*/
-
+			else if (command_cmp(*eip , _TIME_ ))
+				{showTime(* eip);}
 			else if (command_cmp(*eip , _OPEN_ ))
-				openFile(* eip) ;
-			/*
+				{openFile(* eip) ;}
 			else if (command_cmp(*eip , _READ_ ))
-
+				{readFile(* eip);}
 			else if (command_cmp(*eip , _WRIT_ ))
-
+				{writeFile(* eip);}
 			else if (command_cmp(*eip , _CLOS_ ))
-
+				{closeFile(* eip);}
 			else if (command_cmp(*eip , _APND_ ))
-
+				{appendFile(* eip);}
 			else if (command_cmp(*eip , _MAKE_ ))
-
+				{makeFile(* eip);}
 			else if (command_cmp(*eip , _KILL_ ))
-
+				{deleteFile(* eip);}
 			else if (command_cmp(*eip , _RUNF_ ))
-
-			*/
-
+				{runProgram(* eip);}
+			
 			else if (command_cmp(*eip , _CLER_ )){
 				clear_screen(*eip);
 			}

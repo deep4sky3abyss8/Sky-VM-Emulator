@@ -80,29 +80,26 @@ int main(void) {
         else if (command_cmp(*eip , _NOTC_ ))
             not(*eip);
         //==============[ API ]===============
-        /*====================================
-
-        else if (command_cmp(*eip , _TIME_ ))*/
-
+        /*====================================*/
+        else if (command_cmp(*eip , _TIME_ ))
+            {showTime(* eip);}
         else if (command_cmp(*eip , _OPEN_ ))
-            openFile(* eip) ;
-        /*
+            {openFile(* eip) ;}
         else if (command_cmp(*eip , _READ_ ))
-
+            {readFile(* eip);}
         else if (command_cmp(*eip , _WRIT_ ))
-
+            {writeFile(* eip);}
 	    else if (command_cmp(*eip , _CLOS_ ))
-
+            {closeFile(* eip);}
         else if (command_cmp(*eip , _APND_ ))
-
+            {appendFile(* eip);}
         else if (command_cmp(*eip , _MAKE_ ))
-
+            {makeFile(* eip);}
         else if (command_cmp(*eip , _KILL_ ))
-
+            {deleteFile(* eip);}
         else if (command_cmp(*eip , _RUNF_ ))
-
-        */
-
+            {runProgram(* eip);}
+        
         else if (command_cmp(*eip , _CLER_ )){
             clear_screen(*eip);
         }
