@@ -91,6 +91,12 @@ void openFile(int eip)
         char * path = (char *)registers[r1].address ,
              * type = (char *)registers[r2].address;
         FILE *p = fopen(path,type);
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         registers[r3].address = (void *) p;
         os_eip++;
     }
@@ -102,6 +108,12 @@ void openFile(int eip)
         char * path = (char *)registers[r1].address ,
              * type = (char *)registers[r2].address;
         FILE *p = fopen(path,type);
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         registers[r3].address = (void *) p;
         pr_eip++;
     }
@@ -113,14 +125,28 @@ void closeFile(int eip)
     {
         int r1 = os_ram[eip].v1;
         FILE *p = (FILE *) registers[r1].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         fclose(p);
+        registers[r1].address = NULL;
         os_eip++;
     }
     else
     {
         int r1 = pr_ram[eip].v1;
         FILE *p = (FILE *) registers[r1].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         fclose(p);
+        registers[r1].address = NULL;
         pr_eip++;
     }
 }
@@ -132,6 +158,12 @@ void readFile(int eip)
     {
         int r1 = os_ram[eip].v1;
         FILE *p = (FILE *) registers[r1].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         int ch = fgetc(p);
         while (ch != EOF)
         {
@@ -144,6 +176,12 @@ void readFile(int eip)
     {
         int r1 = pr_ram[eip].v1;
         FILE *p = (FILE *) registers[r1].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         int ch = fgetc(p);
         while (ch != EOF)
         {
@@ -163,6 +201,12 @@ void writeFile(int eip)
             r2 = os_ram[eip].v2;
         char *line = (char *) registers[r1].address;
         FILE *p = (FILE *) registers[r2].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
         os_eip++;
@@ -173,13 +217,19 @@ void writeFile(int eip)
             r2 = pr_ram[eip].v2;
         char *line = (char *) registers[r1].address;
         FILE *p = (FILE *) registers[r2].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
         pr_eip++;
     }
 }
 
-//--------| APND |--------//
+//--------| APND |--------//RED printf reset
 // just like writeFile. when you write THE OS be careful about the type of "fopen"
 void appendFile(int eip)
 {
@@ -189,6 +239,12 @@ void appendFile(int eip)
             r2 = os_ram[eip].v2;
         char *line = (char *) registers[r1].address;
         FILE *p = (FILE *) registers[r2].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
         os_eip++;
@@ -199,6 +255,12 @@ void appendFile(int eip)
             r2 = pr_ram[eip].v2;
         char *line = (char *) registers[r1].address;
         FILE *p = (FILE *) registers[r2].address;
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
         pr_eip++;
@@ -215,6 +277,12 @@ void makeFile(int eip)
             r2 = os_ram[eip].v2;
         char *name = (char *) registers[r1].address;
         FILE *p = fopen(name, "w");
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         registers[r2].address=p;
         os_eip++;
     }
@@ -224,6 +292,12 @@ void makeFile(int eip)
             r2 = pr_ram[eip].v2;
         char *name = (char *) registers[r1].address;
         FILE *p = fopen(name, "w");
+        if (!p)
+        {
+            RED
+            printf("The file is not found");
+            RESET
+        }
         registers[r2].address=p;
         pr_eip++;
     }
