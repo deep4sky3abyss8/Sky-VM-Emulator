@@ -1,31 +1,50 @@
-MOVE 9 99 I 
+MOVE 9 99 I
 ASSN 9 0
-MOVE 8 98 I // digit
-MOVE 7 97 C // num input terminate by char ':' without any white space !
-ASSN 7 10   // putting (':'-'0')=10 char in reg for loop check
-MOVE 6 96 I // a cell for res of loop condition
-MOVE 5 95 I // for digit * 10
+MOVE 8 98 I
+MOVE 7 97 C
+ASSN 7 10
+MOVE 6 96 I
+ASSN 6 0
+MOVE 5 95 I
 ASSN 5 10
-GETI 8      // here is start of loop -> getchar()
-EQAL 8 7 6  // loop condition 
-CJMP 6 15   // n : 1 line after JUMP line number
-MULT 9 5 9  // num *= 10
-ADDN 9 8 9  // num += digit
-JUMP 9     // m : GETI line number
-ASSN 8 2
-MOVE 7 97 I
-MODE 9 8 7
-MOVE 8 10 C
-CJMP 7 27
-ASSN 8 Y
+GETI 8
+EQAL 8 7 6
+CJMP 6 16
+MULT 9 5 9
+ADDN 9 8 9
+JUMP 10
+MOVE 11 101 I
+ASSN 11 2
+MOVE 12 100 I
+ASSN 12 0
+MOVE 13 102 I
+ASSN 13 0
+COMP 9 11 6
+CJMP 6 49
+COMP 11 9 6
+CJMP 6 33
+ASSN 8 89
 PUTC 8
-ASSN 8 E
+ASSN 8 69
 PUTC 8
-ASSN 8 S
+ASSN 8 83
 PUTC 8
 HALT
-ASSN 8 N
+MODE 9 11 13
+EQAL 13 12 6
+CJMP 6 49
+ADDO 11
+COMP 11 9 6
+CJMP 6 33
+ASSN 8 89
 PUTC 8
-ASSN 8 O
+ASSN 8 69
+PUTC 8
+ASSN 8 83
+PUTC 8
+HALT
+ASSN 8 78
+PUTC 8
+ASSN 8 79
 PUTC 8
 HALT
