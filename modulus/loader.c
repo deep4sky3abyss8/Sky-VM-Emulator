@@ -130,7 +130,6 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         size_t bufsize = 50 * sizeof(char);
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
-            free(buffer);
             perror("[!][!]  Fatal Error : Loading Error  [!][!]");
             which_ram = OS ;
             os_eip++ ;
