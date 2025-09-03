@@ -212,9 +212,9 @@ void equal(int eip) {
 		os_eip++ ;
 	}
 	else {
-		int src = os_ram[eip].v1 ,
-			des = os_ram[eip].v2 ,
-			res = os_ram[eip].v3 ;
+		int src = pr_ram[eip].v1 ,
+			des = pr_ram[eip].v2 ,
+			res = pr_ram[eip].v3 ;
 		registers[res].type = 'I' ;
 		if (registers[src].type == registers[des].type) {
 			switch (registers[src].type) {
@@ -293,9 +293,9 @@ void not_equal(int eip) {
 		os_eip++ ;
 	}
 	else {
-		int src = os_ram[eip].v1 ,
-			des = os_ram[eip].v2 ,
-			res = os_ram[eip].v3 ;
+		int src = pr_ram[eip].v1 ,
+			des = pr_ram[eip].v2 ,
+			res = pr_ram[eip].v3 ;
 		registers[res].type = 'I' ;
 		if (registers[src].type == registers[des].type) {
 			switch (registers[src].type) {
