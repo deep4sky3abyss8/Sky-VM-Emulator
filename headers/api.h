@@ -9,6 +9,8 @@ void closeFile(int eip);
 
 void readFile(int eip);
 
+void getword(int eip);
+
 void writeFile(int eip);
 
 void appendFile(int eip);

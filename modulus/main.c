@@ -83,6 +83,8 @@ int main(void) {
         /*====================================*/
         else if (command_cmp(*eip , _TIME_ ))
             {showTime(* eip);}
+		else if (command_cmp(*eip , _FGET_ ))
+            {getword(* eip);}
         else if (command_cmp(*eip , _OPEN_ ))
             {openFile(* eip) ;}
         else if (command_cmp(*eip , _READ_ ))

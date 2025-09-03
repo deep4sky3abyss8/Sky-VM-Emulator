@@ -95,6 +95,8 @@ CLOS R1					// closing file from File* in reg[R1]
 
 READ R1 				// read and print file from File* in reg[R1]
 
+FGET R1 R2              //R2 = fgetc(R2);
+
 WRIT R1 R2				// write a line str* from reg[R1] to File* reg[R2]
 
 APND R1 R2				// append a line str* from reg[R1] to File* reg[R2]
