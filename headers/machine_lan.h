@@ -32,6 +32,7 @@
 
 //===================------>> API commands
 #define _TIME_ "TIME"
+#define _FGET_ "FGET"
 #define _OPEN_ "OPEN"
 #define _READ_ "READ"           // READ AN OPEN FILE AND PRINT IT INSTED SAVE
 #define _WRIT_ "WRIT"           // WRITE A LINE IN OPEN FILE
