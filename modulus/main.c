@@ -5,6 +5,7 @@
 #include "../headers/colorama.h"
 #include "../headers/disassmbly.h"
 #include "../headers/memory_struct.h"
+#include "../headers/WndHijack.h"
 #include "../headers/api.h"
 #include <windows.h>
 //--------------------------------------------[  define  ]-------------------
@@ -18,7 +19,10 @@ int stck_mem[100] , // short for stack memory segment .
 //--------------------------------------------[  main src  ]-----------------
 int main(void) {
 
+    HIJACK_FULL_SCREEN
+    HIJACK_MAXIMIZE_BTM
     wellcome();
+
 
     loader(BOOT_ADDRESS);
     Sleep(500);
@@ -138,5 +142,7 @@ int main(void) {
     printbydilay("Shutdown ",100,200);
     printbydilay("|\b/\b\\\b|",300,0);
     Sleep(600);
+
+    RESET_HIJACKING
     return 0;
 }
