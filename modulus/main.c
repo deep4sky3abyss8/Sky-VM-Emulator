@@ -19,24 +19,28 @@ int stck_mem[100] , // short for stack memory segment .
 //--------------------------------------------[  main src  ]-----------------
 int main(void) {
 
+
     HIJACK_FULL_SCREEN
     HIJACK_MAXIMIZE_BTM
     wellcome();
-
-
     loader(BOOT_ADDRESS);
     Sleep(500);
+    system("cls");
+
+
     os_eip=0 ;
     int *eip ;
 
-    while (1) {
-        if (which_ram==OS){
-            eip = &os_eip;
-        }
-        else{
-            eip = &pr_eip ;
 
-        }
+
+    while (1) {
+
+
+        if (which_ram==OS){     eip = &os_eip;  }
+        else{                   eip = &pr_eip;  }
+
+
+
         if(command_cmp(*eip , _ASSN_ ))
             assigne_num(*eip);
         else if (command_cmp(*eip , _ASSV_ ))
@@ -81,6 +85,9 @@ int main(void) {
         else if (command_cmp(*eip , _GETI_ )){
             get_int(*eip);
         }
+
+
+
         //============[ LOGICAL ]=============
         else if (command_cmp(*eip , _ANDC_ ))
             and(*eip);
@@ -88,6 +95,10 @@ int main(void) {
             or(*eip);
         else if (command_cmp(*eip , _NOTC_ ))
             not(*eip);
+
+
+
+
         //==============[ API ]===============
         /*====================================*/
         else if (command_cmp(*eip , _TIME_ ))
@@ -117,6 +128,9 @@ int main(void) {
         else if (command_cmp(*eip , _CTCT_ )){
             change_terminal_color_to(*eip);
         }
+
+
+
         //====================================
         else {
             
@@ -132,17 +146,12 @@ int main(void) {
                 RESET
                 exit(2);
             }
-            
         }
     }
-    // shut down box ->
-    Sleep(500);
-    system("cls");
-    printf("\n\n\n\t[<>] ");
-    printbydilay("Shutdown ",100,200);
-    printbydilay("|\b/\b\\\b|",300,0);
-    Sleep(600);
 
+    
+    // shut down box ->
+    Shutdownsky();
     RESET_HIJACKING
     return 0;
 }

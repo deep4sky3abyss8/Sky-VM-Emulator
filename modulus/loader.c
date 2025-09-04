@@ -7,6 +7,9 @@
 #include "../headers/disassmbly.h"
 #include "../headers/colorama.h"
 //-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+static void banner(void);
+//-------------------------------------------------------------------------------------------------------
 static int read_int(int *num , int index ,char * line) {
     *num = 0 ;
    int sign =1 ;
@@ -181,34 +184,66 @@ void printbydilay(char str[] , int firsdilay , int secenddilay ){
     Sleep(secenddilay);
 }
 //--------------------------------------------------------------------------------------------------------
-static void banner(void){
-    /*
-    #######  ##   ## ##    ##     ####   ###  #####   ######  ##   ##  ##  ###   ##  #######
-    ##       ##  ##   ##  ##      ####  #### ##   ## ##       ##   ##  ##  ####  ##  ##
-    #######  #####     ####       ## #### ## ####### ##       #######  ##  ## #  ##  #######
-         ##  ##  ##     ##        ##  ##  ## ##   ## ##       ##   ##  ##  ##  ####  ##
-    #######  ##   ##    ##        ##      ## ##   ##  ######  ##   ##  ##  ##   ###  #######
-    */
-    YELLOW
-    const char *banner_text = "\n\n\n\t#######  ##   ## ##    ##     ####   ###  #####   ######  ##   ##  ##  ###   ##  #######\n\t##       ##  ##   ##  ##      ####  #### ##   ## ##       ##   ##  ##  ####  ##  ##\n\t#######  #####     ####       ## #### ## ####### ##       #######  ##  ## #  ##  #######\n\t     ##  ##  ##     ##        ##  ##  ## ##   ## ##       ##   ##  ##  ##  ####  ##\n\t#######  ##   ##    ##        ##      ## ##   ##  ######  ##   ##  ##  ##   ###  #######\n\n\n\t[ Mohammad Mahdi Qasemi Saadat Abadi ]--[ Mohammad Mahdi Tahvildar ]--[ Sajjad Sobhani ]\n\n\n";
-    printf("%s", banner_text);
-    RESET
-    return ;
-}
 //--------------------------------------------------------------------------------------------------------
 void wellcome(void){
     //fprintf(stderr,"Sky machine : preparing to boot ...\n\n");
-    printf("\n\t----------------------------------------------------------------------------------------\n");
     banner();
-    printbydilay("\n\tPreparing To Boot ...\r" , 40 , 500);
-    printf("\t                                                     \r");
-    printbydilay("\tLoading ",80,0);
-    printf("============================================\r\tLoading ");
-    Sleep(500);
-    printbydilay("<><><><><><><><><><><><><><><><><><><><><><><>",40,0);
-    printf("\r\t                                                     \r");
-    printf("\t----------------------------------------------------------------------------------------\n\n");
+    printf("\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tLoading ");
+    printbydilay("!\b@\b#\b$\b%\b^\b&\b*\b(\b)\b-\b+\b :)" , 300 , 600);
 }
 //--------------------------------------------------------------------------------------------------------
-// Created by SkyAbyss on 6/6/2025.
+void Shutdownsky(void){
+    Sleep(500);
+    system("cls");
+    printf("\n\n\n\t[<>] ");
+    printbydilay("Shutdown ",100,200);
+    printbydilay("|\b/\b\\\b|",300,0);
+    Sleep(600);
+    return;
+}
+//--------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------
+static void banner(void){
 
+YELLOW
+printf(
+"\n\n"
+"                                                                                                    shV122W5t                                                         \n"
+"                                                                                              xsu  5bx      wrYl                                                       \n"
+"                                                                                            72styaUt         tgaa                                                      \n"
+"                                                                                    zg4ZZ4Xtlqp            xbnl3l                                                     \n"
+"                                                                                  vXlbj                      zsjXgun44z                                               \n"
+"                                                                                  h00u9                             mwic                                               \n"
+"                                                                                p8csnf                             gWbm7Xu vkhjsz                                     \n"
+"                                                                                gj                               tUw vofyV6t   v6Zx                                   \n"
+"                                                                            rTZjswzjZYw   wtstw                                 7vVw                                  \n"
+"                                                                          uXn6n      z1dYpy opwc1z                             jvck3                                  \n"
+"                                                                oW1gsum3V61pkfoy       q     zt3 Wz                             zwmYlx                                \n"
+"                                                              gXtfiu     xrel dz                yXZX6u                             vjeXw                              \n"
+"                                                              9cphbx                                pqfe                             xeqW                              \n"
+"                                                              Vriml                                 qxtw                            pxXwU                              \n"
+"                                                              Wqvp                     yz                       wcVXdx              vwrWY6iookdZUr                     \n"
+"                                                          oTnmx                    eYkrrdZv                  mYp u0wa7                   rprqh4zpZy                   \n"
+"                                                  y4Za91XfX hx                   wYx8r    Y8VW3           uvje    hx79exrWWYWaz              zvxj  rpuz              \n"
+"                                                  m0ijfyz wWr y               dUhfUtfux    xyvkkm        vYsvjz             r4kb                t yju69rnWv            \n"
+"                                                rZomxz                      ttqj                                                                    v5qayXr       \n"
+"                                            l17dcYVywty                                                                                              yvz xmt mddc0  \n"
+"                                          Vt7py                                                                                                              mniko    \n"
+"                                        x xyYigec076443221g9234454332222222221ZZZZYYWY13f7adfijkmmkkjkkjnopqrrrrrqpmjjljiifddaa0877776800aaaddegfgegfa0acaaaa00736evrett5     \n"
+"                                                                                                                                                                      \n"
+"\n"
+"                                                          #######  ##   ## ##    ##     ####   ###  #####   ######  ##   ##  ##  ###   ##  #######\n"
+"                                                          ##       ##  ##   ##  ##      ####  #### ##   ## ##       ##   ##  ##  ####  ##  ##\n"
+"                                                          #######  #####     ####       ## #### ## ####### ##       #######  ##  ## #  ##  #######\n"
+"                                                              ##  ##  ##     ##        ##  ##  ## ##   ## ##       ##   ##  ##  ##  ####  ##\n"
+"                                                          #######  ##   ##    ##        ##      ## ##   ##  ######  ##   ##  ##  ##   ###  #######\n"
+"                                                          \n"
+"                                                          [ Mohammad Mahdi Qasemi Saadat Abadi ]--[ Mohammad Mahdi Tahvildar ]--[ Sajjad Sobhani ]\n"
+"\n"
+);
+RESET
+return ;
+}
+
+//--------------------------------------------------------------------------------------------------------
+// Created by SkyAbyss on 6/6/2025.
