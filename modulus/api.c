@@ -398,7 +398,8 @@ void deleteFile(int eip)
 //--------| RUNF |--------//
 void runProgram(int eip)    // --------> we have only one pr_ram , so can't run os and 2 prg , at most os & 1 prg ...
 {
-    int r1 = pr_ram[eip].v1;
+    //puts("runf reached...");
+    int r1 = os_ram[eip].v1;
     char *name = (char *) registers[r1].address;
     int i=0;
 
@@ -410,12 +411,12 @@ void runProgram(int eip)    // --------> we have only one pr_ram , so can't run 
     strcat(newName,RAW_ADDRESS);
     strcat(newName, name);
     strcat(newName, ".txt");
-    loader(newName);
-    free(newName);
 
     which_ram = (!OS) ;
+    loader(newName);
+    free(newName);
     pr_eip=0;
-
+    //puts("runf passed...");
 }
 
 //--------| CLER |--------//

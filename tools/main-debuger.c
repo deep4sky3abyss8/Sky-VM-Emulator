@@ -17,22 +17,42 @@ int stck_mem[100] , // short for stack memory segment .
     which_ram= OS ;
 //--------------------------------------------[  main src  ]-----------------
 int main(void) {
-
-    wellcome();
-
+    //wellcome();
     loader(BOOT_ADDRESS);
-    Sleep(500);
+    Sleep(1000);
     os_eip=0 ;
     int *eip ;
 
+
+
+    struct ram * RAM ;
+
+
+
     while (1) {
-        if (which_ram==OS){
+        if (which_ram==OS) {
             eip = &os_eip;
+
+
+            RAM = os_ram ;
+            puts("\nruning : os");
         }
-        else{
+        else {
             eip = &pr_eip ;
 
+
+            RAM = pr_ram ;
+            puts("\nruning : prg");
         }
+
+
+        printf("eip: <%d>\tcommand: ",*eip);
+        puts(RAM[*eip].command) ;
+
+
+
+
+
         if(command_cmp(*eip , _ASSN_ ))
             assigne_num(*eip);
         else if (command_cmp(*eip , _ASSV_ ))
@@ -104,7 +124,7 @@ int main(void) {
             {makeFile(* eip);}
         else if (command_cmp(*eip , _KILL_ ))
             {deleteFile(* eip);}
-        else if (command_cmp(*eip , _RUNF_ ) && which_ram==OS )
+        else if (command_cmp(*eip , _RUNF_ ) /*&& which_ram==OS*/ )
             {runProgram(* eip);}
         
         else if (command_cmp(*eip , _CLER_ )){
@@ -118,13 +138,13 @@ int main(void) {
             
             if (which_ram==OS) {
                 RED
-                fprintf(stderr, "[!]Fatal Error occurred in < Operating System >\nInvalid disassembly command : <%s>\n",os_ram[os_eip].command);
+                fprintf(stderr, "[!]Fatal Error in < Operating System >\nInvalid disassembly command : <%s>\n",os_ram[os_eip].command);
                 RESET
                 exit(1);
             }
             else {
                 RED
-                fprintf(stderr, "[!]Fatal Error occurred in < Program running>\nInvalid disassembly command : <%s>\n",pr_ram[pr_eip].command);
+                fprintf(stderr, "[!]Fatal Error in < Program >\nInvalid disassembly command : <%s>\n",pr_ram[pr_eip].command);
                 RESET
                 exit(2);
             }
@@ -132,11 +152,11 @@ int main(void) {
         }
     }
     // shut down box ->
-    Sleep(500);
-    system("cls");
-    printf("\n\n\n\t[<>] ");
-    printbydilay("Shutdown ",100,200);
-    printbydilay("|\b/\b\\\b|",300,0);
-    Sleep(600);
+    // Sleep(2000);
+    // system("cls");
+    // printbydilay("\n\tShutdown ",100,200);
+    // printbydilay(". . . . .",70,0);
+    // system("cls");
+    // Sleep(600);
     return 0;
 }

@@ -95,14 +95,18 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
     int index = 0 ;
     if ( which_ram == OS ) {
         if (file==NULL) {
-            perror("[!][!][!]  Fatal Error : Boot Failed  [!][!][!]");
+            RED
+            puts("[!][!][!]  Fatal Error : Os Boot Failed  [!][!][!]\n\tOperating System FilePath not found");
+            RESET
             exit(1) ;
         }
         char *buffer;
         size_t bufsize = 50 * sizeof(char);
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
-            perror("[!][!][!]  Fatal Error : Boot Failed  [!][!][!]");
+            RED
+            puts("[!][!][!]  Fatal Error : Os Boot Failed  [!][!][!]\n\tmemory allocation failed, free disk");
+            RESET
             exit(1) ;
         }
         while( fgets( buffer, bufsize, file ) ) {
@@ -115,22 +119,29 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
             }
         }
         if(index==0) {
-            perror("[!][!][!]  Fatal Error : Boot Failed  [!][!][!]");
+            RED
+            puts("[!][!][!]  Fatal Error : OS Boot Failed  [!][!][!]\n\tYou tried to load an empty file as Operating System!");
+            RESET
             exit(1) ;
         }
         free(buffer);
     }
     else {
+
         if (file==NULL) {
-            perror("[!][!]  Fatal Error : Loading Error  [!][!]");
+            RED
+            puts("[!][!]  Fatal Error : program Loading Error  [!][!]");
             which_ram = OS ;
+            RESET
             return 1 ;
         }
         char *buffer;
         size_t bufsize = 50 * sizeof(char);
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
-            perror("[!][!]  Fatal Error : Loading Error  [!][!]");
+            RED
+            puts("[!][!]  Fatal Error : program Loading Error  [!][!]");
+            RESET
             which_ram = OS ;
             os_eip++ ;
             return 2 ;
@@ -146,7 +157,9 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         }
         if(index==0) {
             free(buffer);
-            perror("[!][!]  Fatal Error : Loading Error  [!][!]");
+            RED
+            puts("[!][!]  Fatal Error : program Loading Error  [!][!]\n\tYou tried to load an empty file as program!");
+            RESET
             which_ram = OS ;
             os_eip++ ;
             return 3 ;
@@ -154,6 +167,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         }
         free(buffer);
     }
+
     fclose(file);
     return index ; // how many line readed from file .
 }
@@ -189,9 +203,9 @@ void wellcome(void){
     printbydilay("\n\tPreparing To Boot ...\r" , 40 , 500);
     printf("\t                                                     \r");
     printbydilay("\tLoading ",80,0);
-    printf("____________________________________________\r\tLoading ");
+    printf("============================================\r\tLoading ");
     Sleep(500);
-    printbydilay("#############################################",90,0);
+    printbydilay("<><><><><><><><><><><><><><><><><><><><><><><>",40,0);
     printf("\r\t                                                     \r");
     printf("\t----------------------------------------------------------------------------------------\n\n");
 }

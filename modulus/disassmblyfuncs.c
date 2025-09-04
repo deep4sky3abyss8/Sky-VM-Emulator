@@ -11,9 +11,18 @@
 //--------------------------------------------------------------------
 //-------| CHECK |--------// OK
 int command_cmp( int line , const char *pointer ) {
-	for (int index = 0; index < 4; index++) {
-		if (os_ram[line].command[index] != *(pointer + index)) {
-			return 0;
+	if( which_ram==OS ){
+		for (int index = 0; index < 4; index++) {
+			if (os_ram[line].command[index] != *(pointer + index)) {
+				return 0;
+			}
+		}
+	}
+	else {
+		for (int index = 0; index < 4; index++) {
+			if (pr_ram[line].command[index] != *(pointer + index)) {
+				return 0;
+			}
 		}
 	}
 	return 1;
