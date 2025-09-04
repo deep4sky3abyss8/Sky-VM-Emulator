@@ -416,6 +416,7 @@ void runProgram(int eip)    // --------> we have only one pr_ram , so can't run 
     loader(newName);
     free(newName);
     pr_eip=0;
+    os_eip++ ;
     //puts("runf passed...");
 }
 

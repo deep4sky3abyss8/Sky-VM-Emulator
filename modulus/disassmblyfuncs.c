@@ -380,8 +380,7 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 	}
 	which_ram = OS ;
 	pr_eip = 0 ; // program is finish so we reset every thing to start a new program .
-	os_eip++ ;
-	printbydilay("|\tGetting back to terminal !\n|\tIhope see you soon !" , 70 , 1000 );
+	puts("\n__________________________________________");
 	return 0 ;
 }
 //--------| PUTC |--------//
