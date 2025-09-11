@@ -1,0 +1,8 @@
+
+Hi , I'ts look like you need some help!
+
+"cls" is for clear the screen!
+
+"man" as you alredy know is for showing the commands.
+
+

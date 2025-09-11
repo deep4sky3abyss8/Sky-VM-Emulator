@@ -1,0 +1,105 @@
+#include "stdio.h"
+#define _seen 1 //  < f1, f2, f3, f4
+#define _n_seen 0 // < f1, f2, f3. f4
+#ifndef _NEGETIVE_
+#define _NEGETIVE_ 1 // < f1, f2, f3
+#endif
+//==============================================================================================//#
+//==============================================================================================//#
+static int cache ,_something_in_cache_= 0 ;														//#
+//==============================================================================================//#
+//==============================================================================================//#
+//-----------------------f1-------------------------------------------
+//----------------------f2--------------------------------------------
+//--------------------------------------------------------------------
+//-------------------------f3-----------------------------------------
+//--------------------------------------------------------------------
+//-------------------------f4-----------------------------------------
+//--------------------------------------------------------------------
+int read_str(char *result, char delim){
+	int character, index=0 ;
+	
+	while((character=getchar())!='\n' && index<200 ){
+		
+			result[index]=character ;
+			index++ ;
+	}
+	result[index] = 0 ;
+	
+	return index-1 ;
+}
+//-----------------------f5--------------------------------------------
+//---------------------------------------------------------------------
+unsigned long long str_len(char str[]){
+	unsigned long long len ;
+	for(len=0 ; str[len]!='\0'; len++);
+	return len ;
+}
+//-----------------------f6--------------------------------------------
+//---------------------------------------------------------------------
+int str_cmp(char str1[] , char str2[] ){
+	unsigned long long len1=0 , len2=0 ;
+	if((len1=str_len(str1))>(len2=str_len(str2))){
+		return 1 ;
+	}else if(len1<len2){
+		return -1 ;
+	}else{
+		for(int index=0 ; index<len2 ; index++){
+			if(str1[index]>str2[index]){
+				return 1 ;
+			}else if(str1[index]<str2[index]){
+				return -1 ;
+			}
+		}
+	}
+	return 0 ;
+}
+//-----------------------f7--------------------------------------------
+//---------------------------------------------------------------------
+// > absolute didi not talk about len , i copy source to des only to its last char and '\0' .
+void str_cpy(char dest[], char source[]){
+    int index=0 , token ;
+    unsigned long long dest_len = str_len(dest) ;
+    for(index ; (token=source[index])!='\0' && index < dest_len-1 ; index++){
+        dest[index]=token ;
+    }
+    dest[index]='\0' ;
+}
+//-----------------------f8--------------------------------------------
+//---------------------------------------------------------------------
+// > absolute did not talk about len , so i check it before sub finding .
+int str_str( char str[] , char substr[] ){
+	unsigned long long strr_len=str_len(str) , substr_len=str_len(substr);
+	if(strr_len<substr_len){
+		return -1 ;
+	}
+	int out_loop_index , _found_= 0 ;
+	for(out_loop_index=0 ; out_loop_index <= (strr_len - substr_len) ; out_loop_index++ ){
+		_found_= 1 ;
+		for( int in_loop_index=0 ; in_loop_index < substr_len ; in_loop_index++ ){
+			if( substr[in_loop_index] != str[out_loop_index + in_loop_index]){
+				_found_=0 ;
+				break ;
+			}
+		}
+		if(_found_){
+			return out_loop_index ;
+		}
+	}
+	return -1 ;
+}
+//-----------------------f9--------------------------------------------
+//---------------------------------------------------------------------
+// > because did not talk about dest &  source array len , i asume that it have enough space for cating .
+void str_cat(char dest[], char source[]){
+    int index, token ;
+    unsigned long long dest_len = str_len(dest) ;
+    for(index=0 ; (token=source[index])!='\0' ; index++){
+    	dest[dest_len+index] = token ;
+    }
+    dest[dest_len + index] = '\0' ;
+}
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+// Created by SkyAbyss on 6/6/2025.
+
