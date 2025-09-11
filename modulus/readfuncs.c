@@ -17,34 +17,15 @@ static int cache ,_something_in_cache_= 0 ;														//#
 //-------------------------f4-----------------------------------------
 //--------------------------------------------------------------------
 int read_str(char *result, char delim){
-	int character , char_seen = _n_seen , index=0 ;
-	if(_something_in_cache_){
-		character = cache ;
-		_something_in_cache_= 0 ;
-		if(character!=delim && character!='\n'){
-			result[index]=character ;
-			index++ ;
-			char_seen = _seen ;
-		}
-	}
+	int character, index=0 ;
+	
 	while((character=getchar())!='\n' && index<200 ){
-		if( character==delim && !char_seen ){
-			continue ;
-		}
-		else if(character==delim && char_seen ){
-			break ;
-		}
-		else{
+		
 			result[index]=character ;
 			index++ ;
-			char_seen = _seen ;
-		}
 	}
-	result[index] = '\0' ;
-	if(character!=EOF){//------>>> I a little confused that delim can be a part of another func call?
-		cache = character ;//          |__like this : stdio = 1111Hi1Ali111 => read_str(my_str , '1');
-		_something_in_cache_= 1 ;
-	}
+	result[index] = 0 ;
+	
 	return index-1 ;
 }
 //-----------------------f5--------------------------------------------
