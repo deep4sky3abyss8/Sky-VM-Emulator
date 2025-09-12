@@ -50,6 +50,8 @@ PUTS Pn Pm 				// assume a is an int in register Pm. Pn point to start of a str 
 
 PUTI Pn 				// printf("%d", reg[Pn] )
 
+PUTS Pn Pm Px            // store (Pm)th index of str Pn in register Px
+
 ADDN Pn Pm Pz 				// reg[Pz] = (reg[Pn] + reg[Pm]) ;
 
 ADDO Pn 				// reg[Pn] = reg[Pn]+1 ;
