@@ -464,6 +464,60 @@ int put_int(int eip ) {
 	printf("%d",d);
 	return d ;
 }
+//--------| PUSH |--------//
+char * push_str(int eip ) {
+        if (which_ram == OS) {
+                
+            int r1 = os_ram[eip].v1 ,
+                r2 = os_ram[eip].v2 ,
+                r3 = os_ram[eip].v3 ;
+        switch(registers[r1].type){
+            case 'I':
+                    perror("[!] invalid register type for register point to string\n");
+                printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);   
+                return NULL ;
+            default :
+                break;
+        }
+        switch(registers[r2].type){
+            case 'I':
+                break;
+            default :
+                perror("[!] invalid register type for register point to integer\n");
+                printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);       
+                return NULL ;
+        }
+        int len = *((int*)registers[r2].address);
+                char * str = (char*)registers[r1].address ;
+        *(*char)registers[r3].address = *(str+len);
+                os_eip++ ;
+                return str ;
+        }
+        int r1 = pr_ram[eip].v1 ,
+        r2 = pr_ram[eip].v2 ,
+        r3 = pr_ram[eip].v3 ;
+    switch(registers[r1].type){
+        case 'I':
+                perror("[!] invalid register type for register point to string\n");
+                printf ("[!] line %d %s %d %d\n",eip,pr_ram[eip].command,r1,r2);   
+                return NULL ;
+        default :
+            break;
+    }
+    switch(registers[r2].type){
+        case 'I':
+            break;
+        default :
+            perror("[!] invalid register type for register point to integer\n" );
+                printf ("[!] line %d %s %d %d\n",eip,pr_ram[eip].command,r1,r2);   
+            return NULL ;
+    }   
+    int len = *((int*)registers[r2].address);
+    char * str = (char*)registers[r1].address ;
+    *(*char)registers[r3].address = *(str+len);
+    pr_eip++ ;
+        return str ;
+}
 //--------| ADDN |--------//
 int add_ints(int eip) {
 	if (which_ram == OS) {
