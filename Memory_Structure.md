@@ -12,11 +12,7 @@ This document provides an overview of the memory structure and data used in a vi
 "../DisassemblyPograms/os.txt"
 ```
 
-```
-+-------------------------+
 | BOOT LOADER ADDRESS |
-+-------------------------+
-```
 
 ---
 
@@ -32,16 +28,13 @@ int v1, v2, v3; // Arguments (line numbers, addresses, values)
 ```
 - **Notes:** Array index is used as **line number** in jumps and execution.
 
-```
-+-----------------------------------+
+
 | OS_RAM |
 |-----------------------------------|
 | [0] -> struct ram {cmd,v1,v2,v3} |
 | [1] -> struct ram {cmd,v1,v2,v3} |
 | ... |
 | [9999] |
-+-----------------------------------+
-```
 
 ---
 
@@ -50,16 +43,15 @@ int v1, v2, v3; // Arguments (line numbers, addresses, values)
 - **Purpose:** Stores assembly lines of the currently running program.
 - **Structure:** Similar to **OS_RAM**.
 
-```
-+-----------------------------------+
+
+
 | PR_RAM |
 |-----------------------------------|
 | [0] -> struct ram {cmd,v1,v2,v3} |
 | [1] -> struct ram {cmd,v1,v2,v3} |
 | ...
 | [9999] |
-+----------------------------------+
-```
+
 
 ---
 
@@ -67,7 +59,7 @@ int v1, v2, v3; // Arguments (line numbers, addresses, values)
 - **Type:** `struct heap_s`
 - **Purpose:** Store program variables.
 - **Structure:** 
-c 
+```c 
 struct heap_s { 
 int ints; // Integer variables 
 char chrs; // Single character storage 
@@ -75,15 +67,11 @@ char strs; // Continuous chars storing strings
 }; 
 ```
 
-```
-+----------------------------------+
 | HEAP MEMORY |
 |----------------------------|
 | ints : int variables |
 | chrs : single characters |
 | strs : string buffer |
-+------------------------------+
-```
 
 ---
 
@@ -91,16 +79,14 @@ char strs; // Continuous chars storing strings
 - **Type:** `int stack[100]`
 - **Purpose:** **LIFO** (last in, first out) operation.
 
-```
-+--------------------+
+
 | STACK MEMORY |
 |-------------------|
 | [0] int |
 | [1] int |
 | ... |
 | [99] int |
-+--------------------+
-```
+
 
 ---
 
@@ -112,14 +98,11 @@ int os_eip; // Current line in OS_RAM
 int pr_eip; // Current line in PR_RAM
 ```
 
-```
-+------------------------+
+
 | EIP REGISTERS |
 |-------------------|
 | os_eip -> OS_RAM idx |
 | pr_eip -> PR_RAM idx |
-+-----------------------+
-```
 
 ---
 
@@ -134,14 +117,10 @@ char type; // 'I' (int), 'C' (char), 'S' (string)
 } registers;
 ```
 
-```
-+-----------------------+
 | REGISTERS |
 |--------------------|
 | address -> pointer |
 | type -> I/C/S |
-+-----------------------+
-```
 
 ---
 
@@ -152,12 +131,8 @@ char type; // 'I' (int), 'C' (char), 'S' (string)
 int which_ram; // 0 = OS_RAM, 1 = PR_RAM
 ```
 
-```
-+------------------------+
 | CONTROL FLAGS |
 |------------------------|
 | which_ram -> activeRAM |
-+-------------------------+
-```
 
 ---
