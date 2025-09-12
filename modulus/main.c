@@ -68,6 +68,8 @@ int main(void) {
             put_str(*eip);
         else if (command_cmp(*eip , _PUTI_ ))
             put_int(*eip);
+        else if (command_cmp(*eip , _PUSH_ ))
+            push_str(*eip);
         else if (command_cmp(*eip , _ADDN_ ))
             add_ints(*eip);
         else if (command_cmp(*eip , _ADDO_ ))
