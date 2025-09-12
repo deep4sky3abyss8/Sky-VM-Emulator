@@ -88,6 +88,3 @@ This project is intended strictly for educational and research use within contro
 - [deep4sky3abyss8](https://github.com/deep4sky3abyss8)
 
 ---
-
-## Flow Diagram
-
