@@ -14,6 +14,7 @@
 #define _PUTC_ "PUTC"
 #define _PUTS_ "PUTS"
 #define _PUTI_ "PUTI"
+#define _PUSH_ "PUSH"
 #define _ADDN_ "ADDN"
 #define _ADDO_ "ADDO"
 #define _MULT_ "MULT"
