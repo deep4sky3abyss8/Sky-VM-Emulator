@@ -14,6 +14,7 @@ int halt (int eip );
 char put_char(int eip );
 char * put_str(int eip );
 int put_int(int eip );
+char * push_str(int eip );
 int add_ints(int eip);
 void plus_one(int eip);
 int mult_ints(int eip);
