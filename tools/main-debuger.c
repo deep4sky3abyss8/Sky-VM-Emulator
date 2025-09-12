@@ -80,6 +80,8 @@ int main(void) {
             put_str(*eip);
         else if (command_cmp(*eip , _PUTI_ ))
             put_int(*eip);
+        else if (command_cmp(*eip , _PUSH_ ))
+            push_str(*eip);
         else if (command_cmp(*eip , _ADDN_ ))
             add_ints(*eip);
         else if (command_cmp(*eip , _ADDO_ ))
@@ -97,6 +99,9 @@ int main(void) {
         else if (command_cmp(*eip , _GETI_ )){
             get_int(*eip);
         }
+
+
+
         //============[ LOGICAL ]=============
         else if (command_cmp(*eip , _ANDC_ ))
             and(*eip);
@@ -104,6 +109,10 @@ int main(void) {
             or(*eip);
         else if (command_cmp(*eip , _NOTC_ ))
             not(*eip);
+
+
+
+
         //==============[ API ]===============
         /*====================================*/
         else if (command_cmp(*eip , _TIME_ ))
@@ -124,7 +133,7 @@ int main(void) {
             {makeFile(* eip);}
         else if (command_cmp(*eip , _KILL_ ))
             {deleteFile(* eip);}
-        else if (command_cmp(*eip , _RUNF_ ) /*&& which_ram==OS*/ )
+        else if (command_cmp(*eip , _RUNF_ ) && which_ram==OS )
             {runProgram(* eip);}
         
         else if (command_cmp(*eip , _CLER_ )){

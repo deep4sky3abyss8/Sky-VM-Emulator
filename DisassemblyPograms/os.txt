@@ -74,7 +74,7 @@ ASSN 9 0
 MOVE 9 100 S
 FGET 2 1
 ADDN 1 3 1
-CJMP 1 94                     
+CJMP 1 94                     //sdivslmn
 READ 2
 CLOS 2
 CTCT G
@@ -135,7 +135,6 @@ READ 10
 CTCT 0
 GETS 0 2
 RUNF 0
-GETS 0 2
 JUMP 130
 CLOS 10
 CTCT 0

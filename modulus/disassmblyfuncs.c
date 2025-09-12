@@ -489,7 +489,7 @@ char * push_str(int eip ) {
         }
         int len = *((int*)registers[r2].address);
                 char * str = (char*)registers[r1].address ;
-        *(*char)registers[r3].address = *(str+len);
+        *(char*)registers[r3].address = *(str+len);
                 os_eip++ ;
                 return str ;
         }
@@ -514,7 +514,7 @@ char * push_str(int eip ) {
     }   
     int len = *((int*)registers[r2].address);
     char * str = (char*)registers[r1].address ;
-    *(*char)registers[r3].address = *(str+len);
+    *(char*)registers[r3].address = *(str+len);
     pr_eip++ ;
         return str ;
 }
