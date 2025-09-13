@@ -22,9 +22,7 @@ int main(void) {
 
     HIJACK_FULL_SCREEN
     HIJACK_MAXIMIZE_BTM
-    wellcome();
     loader(BOOT_ADDRESS);
-    Sleep(500);
     system("cls");
 
 

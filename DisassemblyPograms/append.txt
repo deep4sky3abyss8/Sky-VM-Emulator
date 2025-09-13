@@ -37,31 +37,50 @@ ASSN 11 63
 PUTC 11
 ASSN 11 32
 PUTC 11
-MOVE 12 0 S
+move 11 3 I
+MOVE 12 0 S                   #START OF THE APPEND
 MOVE 13 0 I
-GETS 12 13
-ASSN 11 97
-OPEN 12 11 13
-MOVE 14 1 I
-ASSN 14 -48
-MOVE 15 1 C
-ASSN 15 10
-MOVE 16 3 I
-MOVE 17 4 I
-ASSN 17 0
-MOVE 18 13 C
-GETC 18
-EQAL 18 15 16
-CJMP 16 60
-MULT 17 15 17
-ADDN 17 18 17
-ADDN 17 14 17
-JUMP 53
-ASSN 14 0
-COMP 17 14 16
-CJMP 16 67
-ADDO 14
-GETS 12 11
-APND 12 13
-JUMP 61
+MOVE 14 4 I
+move 15 5 I
+move 16 1 I
+assn 13 0
+getc 11
+assn 14 32
+eqal 11 14 15
+cjmp 15 47
+assn 14 10                   #get name
+eqal 11 14 15
+cjmp 15 75
+assn 14 32
+eqal 11 14 15
+cjmp 15 79
+stor 0 13 11
+addo 13
+getc 11
+jump 51
+assn 13 97
+open 12 13 14
+assn 13 0
+move 12 0 S
+getc 11
+assn 14 10                   #get text
+eqal 11 14 15
+cjmp 15 83
+stor 12 13 11
+addo 13
+jump 65
+apnd 12 14
+clos 14
 HALT
+assn 11 0           # seen \n
+stor 12 13 11
+addo 13
+jump 61
+assn 11 0           # seen space
+stor 12 13 11
+addo 13
+jump 59
+assn 11 0           # seen \n 2
+stor 12 13 11
+addo 13
+jump 72

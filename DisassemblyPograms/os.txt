@@ -136,11 +136,11 @@ assn 2 0
 CTCT G
 READ 10
 CTCT 0
-getc 1
+getc 1                      #remove space befor text
 assn 3 32
 eqal 1 3 4
 cjmp 4 139
-assn 3 10
+assn 3 10                    #get text
 eqal 1 3 4
 cjmp 4 182
 assn 3 32

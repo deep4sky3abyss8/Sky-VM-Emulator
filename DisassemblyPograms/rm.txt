@@ -31,7 +31,34 @@ ASSN 11 63
 PUTC 11
 ASSN 11 32
 PUTC 11
-MOVE 12 0 S
-GETS 12 11
-KILL 12
+move 11 3 I
+MOVE 12 0 S                   #START OF THE read
+MOVE 13 0 I
+MOVE 14 4 I
+move 15 5 I
+move 16 1 I
+assn 13 0
+getc 11
+assn 14 32
+eqal 11 14 15
+cjmp 15 41
+assn 14 10                   #get name
+eqal 11 14 15
+cjmp 15 57
+assn 14 32
+eqal 11 14 15
+cjmp 15 61
+stor 0 13 11
+addo 13
+getc 11
+jump 45
+kill 12
 HALT
+assn 11 0           # seen \n
+stor 12 13 11
+addo 13
+jump 55
+assn 11 0           # seen space
+stor 12 13 11
+addo 13
+jump 53

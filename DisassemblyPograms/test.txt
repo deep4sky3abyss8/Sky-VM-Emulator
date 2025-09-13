@@ -1,12 +1,4 @@
 moVE 11 98 S
 move 12 97 I #-> this line commented .
 gets 11 12  # comment2
-<<<<<<< HEAD
-assn 12 a
-open 11 12 13 #file in 13
-gets 11 12 #str in 11
-writ 11 13
-clos 13
-=======
->>>>>>> 5139834758636ecaaa7fdb22a42b88e720be36fe
 HaLT # this is comment

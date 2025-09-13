@@ -1,11 +1,25 @@
 MOVE 11 0 C
-ASSN 11 110
+ASSN 11 83
+PUTC 11
+ASSN 11 111
+PUTC 11
+ASSN 11 32
+PUTC 11
+ASSN 11 102
+PUTC 11
+ASSN 11 111
+PUTC 11
+ASSN 11 114
+PUTC 11
+ASSN 11 32
+PUTC 11
+ASSN 11 119
+PUTC 11
+ASSN 11 104
 PUTC 11
 ASSN 11 97
 PUTC 11
-ASSN 11 109
-PUTC 11
-ASSN 11 101
+ASSN 11 116
 PUTC 11
 ASSN 11 32
 PUTC 11
@@ -19,28 +33,54 @@ ASSN 11 101
 PUTC 11
 ASSN 11 32
 PUTC 11
-ASSN 11 112
-PUTC 11
-ASSN 11 108
-PUTC 11
-ASSN 11 101
-PUTC 11
-ASSN 11 115
-PUTC 11
-ASSN 11 101
+ASSN 11 63
 PUTC 11
 ASSN 11 32
 PUTC 11
-ASSN 11 58
-PUTC 11
-ASSN 11 32
-PUTC 11
-MOVE 12 0 S
-GETS 12 11
-ASSN 11 119
-OPEN 12 11 11
+move 11 3 I
+MOVE 12 0 S                   #START OF THE APPEND
 MOVE 13 0 I
-GETS 12 13
-WRIT 12 11
-CLOS 11
+MOVE 14 4 I
+move 15 5 I
+move 16 1 I
+assn 13 0
+getc 11
+assn 14 32
+eqal 11 14 15
+cjmp 15 47
+assn 14 10                   #get name
+eqal 11 14 15
+cjmp 15 75
+assn 14 32
+eqal 11 14 15
+cjmp 15 79
+stor 0 13 11
+addo 13
+getc 11
+jump 51
+assn 13 119
+open 12 13 14
+assn 13 0
+move 12 0 S
+getc 11
+assn 14 10                   #get text
+eqal 11 14 15
+cjmp 15 83
+stor 12 13 11
+addo 13
+jump 65
+writ 12 14
+clos 14
 HALT
+assn 11 0           # seen \n
+stor 12 13 11
+addo 13
+jump 61
+assn 11 0           # seen space
+stor 12 13 11
+addo 13
+jump 59
+assn 11 0           # seen \n 2
+stor 12 13 11
+addo 13
+jump 72
