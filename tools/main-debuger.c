@@ -18,7 +18,7 @@ int stck_mem[100] , // short for stack memory segment .
     which_ram= OS ;
 //--------------------------------------------[  main src  ]-----------------
 int main(void) {
-    //wellcome();
+
     loader(BOOT_ADDRESS);
     Sleep(1000);
     os_eip=0 ;
@@ -159,24 +159,24 @@ int main(void) {
                 RED
                 fprintf(stderr, "[!]Fatal Error in < Operating System >\nInvalid disassembly command : <%s>\n",os_ram[os_eip].command);
                 RESET
+                char c ;
+                puts("press Enter to exit...");
+                while( (c=getchar())!='\n');
                 exit(1);
             }
             else {
                 RED
                 fprintf(stderr, "[!]Fatal Error in < Program >\nInvalid disassembly command : <%s>\n",pr_ram[pr_eip].command);
                 RESET
+                char c ;
+                puts("press Enter to exit...");
+                while( (c=getchar())!='\n');
                 exit(2);
             }
             
         }
     }
-    // shut down box ->
-    // Sleep(2000);
-    // system("cls");
-    // printbydilay("\n\tShutdown ",100,200);
-    // printbydilay(". . . . .",70,0);
-    // system("cls");
-    // Sleep(600);
+
     return 0;
 }
 
