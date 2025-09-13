@@ -16,7 +16,7 @@ int command_cmp( int line , const char *pointer ) {
 	if( which_ram==OS ){
 
 		for (int index = 0; index < 4; index++) {
-			
+
 			if (os_ram[line].command[index] != *(pointer + index) && os_ram[line].command[index] != ( 'a'+*(pointer + index)-'A' )) {
 				return 0;
 			}
@@ -385,7 +385,7 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 	}
 	which_ram = OS ;
 	pr_eip = 0 ; // program is finish so we reset every thing to start a new program .
-	puts("\n__________________________________________");
+	puts("\n__________________________________________\n");
 	return 0 ;
 }
 //--------| PUTC |--------//

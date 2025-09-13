@@ -104,7 +104,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
             exit(1) ;
         }
         char *buffer;
-        size_t bufsize = 50 * sizeof(char);
+        size_t bufsize = 100 * sizeof(char);
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
             RED

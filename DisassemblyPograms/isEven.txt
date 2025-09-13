@@ -1390,25 +1390,25 @@ ASSN 29 58
 PUTC 29
 ASSN 29 32
 PUTC 29
-MOVE 11 99 I              #////<<<<</////-------------------------------------------------------  start
+MOVE 11 99 I              #
 ASSN 11 0
-MOVE 12 98 I         #// digit
-MOVE 13 97 C        # // num input terminate by char ':' without any white space !
-ASSN 13 10          # // putting (':'-'0')=10 char in reg for loop check
-MOVE 14 96 I        # // a cell for res of loop condition
-MOVE 15 95 I        # // for digit * 10
+MOVE 12 98 I         # digit
+MOVE 13 97 C        # num-input-t
+ASSN 13 10          # putting
+MOVE 14 96 I        # a cell 
+MOVE 15 95 I        # for 
 ASSN 15 10
-GETI 12              #// here is start of loop -> getchar()
-EQAL 12 13 14         # // loop condition 
-CJMP 14 1407          #  // n : 1 line after JUMP line number
-MULT 11 15 11         # // num *= 10
-ADDN 11 12 11         # // num += digit
-JUMP 1401             # // m : GETI line number
+GETI 12              #here 
+EQAL 12 13 14         # loop 
+CJMP 14 1407          #n :
+MULT 11 15 11         # num
+ADDN 11 12 11         #num 
+JUMP 1401             #m : 
 ASSN 12 2
 MOVE 13 97 I
 MODE 11 12 13
 MOVE 12 10 C
-CJMP 13 1485                         # //<<<<<///// ***$****+1
+CJMP 13 1485                      
 ASSN 29 10
 PUTC 29
 ASSN 29 62
@@ -1481,7 +1481,7 @@ ASSN 29 32
 PUTC 29
 ASSN 29 93
 PUTC 29
-HALT                                 #//<<<<<///// ***$****
+HALT                                
 ASSN 29 10
 PUTC 29
 ASSN 29 62
