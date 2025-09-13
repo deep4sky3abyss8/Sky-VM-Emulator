@@ -137,25 +137,53 @@ CTCT G
 READ 10
 CTCT 0
 getc 1
-assn 3 10
-eqal 1 3 4
-cjmp 4 154
 assn 3 32
 eqal 1 3 4
-cjmp 4 158
+cjmp 4 139
+assn 3 10
+eqal 1 3 4
+cjmp 4 182
+assn 3 32
+eqal 1 3 4
+cjmp 4 186
 stor 0 2 1
 addo 2
-jump 139
+getc 1
+jump 143
+move 0 0 S
+assn 1 104
+assn 2 0
+push 0 2 3  
+neql 1 3 4
+cjmp 4 177
+addo 2
+assn 1 97
+push 0 2 3  
+neql 1 3 4
+cjmp 4 177
+addo 2
+assn 1 108
+push 0 2 3  
+neql 1 3 4
+cjmp 4 177
+addo 2
+assn 1 116
+push 0 2 3  
+neql 1 3 4
+cjmp 4 177
+addo 2
+CLOS 10
+halt
+move 0 0 S
 RUNF 0
 JUMP 130
 CLOS 10
-CTCT 0
 HALT
 assn 1 0           # seen \n
-stor 0 2 0
+stor 0 2 1
 addo 2
-jump 149
+jump 153
 assn 1 0           # seen space
-stor 0 2 0
+stor 0 2 1
 addo 2
-jump 139
+jump 143
