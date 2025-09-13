@@ -38,9 +38,9 @@ static int skip_space(int index , char * line) {
     while(line[index]==' ' || line[index]=='\t') {
         index++ ;
     }
-   if (line[index] == '\n' || line[index] == '\0'){
-       return 0 ;
-   }
+    if (line[index]=='#' || line[index] == '\n' || line[index] == '\0'   ){
+        return 0 ;
+    }
     return index;
 }
 //-------------------------------------------------------------------------------------------------------
@@ -113,7 +113,8 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
             exit(1) ;
         }
         while( fgets( buffer, bufsize, file ) ) {
-            if (*buffer<'A' || *buffer>'Z') {
+
+            if (  ( *buffer<'A' || *buffer>'Z' )  &&  (*buffer<'a' || *buffer>'z') ){
                 continue;
             }
             else {
@@ -133,7 +134,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
 
         if (file==NULL) {
             RED
-            puts("[!][!]  Fatal Error : program Loading Error  [!][!]");
+            puts("> Command not found...");
             which_ram = OS ;
             RESET
             return 1 ;
@@ -143,14 +144,15 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
             RED
-            puts("[!][!]  Fatal Error : program Loading Error  [!][!]");
+            puts("> Command not found...");
             RESET
             which_ram = OS ;
             os_eip++ ;
             return 2 ;
         }
         while( fgets( buffer, bufsize, file) ){
-            if (*buffer<'A' || *buffer>'Z') {
+
+            if (  ( *buffer<'A' || *buffer>'Z' )  &&  (*buffer<'a' || *buffer>'z') ) {
                 continue;
             }
             else {
@@ -161,7 +163,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         if(index==0) {
             free(buffer);
             RED
-            puts("[!][!]  Fatal Error : program Loading Error  [!][!]\n\tYou tried to load an empty file as program!");
+            puts("[!] Program Loading Error \n\tYou tried to load an empty file as program!");
             RESET
             which_ram = OS ;
             os_eip++ ;

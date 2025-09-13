@@ -11,16 +11,21 @@
 //--------------------------------------------------------------------
 //-------| CHECK |--------// OK
 int command_cmp( int line , const char *pointer ) {
+
+	char check ;
 	if( which_ram==OS ){
+
 		for (int index = 0; index < 4; index++) {
-			if (os_ram[line].command[index] != *(pointer + index)) {
+			
+			if (os_ram[line].command[index] != *(pointer + index) && os_ram[line].command[index] != ( 'a'+*(pointer + index)-'A' )) {
 				return 0;
 			}
 		}
 	}
 	else {
 		for (int index = 0; index < 4; index++) {
-			if (pr_ram[line].command[index] != *(pointer + index)) {
+
+			if ( pr_ram[line].command[index] != *(pointer + index) && pr_ram[line].command[index] != ( 'a'+*(pointer + index)-'A' )) {
 				return 0;
 			}
 		}
@@ -691,6 +696,7 @@ int get_int(int eip) {
 } // it take only one digit from stdin .
 //--------| GETS |--------//  befor using this func user must call MOVE and move his register on strs heap segment .
 int get_str(int eip) {
+
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
 			reg = os_ram[eip].v2 ,
@@ -708,6 +714,7 @@ int get_str(int eip) {
 		char * str = (char *)registers[r1].address ;
 		count = read_str(str , ' ') ;
 		*(int *) registers[reg].address = count ;
+
 		pr_eip++ ;
 		return count ;
 	}

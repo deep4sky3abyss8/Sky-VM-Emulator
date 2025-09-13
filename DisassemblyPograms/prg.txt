@@ -3,7 +3,7 @@ MOVE 2 0 I
 MOVE 3 0 I
 MOVE 10 0 I
 ASSN 3 -48
-MOVE 0 0 S                        //open flash.txt   reg  = 10
+MOVE 0 0 S                        #//open flash.txt   reg  = 10
 ASSN 0 102
 MOVE 0 1 S
 ASSN 0 108
@@ -26,7 +26,7 @@ ASSN 0 0
 MOVE 0 0 S
 ASSN 1 114
 OPEN 0 1 10
-MOVE 0 0 S							//open name_ask.txt
+MOVE 0 0 S							#//open name_ask.txt
 ASSN 0 110
 MOVE 0 1 S
 ASSN 0 97
@@ -53,7 +53,7 @@ ASSN 0 116
 MOVE 0 0 S
 ASSN 1 114
 OPEN 0 1 2
-MOVE 9 100 S                      //open name.txt
+MOVE 9 100 S                      #//open name.txt
 ASSN 9 110
 MOVE 9 101 S
 ASSN 9 97
@@ -102,7 +102,7 @@ ASSN 1 114
 OPEN 9 1 2
 READ 2
 CLOS 2
-MOVE 0 0 S                            //open intro.txt
+MOVE 0 0 S                            #//open intro.txt
 ASSN 0 105
 MOVE 0 1 S
 ASSN 0 110
@@ -127,7 +127,7 @@ ASSN 1 114
 OPEN 0 1 2
 READ 2
 CLOS 2
-MOVE 0 0 S                   //START OF MAIN LOOP
+MOVE 0 0 S                  # //START OF MAIN LOOP
 MOVE 2 0 I
 MOVE 1 0 C
 CTCT G

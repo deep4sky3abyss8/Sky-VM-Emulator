@@ -3,7 +3,7 @@ TIME 11
 MOVE 11 16 S
 MOVE 12 0 I  
 ASSN 12 3
-MODE 11 12 11        //0 = R,1 = P,2 = S
+MODE 11 12 11        #//0 = R,1 = P,2 = S
 MOVE 13 0 I
 MOVE 14 0 I
 MOVE 15 0 C

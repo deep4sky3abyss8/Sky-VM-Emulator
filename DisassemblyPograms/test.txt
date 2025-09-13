@@ -1,4 +1,4 @@
-MOVE 11 98 S
-MOVE 12 98 I
-GETS 11 12
-HALT
+moVE 11 98 S
+move 12 97 I #-> this line commented .
+gets 11 12  # comment2
+HaLT # this is comment

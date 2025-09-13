@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../headers/loader.h"
@@ -35,19 +36,26 @@ int main(void) {
 
 
             RAM = os_ram ;
-            puts("\nruning : os");
+            YELLOW
+            printf("\n> Runing: [os]\t");
+            RESET
         }
         else {
             eip = &pr_eip ;
 
 
             RAM = pr_ram ;
-            puts("\nruning : prg");
+            YELLOW
+            printf("\n> Runing: [prg]\t");
+            RESET
         }
 
 
-        printf("eip: <%d>\tcommand: ",*eip);
-        puts(RAM[*eip].command) ;
+        printf("|\teip: <%d>\t|\tcommand: ",*eip);
+        GREEN
+        printf("%s\t",RAM[*eip].command) ;
+        RESET
+        printf( "| args: %d %d %d\n", RAM[*eip].v1, RAM[*eip].v2, RAM[*eip].v3 );
 
 
 
@@ -171,3 +179,4 @@ int main(void) {
     // Sleep(600);
     return 0;
 }
+
