@@ -518,6 +518,35 @@ char * push_str(int eip ) {
     pr_eip++ ;
         return str ;
 }
+//--------| STOR |--------//
+void store_char (int eip ) {
+        if (which_ram == OS) {
+                
+            int r1 = os_ram[eip].v1 ,
+                r2 = os_ram[eip].v2 ,
+                r3 = os_ram[eip].v3 ;
+			
+        	int idx = *((int*)registers[r2].address);
+
+            char * str = (char*)registers[r1].address,
+				   character = *((char*)registers[r3].address);
+
+			*( str + idx ) = character ;
+		}
+		else {
+
+            int r1 = pr_ram[eip].v1 ,
+                r2 = pr_ram[eip].v2 ,
+                r3 = pr_ram[eip].v3 ;
+			
+        	int idx = *((int*)registers[r2].address);
+
+            char * str = (char*)registers[r1].address,
+				   character = *((char*)registers[r3].address);
+
+			*( str + idx ) = character ;
+		}
+}
 //--------| ADDN |--------//
 int add_ints(int eip) {
 	if (which_ram == OS) {
