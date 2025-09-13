@@ -521,7 +521,7 @@ char * push_str(int eip ) {
     char * str = (char*)registers[r1].address ;
     *(char*)registers[r3].address = *(str+len);
     pr_eip++ ;
-        return str ;
+    return str ;
 }
 //--------| STOR |--------//
 void store_char (int eip ) {
@@ -537,6 +537,7 @@ void store_char (int eip ) {
 				   character = *((char*)registers[r3].address);
 
 			*( str + idx ) = character ;
+			os_eip++ ;
 		}
 		else {
 
@@ -550,6 +551,7 @@ void store_char (int eip ) {
 				   character = *((char*)registers[r3].address);
 
 			*( str + idx ) = character ;
+			pr_eip++ ;
 		}
 }
 //--------| ADDN |--------//
