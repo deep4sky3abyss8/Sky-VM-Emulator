@@ -12,7 +12,7 @@ This project implements a custom low-level programming language and an operating
   - Strings: addresses 0-999
 - Memory and registers operate under strict pointer arithmetic and manual data manipulation.
 
-## Instruction Set
+## Instruction Set (Case-insensitive) 
 
 | Instruction | Description                                                   | Example                                   |
 |-------------|---------------------------------------------------------------|-------------------------------------------|
@@ -28,7 +28,8 @@ This project implements a custom low-level programming language and an operating
 | `PUTC Pn`     | Output character in reg[Pn]                                   |                                           |
 | `PUTS Pn Pm`  | Output string starting at address reg[Pn] length reg[Pm]     |                                           |
 | `PUTI Pn`  | printf("%d", reg[Pn] )     |                                           |
-| `PUSH Pn Pm Px`  | printf("%d", reg[Pn] )     |                                           |
+| `PUSH Pn Pm Px`  | putting (Pm)tn index of str Pn into register Px     |                                           |
+| `STOR Pn Pm Px`  | putting registr Px into (Pm)tn index of str Pn    |                                           |
 | `ADDN Pn Pm Pz` | reg[Pz] = reg[Pn] + reg[Pm]                                 |                                           |
 | `ADDO Pn` | reg[Pn] = reg[Pn]+1 ;                                 |                                           |
 | `MULT Pn Pm Pz` | reg[Pz] = reg[Pn] * reg[Pm]                                 |                                           |
