@@ -191,7 +191,7 @@ void wellcome(void){
     //fprintf(stderr,"Sky machine : preparing to boot ...\n\n");
     banner();
     printf("\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tLoading ");
-    printbydilay("!\b@\b#\b$\b%%\b^\b&\b*\b :)" , 300 , 600);
+    printbydilay("!\b@\b#\b$\b%\b^\b&\b*\b :)" , 300 , 600);
 }
 //--------------------------------------------------------------------------------------------------------
 void Shutdownsky(void){
