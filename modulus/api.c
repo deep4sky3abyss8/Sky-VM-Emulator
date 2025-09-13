@@ -128,9 +128,8 @@ void closeFile(int eip)
         FILE *p = (FILE *) registers[r1].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            os_eip++;
+            return;
         }
         fclose(p);
         registers[r1].address = NULL;
@@ -142,9 +141,8 @@ void closeFile(int eip)
         FILE *p = (FILE *) registers[r1].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            pr_eip++;
+            return;
         }
         fclose(p);
         registers[r1].address = NULL;
@@ -161,9 +159,8 @@ void readFile(int eip)
         FILE *p = (FILE *) registers[r1].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            os_eip++;
+            return;
         }
         int ch = fgetc(p);
         while (ch != EOF)
@@ -180,9 +177,8 @@ void readFile(int eip)
         FILE *p = (FILE *) registers[r1].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            pr_eip++;
+            return;
         }
         int ch = fgetc(p);
         while (ch != EOF)
@@ -256,9 +252,8 @@ void writeFile(int eip)
         FILE *p = (FILE *) registers[r2].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            os_eip++;
+            return;
         }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
@@ -272,9 +267,8 @@ void writeFile(int eip)
         FILE *p = (FILE *) registers[r2].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            pr_eip++;
+            return;
         }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
@@ -294,9 +288,8 @@ void appendFile(int eip)
         FILE *p = (FILE *) registers[r2].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            os_eip++;
+            return;
         }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
@@ -310,9 +303,8 @@ void appendFile(int eip)
         FILE *p = (FILE *) registers[r2].address;
         if (!p)
         {
-            RED
-            printf("The file is not found");
-            RESET
+            pr_eip++;
+            return;
         }
         unsigned long long len = strlen(line);
         fwrite(line, sizeof(char),len,p);
@@ -333,8 +325,11 @@ void makeFile(int eip)
         if (!p)
         {
             RED
-            printf("The file is not found");
+            printf("can not make file");
             RESET
+            registers[r2].address=p;
+            os_eip++;
+            return;
         }
         registers[r2].address=p;
         os_eip++;
@@ -348,8 +343,11 @@ void makeFile(int eip)
         if (!p)
         {
             RED
-            printf("The file is not found");
+            printf("can not make file");
             RESET
+            registers[r2].address=p;
+            pr_eip++;
+            return;
         }
         registers[r2].address=p;
         pr_eip++;
