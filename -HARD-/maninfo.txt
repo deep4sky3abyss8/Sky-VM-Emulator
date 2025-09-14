@@ -18,8 +18,10 @@
 +> "touch" to creating new file.
 |
 |
-|
 +> "halt" to shutdown machine.
+|
+|
+|
 |
 |__ Good luck ...
 
