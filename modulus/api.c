@@ -318,8 +318,7 @@ void makeFile(int eip)
 {
     if (which_ram==OS)
     {
-        int r1 = os_ram[eip].v1,
-            r2 = os_ram[eip].v2;
+        int r1 = os_ram[eip].v1;
         char *name = (char *) registers[r1].address;
         FILE *p = fopen(name, "w");
         if (!p)
@@ -327,17 +326,16 @@ void makeFile(int eip)
             RED
             printf("can not make file");
             RESET
-            registers[r2].address=p;
             os_eip++;
             return;
         }
-        registers[r2].address=p;
+        fclose(p);
+		registers[r1].address = NULL;
         os_eip++;
     }
     else
     {
-        int r1 = pr_ram[eip].v1,
-            r2 = pr_ram[eip].v2;
+        int r1 = pr_ram[eip].v1;
         char *name = (char *) registers[r1].address;
         FILE *p = fopen(name, "w");
         if (!p)
@@ -345,11 +343,11 @@ void makeFile(int eip)
             RED
             printf("can not make file");
             RESET
-            registers[r2].address=p;
             pr_eip++;
             return;
         }
-        registers[r2].address=p;
+       	fclose(p);
+		registers[r1].address = NULL;
         pr_eip++;
     }
 }
