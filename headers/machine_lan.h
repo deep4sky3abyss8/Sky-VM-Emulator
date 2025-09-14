@@ -19,7 +19,7 @@
 #define _ADDN_ "ADDN"
 #define _ADDO_ "ADDO"
 #define _MULT_ "MULT"
-#define _DIVI_ "DIV"
+#define _DIVI_ "DIVI"
 #define _MODE_ "MODE"
 #define _GETC_ "GETC"
 #define _GETS_ "GETS"
