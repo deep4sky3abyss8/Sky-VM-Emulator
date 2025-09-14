@@ -1,0 +1,162 @@
+move 11 0 S
+move 12 0 I
+move 13 1 I
+move 14 2 I
+move 15 3 I
+move 16 4 I
+move 17 5 I
+move 18 6 I
+move 19 7 I
+move 20 8 I                  
+ASSN 11 103		#gtnintro.txt
+MOVE 11 1 S
+ASSN 11 116
+MOVE 11 2 S
+ASSN 11 110
+MOVE 11 3 S
+ASSN 11 105
+MOVE 11 4 S
+ASSN 11 110
+MOVE 11 5 S
+ASSN 11 116
+MOVE 11 6 S
+ASSN 11 114
+MOVE 11 7 S
+ASSN 11 111
+MOVE 11 8 S
+ASSN 11 46
+MOVE 11 9 S
+ASSN 11 116
+MOVE 11 10 S
+ASSN 11 120
+MOVE 11 11 S
+ASSN 11 116
+MOVE 11 12 S
+ASSN 11 0
+MOVE 11 0 S
+ASSN 13 114
+OPEN 11 13 13
+read 13
+CLOS 13                       #>end of intro
+MOVE 11 0 S 
+move 13 1 I
+assn 13 10
+assn 14 -48
+assn 12 0
+time 11
+assn 16 17
+push 11 16 12
+addn 12 14 12
+mult 12 13 12
+assn 16 14
+push 11 16 13
+addn 12 13 12
+addn 12 14 12      #num => reg = 12
+MOVE 11 0 S        #open gtnwin.txt => reg = 13
+ASSN 11 103
+MOVE 11 1 S
+ASSN 11 116
+MOVE 11 2 S
+ASSN 11 110
+MOVE 11 3 S
+ASSN 11 119
+MOVE 11 4 S
+ASSN 11 105
+MOVE 11 5 S
+ASSN 11 110
+MOVE 11 6 S
+ASSN 11 46
+MOVE 11 7 S
+ASSN 11 116
+MOVE 11 8 S
+ASSN 11 120
+MOVE 11 9 S
+ASSN 11 116
+MOVE 11 10 S
+ASSN 11 0
+MOVE 11 0 S
+ASSN 14 114
+OPEN 11 14 13
+MOVE 11 0 S          #open gtnlose.txt => reg 14
+ASSN 11 103
+MOVE 11 1 S
+ASSN 11 116
+MOVE 11 2 S
+ASSN 11 110
+MOVE 11 3 S
+ASSN 11 108
+MOVE 11 4 S
+ASSN 11 111
+MOVE 11 5 S
+ASSN 11 115
+MOVE 11 6 S
+ASSN 11 101
+MOVE 11 7 S
+ASSN 11 46
+MOVE 11 8 S
+ASSN 11 116
+MOVE 11 9 S
+ASSN 11 120
+MOVE 11 10 S
+ASSN 11 116
+MOVE 11 11 S
+ASSN 11 0
+MOVE 11 0 S
+ASSN 15 114
+OPEN 11 15 14
+assn 18 0
+assn 19 5
+assn 16 0     				#num of input => reg 16
+getc 15
+assn 17 32
+eqal 15 17 17
+cjmp 17 110
+assn 17 32
+eqal 15 17 17
+cjmp 17 158
+assn 17 10
+eqal 15 17 17
+cjmp 17 127
+assn 17 10
+mult 16 17 16
+assn 17 -48
+addn 16 17 16
+addn 16 15 16
+getc 15
+jump 114
+eqal 16 12 17
+cjmp 17 152
+eqal 18 19 17
+addo 18
+cjmp 17 154
+comp 16 12 17
+cjmp 17 145
+ASSN 20 68                        #UP!
+PUTC 20
+ASSN 20 79
+PUTC 20
+ASSN 20 87
+PUTC 20
+ASSN 20 78
+PUTC 20
+ASSN 20 10
+PUTC 20
+jump 109
+ASSN 20 85                   #DOWN!
+PUTC 20
+ASSN 20 80
+PUTC 20
+ASSN 20 10
+PUTC 20
+jump 109
+read 13                  #win
+jump 155
+read 14                  #lose
+CLOS 14
+CLOS 13
+halt
+assn 17 10           # seen space
+getc 15
+eqal 17 15 17
+cjmp 17 127
+jump 158
