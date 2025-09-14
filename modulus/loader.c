@@ -9,6 +9,7 @@
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
 static void banner(void);
+void RSOD(const char * msg );
 //-------------------------------------------------------------------------------------------------------
 static int read_int(int *num , int index ,char * line) {
     *num = 0 ;
@@ -94,40 +95,38 @@ static int load(char * line , int index ){
 }
 //--------------------------------------------------------------------------------------------------------
 int loader( const char* address ) {   // OPEN disassembly command like this but in method "a+"
+
+
     FILE* file = fopen( address, "r" );
     int index = 0 ;
+
     if ( which_ram == OS ) {
-        if (file==NULL) {
-            RED
-            puts("[!][!][!]  Fatal Error : Os Boot Failed  [!][!][!]\n\tOperating System FilePath not found");
-            RESET
-            exit(1) ;
-        }
+
+        if (file==NULL) { RSOD("Operating System File-Path NOT found"); exit(1); }
+
         char *buffer;
         size_t bufsize = 200 * sizeof(char);
         buffer = (char*) malloc( bufsize );
-        if (buffer==NULL) {
-            RED
-            puts("[!][!][!]  Fatal Error : Os Boot Failed  [!][!][!]\n\tmemory allocation failed, free disk");
-            RESET
-            exit(1) ;
-        }
+
+        if (buffer==NULL) { RSOD("memory allocation failed, free disk"); exit(1); }
+
+
+
         while( fgets( buffer, bufsize, file ) ) {
 
             if (  ( *buffer<'A' || *buffer>'Z' )  &&  (*buffer<'a' || *buffer>'z') ){
+                
                 continue;
             }
             else {
                 if (load( buffer , index ))
                     index++ ;
             }
+        
+        
+        
         }
-        if(index==0) {
-            RED
-            puts("[!][!][!]  Fatal Error : OS Boot Failed  [!][!][!]\n\tYou tried to load an empty file as Operating System!");
-            RESET
-            exit(1) ;
-        }
+        if(index==0) { RSOD( "You tried to load an empty file as Operating System"); exit(1); }
         free(buffer);
     }
     else {
@@ -245,6 +244,43 @@ printf(
 );
 RESET
 return ;
+}
+//--------------------------------------------------------------------------------------------------------
+void RSOD( const char * msg ){
+
+    system("cls");
+    RED
+    printf(
+"\n\n\n\n"
+"                        @#@@@@@@@                     \n"
+"                      @@@@@@@@@@@@@                   \n"
+"                     @@@    @@@@@@@@@                 \n"
+"                     @@      @@@   @@@                \n"
+"                     @@     &@@    @@@                \n"
+"                      @@@ @&@ *@  @@@@                \n"
+"                        @@@@@@ @@@@@                  \n"
+"                  .@@#  @@@@@@@@@                      Oops!?\n"
+"                @@@@@=  @@@+#@ @@@   @@                Secure Boot had slain!\n"
+"                @@@-@@@@    @@  @@  @@@                %s\n"
+"                       @@@@     @@&@@@@-               \n"
+"                         @@@@@@@@@   @@@@              Your hardware will explode in few minutes.\n"
+"               @@@@@@@@@@@@ @@@@                      \n"
+"                 @@           @@@@                     \n"
+"                @@@              @@@@@@                Good luck...\n"
+"                                  @@@                 \n"
+"                                  @@@\n",msg
+    );
+    RESET
+
+    for (int i=0 ; i<20 ; i++ ){
+
+        Beep( 850 , 400 );
+        Sleep(500);
+    }
+
+    // char c ;
+    // while((c=getchar())!='\n');
+    return ;
 }
 
 //--------------------------------------------------------------------------------------------------------

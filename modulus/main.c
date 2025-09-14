@@ -139,15 +139,12 @@ int main(void) {
         else {
             
             if (which_ram==OS) {
-                RED
-                fprintf(stderr, "[!]Fatal Error occurred in < Operating System >\nInvalid disassembly command : <%s>\n",os_ram[os_eip].command);
-                RESET
+
+                RSOD( "Invalid disassembly command [Operating System]");
                 exit(1);
             }
             else {
-                RED
-                fprintf(stderr, "[!]Fatal Error occurred in < Program running>\nInvalid disassembly command : <%s>\n",pr_ram[pr_eip].command);
-                RESET
+                RSOD( "Invalid disassembly command [programing]");
                 exit(2);
             }
         }
