@@ -1,27 +1,44 @@
 
+>   I'ts look like you need some help!
+    here is a diagram about Bubble...
 
- _I'ts look like you need some help!
-|
-|
-+> "clear" is for clear the screen!
-|
-+> "man" as you alredy know is for showing the commands.
-|
-+> "read" to show the contents of a file.
-|
-+> "append" to append string into file.
-|
-+> "write" to write into file.
-|
-+> "rm" to removing file.
-|
-+> "touch" to creating new file.
-|
-|
-+> "halt" to shutdown machine.
-|
-|
-|
-|
-|__ Good luck ...
+>   @Bubble
+    |
+    |
+    +--------> @Commands
+    |          |
+    |          |
+    |          +> "clear" is for clear the screen!
+    |          |
+    |          +> "man" as you alredy know is for showing the commands.
+    |          |
+    |          +> "read" show the contents of a file.
+    |          |
+    |          +> "append" append string into file.
+    |          |
+    |          +> "write" write into file.
+    |          |
+    |          +> "rm" removing file.
+    |          |
+    |          +> "touch" creating new file.
+    |          |
+    |          |
+    |          +> "halt" to shutdown machine.
+    |
+    |
+    +--------> @Programs
+    |          |
+    |          |
+    |          +> isprime
+    |          |
+    |          +> sumofdigit
+    |          |
+    |          +> iseven
+    |          |
+    |          +> game
+    |
+    |
+    |
+    |
+    |______ Good luck ...
 
