@@ -1,8 +1,27 @@
 
-I'ts look like you need some help!
 
-"clear" is for clear the screen!
+ _I'ts look like you need some help!
+|
+|
++> "clear" is for clear the screen!
+|
++> "man" as you alredy know is for showing the commands.
+|
++> "read" to show the contents of a file.
+|
++> "append" to append string into file.
+|
++> "write" to write into file.
+|
++> "rm" to removing file.
+|
++> "touch" to creating new file.
+|
+|
++> "halt" to shutdown machine.
+|
+|
+|
+|
+|__ Good luck ...
 
-"man" as you alredy know is for showing the commands.
-
-"read" to show the contents of a file
