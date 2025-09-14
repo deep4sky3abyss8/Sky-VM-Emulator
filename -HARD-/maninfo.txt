@@ -22,6 +22,8 @@
     |          |
     |          +> "touch" creating new file.
     |          |
+    |          +> "date" show current time.
+    |          |
     |          |
     |          +> "halt" to shutdown machine.
     |
