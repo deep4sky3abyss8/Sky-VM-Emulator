@@ -112,8 +112,8 @@ assn 16 0     				#num of input => reg 16
 getc 15
 assn 17 32
 eqal 15 17 17
-cjmp 17 112
-assn 17 32
+cjmp 17 112					#end of remover space
+jump 166
 eqal 15 17 17
 cjmp 17 160
 assn 17 10
@@ -124,7 +124,7 @@ mult 16 17 16
 assn 17 -48
 addn 16 17 16
 addn 16 15 16
-getc 15
+jump 165
 jump 116
 eqal 16 12 17
 cjmp 17 154
@@ -162,3 +162,52 @@ getc 15
 eqal 17 15 17
 cjmp 17 129
 jump 160
+getc 15				#getc
+assn 17 32
+eqal 15 17 17
+cjmp 17 160
+assn 17 10
+eqal 15 17 17
+cjmp 17 129
+assn 17 48
+comp 15 17 17
+cjmp 17 179
+assn 17 57
+comp 17 15 17
+cjmp 17 179
+jump 122
+CTCT R					#wrong input
+ASSN 11 87
+PUTC 11
+ASSN 11 82
+PUTC 11
+ASSN 11 79
+PUTC 11
+ASSN 11 78
+PUTC 11
+ASSN 11 71
+PUTC 11
+ASSN 11 32
+PUTC 11
+ASSN 11 73
+PUTC 11
+ASSN 11 78
+PUTC 11
+ASSN 11 80
+PUTC 11
+ASSN 11 85
+PUTC 11
+ASSN 11 84
+PUTC 11
+ASSN 11 33
+PUTC 11
+ASSN 11 33
+PUTC 11
+assn 11 10
+putc 11
+CTCT 0
+assn 17 10
+getc 15
+eqal 17 15 17
+cjmp 17 112
+jump 209
