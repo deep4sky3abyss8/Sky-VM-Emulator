@@ -1,4 +1,5 @@
 
+excellent choice ;)
 >   I'ts look like you need some help!
     here is a diagram about Bubble...
 
@@ -25,8 +26,8 @@
     |          +> "date" show current time.
     |          |
     |          |
-    |          +> "halt" to shutdown machine.
-    |
+    |          +> "halt" to shutdown machine. but please do not use it 0 0
+    |                                                                   | 
     |
     +--------> @Programs
     |          |
@@ -38,8 +39,9 @@
     |          +> iseven
     |          |
     |          +> game
-    |
-    |
+    |          |
+    |          +> gtn
+    |           
     |
     |
     |______ Good luck ...
