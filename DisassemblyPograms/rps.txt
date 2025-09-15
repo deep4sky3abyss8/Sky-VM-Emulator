@@ -1,0 +1,302 @@
+jump 144			#open files  win = reg 25,lose = reg 26,draw = reg 27,intro = reg 28,exit = 29
+MOVE 11 0 S
+MOVE 12 0 I
+MOVE 13 1 I			#input
+MOVE 14 2 I			#comp
+MOVE 15 3 I			#computer score
+move 16 4 I			#player score
+move 17 5 I
+assn 15 0
+assn 16 0
+ASSN 12 3
+TIME 11
+assn 17 17
+push 11 17 17        
+mode 17 12 12       #0 = R,1 = P,2 = S
+GETC 13
+assn 14 32
+eqal 13 14 14
+cjmp 14 16			#remove space
+assn 14 114			#r
+neql 13 14 14
+cjmp 14 32
+assn 14 0
+eqal 12 14 14
+cjmp 14 71		#R VS R -> draw
+assn 14 1
+eqal 12 14 14
+cjmp 14 73		#R VS P -> lose
+assn 14 2
+eqal 12 14 14
+cjmp 14 66			#R VS S -> win
+assn 14 112			#p
+neql 13 14 14
+cjmp 14 44
+assn 14 0
+eqal 12 14 14
+cjmp 14 66			#P VS R -> win
+assn 14 1
+eqal 12 14 14
+cjmp 14 71		#P VS P -> draw
+assn 14 2
+eqal 12 14 14
+cjmp 14 73		#P VS S -> lose
+assn 14 115			#s
+neql 13 14 14
+cjmp 14 56
+assn 14 0
+eqal 12 14 14
+cjmp 14 73		#S VS R -> lose
+assn 14 1
+eqal 12 14 14
+cjmp 14 66		#S VS P -> win
+assn 14 2
+eqal 12 14 14
+cjmp 14 71		#S VS S -> draw
+assn 14	113
+eqal 13 14 14
+cjmp 14 77
+jump 113
+clos 25
+clos 26
+clos 27
+clos 28
+clos 29
+HALT					#HALT
+addo 16					#win
+ctct G
+read 25
+ctct 0				
+jump 80
+read 27					#draw
+jump 80
+addo 15					#lose
+ctct R
+read 26
+jump 80
+read 29					#exit
+jump 299
+ctct 0
+CTCT B					#score
+ASSN 17 60
+PUTC 17
+ASSN 17 32
+PUTC 17
+puti 16
+ASSN 17 32
+PUTC 17
+ASSN 17 62
+PUTC 17
+ASSN 17 32
+PUTC 17
+ASSN 17 45
+PUTC 17
+ASSN 17 32
+PUTC 17
+ASSN 17 60
+PUTC 17
+ASSN 17 32
+PUTC 17
+puti 15
+ASSN 17 32
+PUTC 17
+ASSN 17 62
+PUTC 17
+assn 17 10
+putc 17
+CTCT 0
+getc 13						#line remover
+assn 14 10
+neql 13 14 14
+cjmp 14 108
+jump 11
+CTCT R						#wrong input
+ASSN 17 87
+PUTC 17
+ASSN 17 82
+PUTC 17
+ASSN 17 79
+PUTC 17
+ASSN 17 78
+PUTC 17
+ASSN 17 71
+PUTC 17
+ASSN 17 32
+PUTC 17
+ASSN 17 73
+PUTC 17
+ASSN 17 78
+PUTC 17
+ASSN 17 80
+PUTC 17
+ASSN 17 85
+PUTC 17
+ASSN 17 84
+PUTC 17
+ASSN 17 33
+PUTC 17
+ASSN 17 33
+PUTC 17
+assn 17 10
+putc 17
+CTCT 0
+jump 109
+move 23 22 I  		#read file
+move 24 20 S
+move 25 24 I
+move 26 25 I
+move 27 26 I
+move 28 27 I
+move 29 28 I
+MOVE 24 20 S		#rpc_win.txt = 25
+ASSN 24 114
+MOVE 24 21 S
+ASSN 24 112
+MOVE 24 22 S
+ASSN 24 115
+MOVE 24 23 S
+ASSN 24 95
+MOVE 24 24 S
+ASSN 24 119
+MOVE 24 25 S
+ASSN 24 105
+MOVE 24 26 S
+ASSN 24 110
+MOVE 24 27 S
+ASSN 24 46
+MOVE 24 28 S
+ASSN 24 116
+MOVE 24 29 S
+ASSN 24 120
+MOVE 24 30 S
+ASSN 24 116
+MOVE 24 31 S
+ASSN 24 0
+MOVE 24 20 S
+ASSN 23 114
+OPEN 24 23 25    			#rpc_lose.txt = 26
+MOVE 24 20 S
+ASSN 24 114
+MOVE 24 21 S
+ASSN 24 112
+MOVE 24 22 S
+ASSN 24 115
+MOVE 24 23 S
+ASSN 24 95
+MOVE 24 24 S
+ASSN 24 108
+MOVE 24 25 S
+ASSN 24 111
+MOVE 24 26 S
+ASSN 24 115
+MOVE 24 27 S
+ASSN 24 101
+MOVE 24 28 S
+ASSN 24 46
+MOVE 24 29 S
+ASSN 24 116
+MOVE 24 30 S
+ASSN 24 120
+MOVE 24 31 S
+ASSN 24 116
+MOVE 24 32 S
+ASSN 24 0
+MOVE 24 20 S
+ASSN 23 114
+OPEN 24 23 26
+MOVE 24 20 S				#rpc_draw.txt = 27
+ASSN 24 114
+MOVE 24 21 S
+ASSN 24 112
+MOVE 24 22 S
+ASSN 24 115
+MOVE 24 23 S
+ASSN 24 95
+MOVE 24 24 S
+ASSN 24 100
+MOVE 24 25 S
+ASSN 24 114
+MOVE 24 26 S
+ASSN 24 97
+MOVE 24 27 S
+ASSN 24 119
+MOVE 24 28 S
+ASSN 24 46
+MOVE 24 29 S
+ASSN 24 116
+MOVE 24 30 S
+ASSN 24 120
+MOVE 24 31 S
+ASSN 24 116
+MOVE 24 32 S
+ASSN 24 0
+MOVE 24 20 S
+ASSN 23 114
+OPEN 24 23 27			#rpc_intro.txt = 28
+MOVE 24 20 S
+ASSN 24 114
+MOVE 24 21 S
+ASSN 24 112
+MOVE 24 22 S
+ASSN 24 115
+MOVE 24 23 S
+ASSN 24 95
+MOVE 24 24 S
+ASSN 24 105
+MOVE 24 25 S
+ASSN 24 110
+MOVE 24 26 S
+ASSN 24 116
+MOVE 24 27 S
+ASSN 24 114
+MOVE 24 28 S
+ASSN 24 111
+MOVE 24 29 S
+ASSN 24 46
+MOVE 24 30 S
+ASSN 24 116
+MOVE 24 31 S
+ASSN 24 120
+MOVE 24 32 S
+ASSN 24 116
+MOVE 24 33 S
+ASSN 24 0
+MOVE 24 20 S
+ASSN 23 114
+OPEN 24 23 28
+MOVE 24 20 S			#rpc_exit.txt = 29
+ASSN 24 114
+MOVE 24 21 S
+ASSN 24 112
+MOVE 24 22 S
+ASSN 24 115
+MOVE 24 23 S
+ASSN 24 95
+MOVE 24 24 S
+ASSN 24 101
+MOVE 24 25 S
+ASSN 24 120
+MOVE 24 26 S
+ASSN 24 105
+MOVE 24 27 S
+ASSN 24 116
+MOVE 24 28 S
+ASSN 24 46
+MOVE 24 29 S
+ASSN 24 116
+MOVE 24 30 S
+ASSN 24 120
+MOVE 24 31 S
+ASSN 24 116
+MOVE 24 32 S
+ASSN 24 0
+MOVE 24 20 S
+ASSN 23 114
+OPEN 24 23 29
+read 28
+jump 2
+getc 13
+assn 14 10
+eqal 14 13 14
+cjmp 14 60
+jump 298
