@@ -1,0 +1,5 @@
+< Target Locked >
+Mission: isPrime
+To check whether the number you want is prime or not, put a ":" character after entering the number without any spaces. With this method, you can still enter a number after viewing the result.
+If you want to exit the program and not see any more input, put a zero after the ":" character.
+so enter a number:

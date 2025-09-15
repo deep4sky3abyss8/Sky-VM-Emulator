@@ -1,0 +1,5 @@
+< Target Locked >
+Mission: sumOfDigit
+To get the sum of the digits of the input number, first enter the number and then the ":" character. With this method, you can still enter new number after viewing the result.
+If you want to exit the program and not see any more input, put a zero after the ":" character.
+so enter a number:
