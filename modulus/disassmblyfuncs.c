@@ -385,7 +385,7 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 	}
 	which_ram = OS ;
 	pr_eip = 0 ; // program is finish so we reset every thing to start a new program .
-	puts("\n__________________________________________\n");
+	
 	return 0 ;
 }
 //--------| PUTC |--------//
