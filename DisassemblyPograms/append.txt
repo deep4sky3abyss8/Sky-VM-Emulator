@@ -80,7 +80,9 @@ assn 11 0           # seen space
 stor 12 13 11
 addo 13
 jump 59
-assn 11 0           # seen \n 2
+assn 11 10           # seen \n 2
 stor 12 13 11
 addo 13
+assn 11 0
+stor 12 13 11
 jump 72
