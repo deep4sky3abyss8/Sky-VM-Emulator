@@ -7,7 +7,8 @@ move 16 4 I
 move 17 5 I
 move 18 6 I
 move 19 7 I
-move 20 8 I                  
+move 20 8 I  
+CTCT B                
 ASSN 11 103		#gtnintro.txt
 MOVE 11 1 S
 ASSN 11 116
@@ -37,7 +38,8 @@ MOVE 11 0 S
 ASSN 13 114
 OPEN 11 13 13
 read 13
-CLOS 13                       #>end of intro
+CLOS 13  
+CTCT 0
 MOVE 11 0 S 
 move 13 1 I
 assn 13 10
@@ -110,27 +112,27 @@ assn 16 0     				#num of input => reg 16
 getc 15
 assn 17 32
 eqal 15 17 17
-cjmp 17 110
+cjmp 17 112
 assn 17 32
 eqal 15 17 17
-cjmp 17 158
+cjmp 17 160
 assn 17 10
 eqal 15 17 17
-cjmp 17 127
+cjmp 17 129
 assn 17 10
 mult 16 17 16
 assn 17 -48
 addn 16 17 16
 addn 16 15 16
 getc 15
-jump 114
+jump 116
 eqal 16 12 17
-cjmp 17 152
+cjmp 17 154
 eqal 18 19 17
 addo 18
-cjmp 17 154
+cjmp 17 156
 comp 16 12 17
-cjmp 17 145
+cjmp 17 147
 ASSN 20 68                        #UP!
 PUTC 20
 ASSN 20 79
@@ -141,16 +143,16 @@ ASSN 20 78
 PUTC 20
 ASSN 20 10
 PUTC 20
-jump 109
+jump 111
 ASSN 20 85                   #DOWN!
 PUTC 20
 ASSN 20 80
 PUTC 20
 ASSN 20 10
 PUTC 20
-jump 109
+jump 111
 read 13                  #win
-jump 155
+jump 157
 read 14                  #lose
 CLOS 14
 CLOS 13
@@ -158,5 +160,5 @@ halt
 assn 17 10           # seen space
 getc 15
 eqal 17 15 17
-cjmp 17 127
-jump 158
+cjmp 17 129
+jump 160
