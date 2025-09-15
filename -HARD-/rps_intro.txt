@@ -1,0 +1,10 @@
+
+OK! lets play some game!
+you can chose :
+
+"ROCK" with "r"
+"PAPER" with "p"
+"SCISSOR" with "s"
+"EXIT" with "q"
+so what you chose? 
+
