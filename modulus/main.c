@@ -144,8 +144,25 @@ int main(void) {
                 exit(1);
             }
             else {
-                RSOD( "Invalid disassembly command [programing]");
-                exit(2);
+
+                RED
+                printf(
+                        "\n> [ERROR]\n"
+                        "> Exit-code 2 while program running\n"
+                        "> Invalid disassembly command in program src-code\n"
+                        "   |\n"
+                        "   |____ Unknown-Command: < %s >\n\n"
+                        "> Line-Number: <%d>\n"
+                        "> Eip: <0x%x>\n\n"
+                        "> @Bubble~root has killed Dangerous-task\n\n",
+
+                        pr_ram[*eip].command, *eip+1, eip
+                    );
+                RESET
+
+                Beep( 850, 400 );
+                which_ram = OS;
+                continue;
             }
         }
     }
