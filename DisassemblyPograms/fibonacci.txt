@@ -1,46 +1,149 @@
-MOVE 11 0 I
-MOVE 12 1 I
-MOVE 13 2 I
-MOVE 14 3 I
-MOVE 15 4 I
-move 16 5 I
-ASSN 16 0
-ASSN 12 32
-ASSN 15 10
-ASSN 14 -48
-GETC 11
-EQAL 11 12 13
-CJMP 13 11
-ASSN 12 0
-EQAL 11 15 13
-CJMP 13 43
-MULT 12 15 12
-ADDN 12 11 12
-ADDN 12 14 12
-GETC 11
-JUMP 15
-ASSN 14 0
-ASSN 15 1
-ASSN 13 0
-NEQL 13 12 13
-CJMP 13 29
-PUTI 14
-JUMP 42
-ASSN 13 1
-NEQL 13 12 13
-CJMP 13 34
-PUTI 15
-JUMP 42
-ASSV 13 14
-ASSN 14 15
-MULT 15 13 15
-ADDO 16
-EQAL 16 12 11
-CJMP 11 41
-JUMP 34
-PUTI 15
-HALT
-ASSN 13 10
-EQAL 13 11 13
-CJMP 13 22
-JTMP 42
+MOVE 11 0 I     #getc
+MOVE 12 1 I		#input
+MOVE 13 2 I		#line counter
+MOVE 14 3 I		#num 1
+MOVE 15 4 I		#num 2
+move 16 5 I		#num 3
+move 17 6 I		#condition
+move 18 7 I		#for anything else
+assn 12 0
+assn 13 1
+assn 14 0
+assn 15 1
+assn 16 0
+jump 68			#open intro file
+jump 16		 	#get input
+getc 11			#get input
+assn 17 32
+eqal 17 11 17
+cjmp 17 16	 	#space remover
+assn 17 10
+eqal 17 11 17	
+cjmp 17 44		#calculate
+assn 17 32
+eqal 17 11 17
+cjmp 17 39		#seen space
+assn 17 48
+comp 11 17 17
+cjmp 17 115 	#wrong input
+assn 17 57
+comp 17 11 17
+cjmp 17 115		#wrong  input
+assn 17 10
+mult 12 17 12
+assn 17 -48
+addn 12 17 12
+addn 12 11 12
+getc 11
+jump 20			#back to top
+getc 11			#seen space
+assn 17 10
+eqal 11 17 17
+cjmp 17 44		#calculate
+jump 39
+assn 17 0		# n =0	calculate
+neql 17 12 17
+cjmp 17 51
+puti 14
+assn 17 10
+putc 17
+halt
+assn 17 1		# n = 1
+neql 17 12 17
+cjmp 17 58
+puti 15
+assn 17 10
+putc 17
+halt
+assv 16 15
+addn 14 15 15
+assv 14 16
+addo 13
+neql 13 12 17
+cjmp 17 58
+puti 15
+assn 17 10
+putc 17
+halt
+MOVE 19 0 S		#read intro
+ASSN 19 102
+MOVE 19 1 S
+ASSN 19 105
+MOVE 19 2 S
+ASSN 19 98
+MOVE 19 3 S
+ASSN 19 111
+MOVE 19 4 S
+ASSN 19 110
+MOVE 19 5 S
+ASSN 19 97
+MOVE 19 6 S
+ASSN 19 99
+MOVE 19 7 S
+ASSN 19 99
+MOVE 19 8 S
+ASSN 19 105
+MOVE 19 9 S
+ASSN 19 95
+MOVE 19 10 S
+ASSN 19 105
+MOVE 19 11 S
+ASSN 19 110
+MOVE 19 12 S
+ASSN 19 116
+MOVE 19 13 S
+ASSN 19 114
+MOVE 19 14 S
+ASSN 19 111
+MOVE 19 15 S
+ASSN 19 46
+MOVE 19 16 S
+ASSN 19 116
+MOVE 19 17 S
+ASSN 19 120
+MOVE 19 18 S
+ASSN 19 116
+MOVE 19 19 S
+ASSN 19 0
+MOVE 19 0 S
+ASSN 17 114
+OPEN 19 17 18
+read 18
+CLOS 18
+move 18 7 I
+jump 15
+CTCT R					#wrong input
+ASSN 11 87
+PUTC 11
+ASSN 11 82
+PUTC 11
+ASSN 11 79
+PUTC 11
+ASSN 11 78
+PUTC 11
+ASSN 11 71
+PUTC 11
+ASSN 11 32
+PUTC 11
+ASSN 11 73
+PUTC 11
+ASSN 11 78
+PUTC 11
+ASSN 11 80
+PUTC 11
+ASSN 11 85
+PUTC 11
+ASSN 11 84
+PUTC 11
+ASSN 11 33
+PUTC 11
+ASSN 11 33
+PUTC 11
+assn 11 10
+putc 11
+CTCT 0
+assn 17 10
+getc 15
+neql 17 15 17
+cjmp 17 145
+halt
