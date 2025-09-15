@@ -124,7 +124,6 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
             }
         
         
-        
         }
         if(index==0) { RSOD( "You tried to load an empty file as Operating System"); exit(1); }
         free(buffer);
@@ -133,7 +132,7 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
 
         if (file==NULL) {
             RED
-            puts("> Command not found...");
+            puts("> Command not found...\n");
             which_ram = OS ;
             RESET
             return 1 ;
@@ -143,10 +142,9 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
             RED
-            puts("> Command not found...");
+            puts("> Can't allocate memory for loading program\n");
             RESET
             which_ram = OS ;
-            os_eip++ ;
             return 2 ;
         }
         while( fgets( buffer, bufsize, file) ){
@@ -160,12 +158,17 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
             }
         }
         if(index==0) {
+
             free(buffer);
+
             RED
-            puts("[!] Program Loading Error \n\tYou tried to load an empty file as program!");
+            puts(
+                "> Program Loading Error \n"
+                "    |___You tried to load an empty file as program!\n"
+            );
             RESET
+            
             which_ram = OS ;
-            os_eip++ ;
             return 3 ;
             ;
         }

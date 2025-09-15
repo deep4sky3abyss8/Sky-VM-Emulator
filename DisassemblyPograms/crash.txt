@@ -1,4 +1,4 @@
 moVE 11 98 S
-move 12 97 I #-> this line commented .
+mope 12 97 I #-> this line commented .
 gets 11 12  # comment2
 HaLT # this is comment
