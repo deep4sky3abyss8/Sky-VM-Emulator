@@ -653,7 +653,10 @@ int mode_ints(int eip) {
 			res= os_ram[eip].v3 ,
 			a= *(int *)registers[r1].address ,
 			b= *(int *)registers[r2].address ;
-		*(int *)registers[res].address = a%b ;
+
+		if (!b) printf("ERR");
+		else *(int *)registers[res].address = a%b ;
+
 		os_eip++ ;
 		return res ;
 	}
@@ -663,7 +666,10 @@ int mode_ints(int eip) {
 			res= pr_ram[eip].v3 ,
 			a= *(int *)registers[r1].address ,
 			b= *(int *)registers[r2].address ;
-		*(int *)registers[res].address = a%b ;
+
+		if (!b) printf("ERR");
+		else *(int *)registers[res].address = a%b ;
+
 		pr_eip++ ;
 		return res ;
 	}
