@@ -1,0 +1,2 @@
+> Enter a number as n and view the nth Fibonacci number.
+so your number:] 

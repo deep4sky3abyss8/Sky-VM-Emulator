@@ -1,3 +1,4 @@
 
  What can i do for you today?
  use "man" command to know what is really going on!!!!
+ There is no difference between uppercase and lowercase letters.
