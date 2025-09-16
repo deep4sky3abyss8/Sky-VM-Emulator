@@ -1,1 +1,2 @@
-about :
+about : we are 3 creative student and we are interested in programming. this project was challenging but we hope it was a good teamwork.
+MohammadMahdi * 2 && Sajad

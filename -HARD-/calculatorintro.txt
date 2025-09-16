@@ -1,1 +1,6 @@
-LEFT TO RIGHT :
+> LEFT TO RIGHT :
+ Use + to add.
+ Use - to subtract.
+ Use * to multiply.
+ Use / to divide.
+ Use ^ to raise to an exponent.
