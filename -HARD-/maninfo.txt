@@ -25,6 +25,11 @@
     |          |
     |          +> "date" show current time.
     |          |
+    |          +> "chname" change your name.
+    |          |
+    |          +> "whoAmi" what is your name in os.
+    |          |
+    |          +> "whoAreYou" know about us.
     |          |
     |          +> "halt" to shutdown machine. B) 
     |          |
