@@ -132,7 +132,9 @@ int main(void) {
         else if (command_cmp(*eip , _CTCT_ )){
             change_terminal_color_to(*eip);
         }
-
+        else if (command_cmp(*eip , _REST_ )){
+            rest(*eip);
+        }
 
 
         //====================================

@@ -13,6 +13,8 @@ void getword(int eip);
 
 void writeFile(int eip);
 
+void rest(int eip);
+
 void appendFile(int eip);
 
 void makeFile(int eip);

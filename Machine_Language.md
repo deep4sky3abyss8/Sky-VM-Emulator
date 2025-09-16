@@ -57,6 +57,7 @@ This project implements a custom low-level programming language and an operating
 - `KILL R1` : Deletes the file named in reg[R1].
 - `RUNF R1` : Loads and runs a program pointed by reg[R1].
 - `CLER` : clear screen
+- `REST R1` : sleep system, R1 is register contail a number in nanosec . 
 - `CTCT color` : Sets terminal color (`R`, `G`, `B`, `Y`, `0`->reset).
 
 ## Example: Reading a Multi-digit Number

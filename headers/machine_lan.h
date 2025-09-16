@@ -45,6 +45,6 @@
 #define _RUNF_ "RUNF"           // RUN A PRG FILE
 //------------------
 #define _CTCT_ "CTCT"           // CHANG SCREEN TEXT COLORS TO ...
-
+#define _REST_ "REST"
 
 #endif// MACHINE_LAN_H

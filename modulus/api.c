@@ -427,6 +427,25 @@ void clear_screen(int eip){
     }
     system("cls") ;
 }
+//--------| REST |--------//
+void rest(int eip){
+
+    int r1 ;
+
+    if( which_ram==OS){
+
+        r1 = os_ram[eip].v1;
+        os_eip++ ;
+    }
+    else{
+
+        r1 = os_ram[eip].v1;
+        pr_eip++ ;
+    }
+    int timeout = *(int*)registers[r1].address ;
+    Sleep( timeout );
+    return ;
+}
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //CTCT color(R/G/B/Y/0)			// change terminal color to R->red , G->green ,  B->blue , Y->yellow , 0->reset		be carefull if you don't reset , it will not reset atumaticly !!!!!
 
