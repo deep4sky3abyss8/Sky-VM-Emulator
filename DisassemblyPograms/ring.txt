@@ -1,0 +1,4 @@
+move 11 0 I
+ASSN 11 7
+PUTC 11
+HALT
