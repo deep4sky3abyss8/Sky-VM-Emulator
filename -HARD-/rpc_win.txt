@@ -1,2 +1,2 @@
-Oops ! i lost, how about we play again? ( put "yes" or "no")
+Oops ! i lost, how about we play again?
 # > 
