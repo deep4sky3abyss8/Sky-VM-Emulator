@@ -37,7 +37,7 @@
     |          |
     |          #> "empty" load an empty-src program. -> err handle
     |
-    +--------> @Programs
+    +--------> @ Mathematical programs :/
     |          |
     |          |
     |          +> isprime
@@ -46,12 +46,22 @@
     |          |
     |          +> iseven
     |          |
-    |          +> game
+    |          +> Fibonacci
     |          |
-    |          +> gtn
+    |          +> calculator
+    |          |
+    +--------> @ interesting games ;)
+    |          |
+    |          |
+    |          +> "rps" classic sang-kaghaz-qeighi
+    |          |
+    |          +> "gtn" guess the number
     |          | 
-    |          +> rps
+    |          +> "game" play to know what is it!
     |          | 
+    +--------> @ just for fun :)
+    |          |
+    |          |
     |          +> cowsay
     |          |         
     |          +> ring
@@ -60,9 +70,6 @@
     |          | 
     |          +> headortail
     |          | 
-    |          +> Fibonacci
-    |          |
-    |          +> calculator
     |       
     |______ Good luck ...
 

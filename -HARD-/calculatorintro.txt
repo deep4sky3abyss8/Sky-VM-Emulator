@@ -4,3 +4,4 @@
  Use * to multiply.
  Use / to divide.
  Use ^ to raise to an exponent.
+> please use number that >= 0.
