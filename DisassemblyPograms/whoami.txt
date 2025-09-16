@@ -22,4 +22,8 @@ ASSN 12 114
 OPEN 11 12 12
 read 12
 CLOS 12
+<<<<<<< HEAD
 halt
+=======
+halt
+>>>>>>> acb2b57c956f6bfc7f51801598062e01356e3a76
