@@ -51,7 +51,18 @@
     |          +> gtn
     |          | 
     |          +> rps
-    |          
-    |          
+    |          | 
+    |          +> cowsay
+    |          |         
+    |          +> ring
+    |          | 
+    |          +> bobrossSpeech
+    |          | 
+    |          +> headortail
+    |          | 
+    |          +> Fibonacci
+    |          |
+    |          +> calculator
+    |       
     |______ Good luck ...
 
