@@ -1,5 +1,5 @@
 
-excellent choice ;)
+>   excellent choice ;)
 >   I'ts look like you need some help!
     here is a diagram about Bubble...
 
@@ -26,8 +26,11 @@ excellent choice ;)
     |          +> "date" show current time.
     |          |
     |          |
-    |          +> "halt" to shutdown machine. but please do not use it 0 0
-    |                                                                   | 
+    |          +> "halt" to shutdown machine. B) 
+    |          |
+    |          #> "crash" try to cr*sh @Bubble -> err handle
+    |          |
+    |          #> "empty" load an empty-src program. -> err handle
     |
     +--------> @Programs
     |          |
@@ -43,7 +46,7 @@ excellent choice ;)
     |          +> gtn
     |          | 
     |          +> rps
-    |          |
-    |          |
+    |          
+    |          
     |______ Good luck ...
 

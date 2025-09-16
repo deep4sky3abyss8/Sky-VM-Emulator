@@ -1,4 +1,4 @@
-< Target Locked >
-Mission: secondGame
-num is 00 - 99
-you haeve 6 try
+ < Target Locked >
+ Mission: secondGame
+ num is 00 - 99
+ you haeve 6 try

@@ -1,11 +1,13 @@
 < Target Locked >
-Mission: thirdGame
-OK! lets play some game!
-you can chose :
+ Mission: thirdGame
+ 
+> OK! lets play some game!
+> you can chose :
 
-"ROCK" with "r"
-"PAPER" with "p"
-"SCISSOR" with "s"
-"EXIT" with "q"
-so what you chose? 
+ "ROCK" with "r"
+ "PAPER" with "p"
+ "SCISSOR" with "s"
+ "EXIT" with "q"
+
+> so what you chose? 
 
