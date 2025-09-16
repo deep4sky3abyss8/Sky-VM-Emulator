@@ -439,7 +439,7 @@ void rest(int eip){
     }
     else{
 
-        r1 = os_ram[eip].v1;
+        r1 = pr_ram[eip].v1;
         pr_eip++ ;
     }
     int timeout = *(int*)registers[r1].address ;
