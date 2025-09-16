@@ -97,6 +97,7 @@ void openFile(int eip)
             RED
             printf("The file is not found");
             RESET
+            which_ram = OS ;
         }
         registers[r3].address = (void *) p;
         os_eip++;
