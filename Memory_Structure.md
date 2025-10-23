@@ -9,7 +9,7 @@ This document provides an overview of the memory structure and data used in a vi
 - **Purpose:** Holds the path to the operating system file to load.
 - **Example:**
 ```c
-"../DisassemblyPograms/os.txt"
+"../.kernel/os.txt"
 ```
 
 | BOOT LOADER ADDRESS |
