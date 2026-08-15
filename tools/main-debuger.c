@@ -12,6 +12,10 @@
 //--------------------------------------------[  define  ]-------------------
 #define BOOT_ADDRESS "../.kernel/os.txt"
 //--------------------------------------------[   external var src  ] -----------------
+struct ram os_ram[10000];
+struct ram pr_ram[10000];
+struct heap_s heap;
+struct regs registers[30];
 int stck_mem[100] , // short for stack memory segment .
     os_eip=0 ,  // -> eip registers which tell us which line of program/os we are in .
     pr_eip=0 ,
