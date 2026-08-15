@@ -55,6 +55,13 @@ int main(void) {
         }
 
 
+        if (*eip < 0 || *eip >= 10000) {
+            RED
+            fprintf(stderr, "[!]Fatal Error: EIP out of bounds <%d>\n", *eip);
+            RESET
+            exit(3);
+        }
+
         printf("|\teip: <%d>\t|\tcommand: ",*eip);
         GREEN
         printf("%s\t",RAM[*eip].command) ;
@@ -166,18 +173,18 @@ int main(void) {
                 RED
                 fprintf(stderr, "[!]Fatal Error in < Operating System >\nInvalid disassembly command : <%s>\n",os_ram[os_eip].command);
                 RESET
-                char c ;
+                int c ;
                 puts("press Enter to exit...");
-                while( (c=getchar())!='\n');
+                while( (c=getchar())!='\n' && c!=EOF);
                 exit(1);
             }
             else {
                 RED
                 fprintf(stderr, "[!]Fatal Error in < Program >\nInvalid disassembly command : <%s>\n",pr_ram[pr_eip].command);
                 RESET
-                char c ;
+                int c ;
                 puts("press Enter to exit...");
-                while( (c=getchar())!='\n');
+                while( (c=getchar())!='\n' && c!=EOF);
                 exit(2);
             }
             

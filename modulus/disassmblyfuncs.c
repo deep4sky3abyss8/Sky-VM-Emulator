@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <windows.h>
 #include "../headers/memory_struct.h" // include for global memory arrays .
 #include "../headers/loader.h" // for halt command .
@@ -11,12 +12,10 @@
 //--------------------------------------------------------------------
 //-------| CHECK |--------// OK
 int command_cmp( int line , const char *pointer ) {
+	if (line < 0 || line >= 10000 || !pointer) return 0;
 
-	char check ;
 	if( which_ram==OS ){
-
 		for (int index = 0; index < 4; index++) {
-
 			if (os_ram[line].command[index] != *(pointer + index) && os_ram[line].command[index] != ( 'a'+*(pointer + index)-'A' )) {
 				return 0;
 			}
@@ -24,7 +23,6 @@ int command_cmp( int line , const char *pointer ) {
 	}
 	else {
 		for (int index = 0; index < 4; index++) {
-
 			if ( pr_ram[line].command[index] != *(pointer + index) && pr_ram[line].command[index] != ( 'a'+*(pointer + index)-'A' )) {
 				return 0;
 			}
@@ -37,26 +35,30 @@ void assigne_num( int eip ){
 	if(which_ram == OS){
 		int reg_index = os_ram[eip].v1 ,
 		value = os_ram[eip].v2 ;
-		switch (registers[reg_index].type) {
-			case 'I':
-				*((int * )registers[reg_index].address)= value ;
-				break;
-			default:
-				*((char * )registers[reg_index].address)= (char)value ;
-				break;
+		if (reg_index >= 0 && reg_index < 30 && registers[reg_index].address != NULL) {
+			switch (registers[reg_index].type) {
+				case 'I':
+					*((int * )registers[reg_index].address)= value ;
+					break;
+				default:
+					*((char * )registers[reg_index].address)= (char)value ;
+					break;
+			}
 		}
 		os_eip++ ;
 	}
 	else{
 		int reg_index = pr_ram[eip].v1 ,
 		value = pr_ram[eip].v2 ;
-		switch (registers[reg_index].type) {
-			case 'I':
-				*((int * )registers[reg_index].address)= value ;
-				break;
-			default:
-				*((char * )registers[reg_index].address)= (char)value ;
-				break;
+		if (reg_index >= 0 && reg_index < 30 && registers[reg_index].address != NULL) {
+			switch (registers[reg_index].type) {
+				case 'I':
+					*((int * )registers[reg_index].address)= value ;
+					break;
+				default:
+					*((char * )registers[reg_index].address)= (char)value ;
+					break;
+			}
 		}
 		pr_eip++ ;
 	}
@@ -66,35 +68,51 @@ void move_to_reg ( int eip) {
 	if(which_ram == OS) {
 		int index = os_ram[eip].v1 ;
 		int target =  os_ram[eip].v2 ;
-		switch (os_ram[eip].v3) {
-			case 'I':
-				registers[index].address = &(heap.ints[target]) ;
-				break;
-			case 'C':
-				registers[index].address = &(heap.chrs[target]) ;
-				break;
-			case 'S' :
-				registers[index].address = &(heap.strs[target]) ;
-				break;
+		if (index >= 0 && index < 30) {
+			switch (os_ram[eip].v3) {
+				case 'I':
+					if (target >= 0 && target < 100) registers[index].address = &(heap.ints[target]) ;
+					else registers[index].address = NULL;
+					break;
+				case 'C':
+					if (target >= 0 && target < 100) registers[index].address = &(heap.chrs[target]) ;
+					else registers[index].address = NULL;
+					break;
+				case 'S' :
+					if (target >= 0 && target < 1000) registers[index].address = &(heap.strs[target]) ;
+					else registers[index].address = NULL;
+					break;
+				default:
+					registers[index].address = NULL;
+					break;
+			}
+			registers[index].type = (char)os_ram[eip].v3 ;
 		}
-		registers[index].type = os_ram[eip].v3 ;
 		os_eip++ ;
 	}
 	else {
 		int index = pr_ram[eip].v1 ;
 		int target =  pr_ram[eip].v2 ;
-		switch (pr_ram[eip].v3) {
-			case 'I':
-				registers[index].address = &(heap.ints[target]) ;
-				break;
-			case 'C':
-				registers[index].address = &(heap.chrs[target]) ;
-				break;
-			case 'S' :
-				registers[index].address = &(heap.strs[target]) ;
-				break;
+		if (index >= 0 && index < 30) {
+			switch (pr_ram[eip].v3) {
+				case 'I':
+					if (target >= 0 && target < 100) registers[index].address = &(heap.ints[target]) ;
+					else registers[index].address = NULL;
+					break;
+				case 'C':
+					if (target >= 0 && target < 100) registers[index].address = &(heap.chrs[target]) ;
+					else registers[index].address = NULL;
+					break;
+				case 'S' :
+					if (target >= 0 && target < 1000) registers[index].address = &(heap.strs[target]) ;
+					else registers[index].address = NULL;
+					break;
+				default:
+					registers[index].address = NULL;
+					break;
+			}
+			registers[index].type = (char)pr_ram[eip].v3 ;
 		}
-		registers[index].type = pr_ram[eip].v3 ;
 		pr_eip++ ;
 	}
 }
@@ -103,29 +121,35 @@ void assign_var ( int eip) {
 	if(which_ram == OS) {
 		int des = os_ram[eip].v1 ;
 		int src =  os_ram[eip].v2 ;
-		switch (registers[src].type) {
-			case 'I':
-				*((int *)registers[des].address) = * ((int *)registers[src].address) ;
-				break;
-			default:
-				*((char*)registers[des].address) = * ((char*)registers[src].address) ;
-				break;
+		if (des >= 0 && des < 30 && src >= 0 && src < 30 &&
+		    registers[des].address != NULL && registers[src].address != NULL) {
+			switch (registers[src].type) {
+				case 'I':
+					*((int *)registers[des].address) = * ((int *)registers[src].address) ;
+					break;
+				default:
+					*((char*)registers[des].address) = * ((char*)registers[src].address) ;
+					break;
+			}
+			registers[des].type = registers[src].type ;
 		}
-		registers[des].type = registers[src].type ;
 		os_eip++ ;
 	}
 	else {
 		int des = pr_ram[eip].v1 ;
 		int src =  pr_ram[eip].v2 ;
-		switch (registers[src].type) {
-			case 'I':
-				*((int *)registers[des].address) = * ((int *)registers[src].address) ;
-				break;
-			default:
-				*((char*)registers[des].address) = * ((char*)registers[src].address) ;
-				break;
+		if (des >= 0 && des < 30 && src >= 0 && src < 30 &&
+		    registers[des].address != NULL && registers[src].address != NULL) {
+			switch (registers[src].type) {
+				case 'I':
+					*((int *)registers[des].address) = * ((int *)registers[src].address) ;
+					break;
+				default:
+					*((char*)registers[des].address) = * ((char*)registers[src].address) ;
+					break;
+			}
+			registers[des].type = registers[src].type ;
 		}
-		registers[des].type = registers[src].type ;
 		pr_eip++ ;
 	}
 }
@@ -135,25 +159,28 @@ void compare ( int eip) {
 		int src = os_ram[eip].v1 ,
 			des = os_ram[eip].v2 ,
 			res = os_ram[eip].v3 ;
-		registers[res].type = 'I' ;
-		if (registers[src].type == registers[des].type) {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((int *)registers[des].address) > *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((char *)registers[des].address) > *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+		if (src >= 0 && src < 30 && des >= 0 && des < 30 && res >= 0 && res < 30 &&
+		    registers[src].address != NULL && registers[des].address != NULL && registers[res].address != NULL) {
+			registers[res].type = 'I' ;
+			if (registers[src].type == registers[des].type) {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((int *)registers[des].address) > *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((char *)registers[des].address) > *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
-		}
-		else {
-			*(int*)registers[res].address = 0 ;
+			else {
+				*(int*)registers[res].address = 0 ;
+			}
 		}
 		os_eip++ ;
 	}
@@ -161,25 +188,28 @@ void compare ( int eip) {
 		int src = pr_ram[eip].v1 ,
 			des = pr_ram[eip].v2 ,
 			res = pr_ram[eip].v3 ;
-		registers[res].type = 'I' ;
-		if (registers[src].type == registers[des].type) {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((int *)registers[des].address) > *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((char *)registers[des].address) > *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+		if (src >= 0 && src < 30 && des >= 0 && des < 30 && res >= 0 && res < 30 &&
+		    registers[src].address != NULL && registers[des].address != NULL && registers[res].address != NULL) {
+			registers[res].type = 'I' ;
+			if (registers[src].type == registers[des].type) {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((int *)registers[des].address) > *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((char *)registers[des].address) > *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
-		}
-		else {
-			*(int*)registers[res].address = 0 ;
+			else {
+				*(int*)registers[res].address = 0 ;
+			}
 		}
 		pr_eip++ ;
 	}
@@ -190,37 +220,40 @@ void equal(int eip) {
 		int src = os_ram[eip].v1 ,
 			des = os_ram[eip].v2 ,
 			res = os_ram[eip].v3 ;
-		registers[res].type = 'I' ;
-		if (registers[src].type == registers[des].type) {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((int *)registers[des].address) == *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((char *)registers[des].address) == *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+		if (src >= 0 && src < 30 && des >= 0 && des < 30 && res >= 0 && res < 30 &&
+		    registers[src].address != NULL && registers[des].address != NULL && registers[res].address != NULL) {
+			registers[res].type = 'I' ;
+			if (registers[src].type == registers[des].type) {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((int *)registers[des].address) == *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((char *)registers[des].address) == *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
-		}
-		else {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((char *)registers[des].address) == *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((int *)registers[des].address) == *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+			else {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((char *)registers[des].address) == *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((int *)registers[des].address) == *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
 		}
 		os_eip++ ;
@@ -229,37 +262,40 @@ void equal(int eip) {
 		int src = pr_ram[eip].v1 ,
 			des = pr_ram[eip].v2 ,
 			res = pr_ram[eip].v3 ;
-		registers[res].type = 'I' ;
-		if (registers[src].type == registers[des].type) {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((int *)registers[des].address) == *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((char *)registers[des].address) == *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+		if (src >= 0 && src < 30 && des >= 0 && des < 30 && res >= 0 && res < 30 &&
+		    registers[src].address != NULL && registers[des].address != NULL && registers[res].address != NULL) {
+			registers[res].type = 'I' ;
+			if (registers[src].type == registers[des].type) {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((int *)registers[des].address) == *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((char *)registers[des].address) == *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
-		}
-		else {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((char *)registers[des].address) == *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((int *)registers[des].address) == *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+			else {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((char *)registers[des].address) == *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((int *)registers[des].address) == *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
 		}
 		pr_eip++ ;
@@ -271,37 +307,40 @@ void not_equal(int eip) {
 		int src = os_ram[eip].v1 ,
 			des = os_ram[eip].v2 ,
 			res = os_ram[eip].v3 ;
-		registers[res].type = 'I' ;
-		if (registers[src].type == registers[des].type) {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((int *)registers[des].address) != *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((char *)registers[des].address) != *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+		if (src >= 0 && src < 30 && des >= 0 && des < 30 && res >= 0 && res < 30 &&
+		    registers[src].address != NULL && registers[des].address != NULL && registers[res].address != NULL) {
+			registers[res].type = 'I' ;
+			if (registers[src].type == registers[des].type) {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((int *)registers[des].address) != *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((char *)registers[des].address) != *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
-		}
-		else {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((char *)registers[des].address) != *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((int *)registers[des].address) != *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+			else {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((char *)registers[des].address) != *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((int *)registers[des].address) != *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
 		}
 		os_eip++ ;
@@ -310,37 +349,40 @@ void not_equal(int eip) {
 		int src = pr_ram[eip].v1 ,
 			des = pr_ram[eip].v2 ,
 			res = pr_ram[eip].v3 ;
-		registers[res].type = 'I' ;
-		if (registers[src].type == registers[des].type) {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((int *)registers[des].address) != *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((char *)registers[des].address) != *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+		if (src >= 0 && src < 30 && des >= 0 && des < 30 && res >= 0 && res < 30 &&
+		    registers[src].address != NULL && registers[des].address != NULL && registers[res].address != NULL) {
+			registers[res].type = 'I' ;
+			if (registers[src].type == registers[des].type) {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((int *)registers[des].address) != *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((char *)registers[des].address) != *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
-		}
-		else {
-			switch (registers[src].type) {
-				case 'I':
-					if (*((char *)registers[des].address) != *((int *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
-				default:
-					if (*((int *)registers[des].address) != *((char *)registers[src].address))
-						*(int*)registers[res].address = 1 ;
-					else
-						*(int*)registers[res].address = 0 ;
-					break;
+			else {
+				switch (registers[src].type) {
+					case 'I':
+						if (*((char *)registers[des].address) != *((int *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+					default:
+						if (*((int *)registers[des].address) != *((char *)registers[src].address))
+							*(int*)registers[res].address = 1 ;
+						else
+							*(int*)registers[res].address = 0 ;
+						break;
+				}
 			}
 		}
 		pr_eip++ ;
@@ -351,18 +393,22 @@ void con_jump(int eip) {
 	if(which_ram == OS) {
 		int reg = os_ram[eip].v1 ,
 			line = os_ram[eip].v2 ;
-		if ( *(int*)registers[reg].address) {
-			os_eip = line-1 ;
-			return;
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL && *(int*)registers[reg].address) {
+			if (line >= 1 && line <= 10000) {
+				os_eip = line-1 ;
+				return;
+			}
 		}
 		os_eip++ ;
 	}
 	else {
 		int reg = pr_ram[eip].v1 ,
 			line = pr_ram[eip].v2 ;
-		if ( *(int*)registers[reg].address) {
-			pr_eip = line-1 ;
-			return ;
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL && *(int*)registers[reg].address) {
+			if (line >= 1 && line <= 10000) {
+				pr_eip = line-1 ;
+				return ;
+			}
 		}
 		pr_eip++ ;
 	}
@@ -371,15 +417,24 @@ void con_jump(int eip) {
 int jump (int eip) {
 	if(which_ram == OS) {
 		int line = os_ram[eip].v1 ;
+		if (line >= 1 && line <= 10000) {
 			os_eip = line-1 ;
-			return line ;
+		} else {
+			os_eip++ ;
+		}
+		return line ;
 	}
 	int line = pr_ram[eip].v1 ;
+	if (line >= 1 && line <= 10000) {
 		pr_eip = line-1 ;
-		return line ;
+	} else {
+		pr_eip++ ;
+	}
+	return line ;
 }
 //--------| HALT |--------//
 int halt (int eip ){   // --> if in future we allocate any memory , here we must free them all .
+	(void)eip;
 	if(which_ram == OS) {
 		return 1 ;
 	}
@@ -392,15 +447,21 @@ int halt (int eip ){   // --> if in future we allocate any memory , here we must
 char put_char(int eip ) {
 	if(which_ram == OS) {
 		int reg = os_ram[eip].v1 ;
-		char c = *((char*)registers[reg].address) ;
+		char c = '\0';
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
+			c = *((char*)registers[reg].address) ;
+			putchar(c);
+		}
 		os_eip++ ;
-		putchar(c);
 		return c ;
 	}
 	int reg = pr_ram[eip].v1 ;
-	char c = *((char*)registers[reg].address) ;
+	char c = '\0';
+	if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
+		c = *((char*)registers[reg].address) ;
+		putchar(c);
+	}
 	pr_eip++ ;
-	putchar(c);
 	return c ;
 }
 //--------| PUTS |--------//
@@ -408,10 +469,14 @@ char * put_str(int eip ) {
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
             r2 = os_ram[eip].v2 ;
+		if (r1 < 0 || r1 >= 30 || r2 < 0 || r2 >= 30 || !registers[r1].address || !registers[r2].address) {
+			os_eip++;
+			return NULL;
+		}
         switch(registers[r1].type){
             case 'I':
 		    perror("[!] invalid register type for register point to string\n");
-		printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);   
+		    printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);   
                 return NULL ;
             default :
                 break;
@@ -421,7 +486,7 @@ char * put_str(int eip ) {
                 break;
             default :
                 perror("[!] invalid register type for register point to integer\n");
-		printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);       
+		    printf ("[!] line %d %s %d %d\n",eip,os_ram[eip].command,r1,r2);       
                 return NULL ;
         }
         int len = *((int*)registers[r2].address);
@@ -432,6 +497,10 @@ char * put_str(int eip ) {
 	}
 	int r1 = pr_ram[eip].v1 ,
         r2 = pr_ram[eip].v2 ;
+	if (r1 < 0 || r1 >= 30 || r2 < 0 || r2 >= 30 || !registers[r1].address || !registers[r2].address) {
+		pr_eip++;
+		return NULL;
+	}
     switch(registers[r1].type){
         case 'I':
 		perror("[!] invalid register type for register point to string\n");
@@ -457,25 +526,35 @@ char * put_str(int eip ) {
 //--------| PUTI |--------//
 int put_int(int eip ) {
 	if (which_ram == OS) {
-		int reg = os_ram[eip].v1 ,
+		int reg = os_ram[eip].v1 ;
+		int d = 0;
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
 			d = *((int *)registers[reg].address) ;
+			printf("%d ",d);
+		}
 		os_eip++ ;
-		printf("%d ",d);
 		return d ;
 	}
-	int reg = pr_ram[eip].v1 ,
+	int reg = pr_ram[eip].v1 ;
+	int d = 0;
+	if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
 		d = *((int *)registers[reg].address) ;
+		printf("%d",d);
+	}
 	pr_eip++ ;
-	printf("%d",d);
 	return d ;
 }
 //--------| PUSH |--------//
 char * push_str(int eip ) {
-        if (which_ram == OS) {
-                
-            int r1 = os_ram[eip].v1 ,
-                r2 = os_ram[eip].v2 ,
-                r3 = os_ram[eip].v3 ;
+    if (which_ram == OS) {
+        int r1 = os_ram[eip].v1 ,
+            r2 = os_ram[eip].v2 ,
+            r3 = os_ram[eip].v3 ;
+		if (r1 < 0 || r1 >= 30 || r2 < 0 || r2 >= 30 || r3 < 0 || r3 >= 30 ||
+		    !registers[r1].address || !registers[r2].address || !registers[r3].address) {
+			os_eip++;
+			return NULL;
+		}
         switch(registers[r1].type){
             case 'I':
                     perror("[!] invalid register type for register point to string\n");
@@ -493,14 +572,19 @@ char * push_str(int eip ) {
                 return NULL ;
         }
         int len = *((int*)registers[r2].address);
-                char * str = (char*)registers[r1].address ;
+        char * str = (char*)registers[r1].address ;
         *(char*)registers[r3].address = *(str+len);
-                os_eip++ ;
-                return str ;
-        }
-        int r1 = pr_ram[eip].v1 ,
+        os_eip++ ;
+        return str ;
+    }
+    int r1 = pr_ram[eip].v1 ,
         r2 = pr_ram[eip].v2 ,
         r3 = pr_ram[eip].v3 ;
+	if (r1 < 0 || r1 >= 30 || r2 < 0 || r2 >= 30 || r3 < 0 || r3 >= 30 ||
+	    !registers[r1].address || !registers[r2].address || !registers[r3].address) {
+		pr_eip++;
+		return NULL;
+	}
     switch(registers[r1].type){
         case 'I':
                 perror("[!] invalid register type for register point to string\n");
@@ -525,54 +609,58 @@ char * push_str(int eip ) {
 }
 //--------| STOR |--------//
 void store_char (int eip ) {
-        if (which_ram == OS) {
-                
-            int r1 = os_ram[eip].v1 ,
-                r2 = os_ram[eip].v2 ,
-                r3 = os_ram[eip].v3 ;
-			
+    if (which_ram == OS) {
+        int r1 = os_ram[eip].v1 ,
+            r2 = os_ram[eip].v2 ,
+            r3 = os_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && r3 >= 0 && r3 < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[r3].address != NULL) {
         	int idx = *((int*)registers[r2].address);
-
             char * str = (char*)registers[r1].address,
 				   character = *((char*)registers[r3].address);
-
 			*( str + idx ) = character ;
-			os_eip++ ;
 		}
-		else {
-
-            int r1 = pr_ram[eip].v1 ,
-                r2 = pr_ram[eip].v2 ,
-                r3 = pr_ram[eip].v3 ;
-			
+		os_eip++ ;
+	}
+	else {
+        int r1 = pr_ram[eip].v1 ,
+            r2 = pr_ram[eip].v2 ,
+            r3 = pr_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && r3 >= 0 && r3 < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[r3].address != NULL) {
         	int idx = *((int*)registers[r2].address);
-
             char * str = (char*)registers[r1].address,
 				   character = *((char*)registers[r3].address);
-
 			*( str + idx ) = character ;
-			pr_eip++ ;
 		}
+		pr_eip++ ;
+	}
 }
 //--------| ADDN |--------//
 int add_ints(int eip) {
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
 			r2 = os_ram[eip].v2 ,
-			res= os_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
-		*(int *)registers[res].address = a+b ;
+			res= os_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
+			*(int *)registers[res].address = a+b ;
+		}
 		os_eip++ ;
 		return res ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
-			res= pr_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
-		*(int *)registers[res].address = a+b ;
+			res= pr_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
+			*(int *)registers[res].address = a+b ;
+		}
 		pr_eip++ ;
 		return res ;
 	}
@@ -580,17 +668,21 @@ int add_ints(int eip) {
 //--------| ADDO |--------//
 void plus_one(int eip) {
 	if (which_ram == OS) {
-		int r = os_ram[eip].v1 ,
-			a = *(int *)registers[r].address ;
-		a++ ;
-		*(int *)registers[r].address = a ;
+		int r = os_ram[eip].v1 ;
+		if (r >= 0 && r < 30 && registers[r].address != NULL) {
+			int a = *(int *)registers[r].address ;
+			a++ ;
+			*(int *)registers[r].address = a ;
+		}
 		os_eip++ ;
 		return;
 	}
-	int r = pr_ram[eip].v1 ,
-		a = *(int *)registers[r].address ;
-	a++ ;
-	*(int *)registers[r].address = a ;
+	int r = pr_ram[eip].v1 ;
+	if (r >= 0 && r < 30 && registers[r].address != NULL) {
+		int a = *(int *)registers[r].address ;
+		a++ ;
+		*(int *)registers[r].address = a ;
+	}
 	pr_eip++ ;
 }
 //--------| MULT |--------//
@@ -598,20 +690,26 @@ int mult_ints(int eip) {
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
 			r2 = os_ram[eip].v2 ,
-			res= os_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
-		*(int *)registers[res].address = a*b ;
+			res= os_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
+			*(int *)registers[res].address = a*b ;
+		}
 		os_eip++ ;
 		return res ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
-			res= pr_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
-		*(int *)registers[res].address = a*b ;
+			res= pr_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
+			*(int *)registers[res].address = a*b ;
+		}
 		pr_eip++ ;
 		return res ;
 	}
@@ -621,26 +719,46 @@ int div_ints(int eip) {
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
 			r2 = os_ram[eip].v2 ,
-			res= os_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
+			res= os_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
 
-		if (!b) printf("ERR");
-		else *(int *)registers[res].address = a/b ;
-
+			if (b == 0) {
+				printf("ERR");
+				*(int *)registers[res].address = 0;
+			}
+			else if (a == INT_MIN && b == -1) {
+				*(int *)registers[res].address = INT_MAX;
+			}
+			else {
+				*(int *)registers[res].address = a/b ;
+			}
+		}
 		os_eip++ ;
 		return res ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
-			res= pr_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
+			res= pr_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
 
-		if (!b) printf("ERR");
-		else *(int *)registers[res].address = a/b ;
-
+			if (b == 0) {
+				printf("ERR");
+				*(int *)registers[res].address = 0;
+			}
+			else if (a == INT_MIN && b == -1) {
+				*(int *)registers[res].address = INT_MAX;
+			}
+			else {
+				*(int *)registers[res].address = a/b ;
+			}
+		}
 		pr_eip++ ;
 		return res ;
 	}
@@ -650,26 +768,46 @@ int mode_ints(int eip) {
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
 			r2 = os_ram[eip].v2 ,
-			res= os_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
+			res= os_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
 
-		if (!b) printf("ERR");
-		else *(int *)registers[res].address = a%b ;
-
+			if (b == 0) {
+				printf("ERR");
+				*(int *)registers[res].address = 0;
+			}
+			else if (a == INT_MIN && b == -1) {
+				*(int *)registers[res].address = 0;
+			}
+			else {
+				*(int *)registers[res].address = a%b ;
+			}
+		}
 		os_eip++ ;
 		return res ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
-			res= pr_ram[eip].v3 ,
-			a= *(int *)registers[r1].address ,
-			b= *(int *)registers[r2].address ;
+			res= pr_ram[eip].v3 ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && res >= 0 && res < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[res].address != NULL) {
+			int a = *(int *)registers[r1].address ,
+				b = *(int *)registers[r2].address ;
 
-		if (!b) printf("ERR");
-		else *(int *)registers[res].address = a%b ;
-
+			if (b == 0) {
+				printf("ERR");
+				*(int *)registers[res].address = 0;
+			}
+			else if (a == INT_MIN && b == -1) {
+				*(int *)registers[res].address = 0;
+			}
+			else {
+				*(int *)registers[res].address = a%b ;
+			}
+		}
 		pr_eip++ ;
 		return res ;
 	}
@@ -678,15 +816,19 @@ int mode_ints(int eip) {
 char get_char(int eip) {
 	if (which_ram == OS) {
 		int reg = os_ram[eip].v1 ;
-		char character = getchar() ;
-		*(char *)registers[reg].address = character ;
+		char character = (char)getchar() ;
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
+			*(char *)registers[reg].address = character ;
+		}
 		os_eip++ ;
 		return character ;
 	}
 	else {
 		int reg = pr_ram[eip].v1 ;
-		char character = getchar() ;
-		*(char *)registers[reg].address = character ;
+		char character = (char)getchar() ;
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
+			*(char *)registers[reg].address = character ;
+		}
 		pr_eip++ ;
 		return character ;
 	}
@@ -694,41 +836,57 @@ char get_char(int eip) {
 //--------| GETI |--------//
 int get_int(int eip) {
 	if (which_ram == OS) {
-		int reg = os_ram[eip].v1 ,
-			num = getchar()-'0';
-		*(char *)registers[reg].address = num ;
+		int reg = os_ram[eip].v1 ;
+		int num = getchar()-'0';
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
+			if (registers[reg].type == 'I') {
+				*(int *)registers[reg].address = num ;
+			} else {
+				*(char *)registers[reg].address = (char)num ;
+			}
+		}
 		os_eip++ ;
 		return num ;
 	}
 	else {
-		int reg = pr_ram[eip].v1 ,
-			num = getchar()-'0' ;
-		*(char *)registers[reg].address = num ;
+		int reg = pr_ram[eip].v1 ;
+		int num = getchar()-'0' ;
+		if (reg >= 0 && reg < 30 && registers[reg].address != NULL) {
+			if (registers[reg].type == 'I') {
+				*(int *)registers[reg].address = num ;
+			} else {
+				*(char *)registers[reg].address = (char)num ;
+			}
+		}
 		pr_eip++ ;
 		return num ;
 	}
 } // it take only one digit from stdin .
 //--------| GETS |--------//  befor using this func user must call MOVE and move his register on strs heap segment .
 int get_str(int eip) {
-
 	if (which_ram == OS) {
 		int r1 = os_ram[eip].v1 ,
 			reg = os_ram[eip].v2 ,
-			count =0 ;
-		char * str = (char *)registers[r1].address ;
-		count = read_str(str , ' ') ;
-		*(int *) registers[reg].address = count ;
+			count = 0 ;
+		if (r1 >= 0 && r1 < 30 && reg >= 0 && reg < 30 &&
+		    registers[r1].address != NULL && registers[reg].address != NULL) {
+			char * str = (char *)registers[r1].address ;
+			count = read_str(str , ' ') ;
+			*(int *) registers[reg].address = count ;
+		}
 		os_eip++ ;
 		return count ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			reg = pr_ram[eip].v2 ,
-			count =0 ;
-		char * str = (char *)registers[r1].address ;
-		count = read_str(str , ' ') ;
-		*(int *) registers[reg].address = count ;
-
+			count = 0 ;
+		if (r1 >= 0 && r1 < 30 && reg >= 0 && reg < 30 &&
+		    registers[r1].address != NULL && registers[reg].address != NULL) {
+			char * str = (char *)registers[r1].address ;
+			count = read_str(str , ' ') ;
+			*(int *) registers[reg].address = count ;
+		}
 		pr_eip++ ;
 		return count ;
 	}
@@ -739,14 +897,20 @@ void and (int eip){
 		int r1 = os_ram[eip].v1 ,
 			r2 = os_ram[eip].v2 ,
 			r3 = os_ram[eip].v3 ;
-		*(int *)registers[r3].address = *(int *)registers[r2].address && *(int *)registers[r1].address ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && r3 >= 0 && r3 < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[r3].address != NULL) {
+			*(int *)registers[r3].address = (*(int *)registers[r2].address && *(int *)registers[r1].address) ? 1 : 0 ;
+		}
         os_eip++ ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
 			r3 = pr_ram[eip].v3 ;
-		*(int *)registers[r3].address = *(int *)registers[r2].address && *(int *)registers[r1].address ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && r3 >= 0 && r3 < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[r3].address != NULL) {
+			*(int *)registers[r3].address = (*(int *)registers[r2].address && *(int *)registers[r1].address) ? 1 : 0 ;
+		}
         pr_eip++ ;
 	}
 }
@@ -756,34 +920,43 @@ void or (int eip){
 		int r1 = os_ram[eip].v1 ,
 			r2 = os_ram[eip].v2 ,
 			r3 = os_ram[eip].v3 ;
-		*(int *)registers[r3].address = *(int *)registers[r2].address || *(int *)registers[r1].address ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && r3 >= 0 && r3 < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[r3].address != NULL) {
+			*(int *)registers[r3].address = (*(int *)registers[r2].address || *(int *)registers[r1].address) ? 1 : 0 ;
+		}
         os_eip++ ;
 	}
 	else {
 		int r1 = pr_ram[eip].v1 ,
 			r2 = pr_ram[eip].v2 ,
 			r3 = pr_ram[eip].v3 ;
-		*(int *)registers[r3].address = *(int *)registers[r2].address || *(int *)registers[r1].address ;
+		if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 && r3 >= 0 && r3 < 30 &&
+		    registers[r1].address != NULL && registers[r2].address != NULL && registers[r3].address != NULL) {
+			*(int *)registers[r3].address = (*(int *)registers[r2].address || *(int *)registers[r1].address) ? 1 : 0 ;
+		}
         pr_eip++ ;
 	}
 }
 //--------| NOTC |--------//
 void not(int eip){
 	if (which_ram==OS) {
-		int r1 = os_ram[eip].v1 ,
-			tmp ;
-		tmp = *(int *)registers[r1].address ;
-		*(int *)registers[r1].address = !tmp ;
+		int r1 = os_ram[eip].v1 ;
+		if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL) {
+			int tmp = *(int *)registers[r1].address ;
+			*(int *)registers[r1].address = (!tmp) ? 1 : 0 ;
+		}
         os_eip++ ;
 	}
 	else {
-		int r1 = pr_ram[eip].v1 ,
-			tmp ;
-		tmp = *(int *)registers[r1].address ;
-		*(int *)registers[r1].address = !tmp ;
+		int r1 = pr_ram[eip].v1 ;
+		if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL) {
+			int tmp = *(int *)registers[r1].address ;
+			*(int *)registers[r1].address = (!tmp) ? 1 : 0 ;
+		}
         pr_eip++ ;
 	}
 }
+
 //------------------------- WINDOWS API COMMANDS ------------------------------
 /*
 int main() {

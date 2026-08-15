@@ -12,12 +12,13 @@ static void banner(void);
 void RSOD(const char * msg );
 //-------------------------------------------------------------------------------------------------------
 static int read_int(int *num , int index ,char * line) {
+    if (!num || !line) return 0;
     *num = 0 ;
-   int sign =1 ;
-    for ( index ; line[index]!=' ' && line[index]!='\t' ; index++) {
+    int sign = 1 ;
+    for ( ; line[index]!=' ' && line[index]!='\t' && line[index]!='\0' ; index++) {
         if (line[index] == '\n' || line[index] == '\0') {
            *num *= sign ;
-           if(sign == -1 && num == 0)
+           if(sign == -1 && *num == 0)
               *num = '-' ;            // here if reach mean there's no any digit seen so just was - character.
             return 0 ;
         }
@@ -31,11 +32,12 @@ static int read_int(int *num , int index ,char * line) {
         }
         *num = (*num)*10 + (line[index]-'0');
     }
-   *num *= sign ;
+    *num *= sign ;
     return index;
 }
 //-------------------------------------------------------------------------------------------------------
 static int skip_space(int index , char * line) {
+    if (!line) return 0;
     while(line[index]==' ' || line[index]=='\t') {
         index++ ;
     }
@@ -46,9 +48,13 @@ static int skip_space(int index , char * line) {
 }
 //-------------------------------------------------------------------------------------------------------
 static int load(char * line , int index ){
+    if (!line || index < 0 || index >= 10000) return 0;
     if (which_ram==OS){
+        os_ram[index].v1 = 0;
+        os_ram[index].v2 = 0;
+        os_ram[index].v3 = 0;
         int i=0 ;
-        for ( i ; i < 4 ; i++) {
+        for ( ; i < 4 && line[i] != '\0' && line[i] != '\n' && line[i] != ' ' && line[i] != '\t' ; i++) {
             os_ram[index].command[i] = *(line+i);
         }
         os_ram[index].command[i] = '\0';
@@ -70,8 +76,11 @@ static int load(char * line , int index ){
         return 1 ;
     }
     else {
+        pr_ram[index].v1 = 0;
+        pr_ram[index].v2 = 0;
+        pr_ram[index].v3 = 0;
         int i=0 ;
-        for ( i ; i < 4 ; i++) {
+        for ( ; i < 4 && line[i] != '\0' && line[i] != '\n' && line[i] != ' ' && line[i] != '\t' ; i++) {
             pr_ram[index].command[i] = *(line+i);
         }
         pr_ram[index].command[i] = '\0';
@@ -108,11 +117,11 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         size_t bufsize = 200 * sizeof(char);
         buffer = (char*) malloc( bufsize );
 
-        if (buffer==NULL) { RSOD("memory allocation failed, free disk"); exit(1); }
+        if (buffer==NULL) { fclose(file); RSOD("memory allocation failed, free disk"); exit(1); }
 
 
 
-        while( fgets( buffer, bufsize, file ) ) {
+        while( index < 10000 && fgets( buffer, bufsize, file ) ) {
 
             if (  ( *buffer<'A' || *buffer>'Z' )  &&  (*buffer<'a' || *buffer>'z') ){
                 
@@ -125,8 +134,9 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         
         
         }
-        if(index==0) { RSOD( "You tried to load an empty file as Operating System"); exit(1); }
         free(buffer);
+        fclose(file);
+        if(index==0) { RSOD( "You tried to load an empty file as Operating System"); exit(1); }
     }
     else {
 
@@ -141,13 +151,14 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
         size_t bufsize = 200 * sizeof(char);
         buffer = (char*) malloc( bufsize );
         if (buffer==NULL) {
+            fclose(file);
             RED
             puts("> Can't allocate memory for loading program\n");
             RESET
             which_ram = OS ;
             return 2 ;
         }
-        while( fgets( buffer, bufsize, file) ){
+        while( index < 10000 && fgets( buffer, bufsize, file) ){
 
             if (  ( *buffer<'A' || *buffer>'Z' )  &&  (*buffer<'a' || *buffer>'z') ) {
                 continue;
@@ -157,9 +168,9 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
                     index++ ;
             }
         }
+        free(buffer);
+        fclose(file);
         if(index==0) {
-
-            free(buffer);
 
             RED
             puts(
@@ -170,12 +181,9 @@ int loader( const char* address ) {   // OPEN disassembly command like this but 
             
             which_ram = OS ;
             return 3 ;
-            ;
         }
-        free(buffer);
     }
 
-    fclose(file);
     return index ; // how many line readed from file .
 }
 //--------------------------------------------------------------------------------------------------------
