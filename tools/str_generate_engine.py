@@ -41,13 +41,13 @@ while conted :
     print(Fore.RESET+"\n\n\n>>> Copy Your Output ...\n")
     while True :
         try :
-            conted = int(input(f">>> Press ...\n\n\t[ 1 ] to input again\n\t[ 0 ] to exit\n\n>>> Your Choise : "))
+            conted = int(input(f">>> Press ...\n\n\t[ 1 ] to input again\n\t[ 0 ] to exit\n\n>>> Your Choice : "))
             if conted==1 or conted==0 :
                 break
-            print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < choise >"+Fore.RESET)
+            print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < choice >"+Fore.RESET)
         except :
-            print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < choise >"+Fore.RESET)
-os.system("cls"or"clear")
+            print(Fore.RED+f"\n[!] InputError  Code{random.randint(0,10000)} : Invalid input as < choice >"+Fore.RESET)
+os.system("cls" if os.name == "nt" else "clear")
 
 # Created by mMahdi in 7/27/2025 - 12:27
 
