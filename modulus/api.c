@@ -33,39 +33,12 @@ CLER 					// clear screen : system("cls")
 //--------------------------------------------------------//
 //--------------------------------------------------------//
 
-//--------| TIME |--------//
+///--------| TIME |--------//
 void showTime(int eip)
 {
-    if (which_ram == OS)
+    int rn = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    if (rn >= 0 && rn < 30 && registers[rn].address != NULL)
     {
-        int rn = os_ram[eip].v1;
-        char *dest = (char *)registers[rn].address;
-        SYSTEMTIME t;
-//        SYSTEMTIME is a struct that define in windows.h =>>
-//        typedef struct _SYSTEMTIME {
-//        WORD wYear;         // مثلاً 2025
-//        WORD wMonth;        // از 1 تا 12
-//        WORD wDay;          // از 1 تا 31
-//        WORD wHour;         // از 0 تا 23
-//        WORD wMinute;       // از 0 تا 59
-//        WORD wSecond;       // از 0 تا 59
-//        WORD wMilliseconds; // صدم ثانیه (اینجا استفاده نشده)
-//        WORD wDayOfWeek;    // 0 (Sunday) تا 6 (Saturday) - اینم استفاده نمی‌شه
-//    } SYSTEMTIME;
-        GetLocalTime(&t); // one of the API of the WINDOWS
-
-        sprintf(dest, "%04d/%d/%d %02d:%02d:%02d",
-                t.wYear,
-                t.wMonth,
-                t.wDay,
-                t.wHour,
-                t.wMinute,
-                t.wSecond);
-        os_eip++;
-    }
-    else
-    {
-        int rn = pr_ram[eip].v1;
         char *dest = (char *)registers[rn].address;
         SYSTEMTIME t;
         GetLocalTime(&t);
@@ -77,289 +50,164 @@ void showTime(int eip)
                 t.wHour,
                 t.wMinute,
                 t.wSecond);
-        pr_eip++;
     }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
 //--------| OPEN |--------//
 void openFile(int eip)
 {
-    if (which_ram == OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    int r2 = (which_ram == OS) ? os_ram[eip].v2 : pr_ram[eip].v2;
+    int r3 = (which_ram == OS) ? os_ram[eip].v3 : pr_ram[eip].v3;
+    FILE *p = NULL;
+    if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 &&
+        registers[r1].address != NULL && registers[r2].address != NULL)
     {
-        int r1 = os_ram[eip].v1,
-            r2 = os_ram[eip].v2,
-            r3 = os_ram[eip].v3;
-        char * path = (char *)registers[r1].address ,
-             * type = (char *)registers[r2].address;
-        FILE *p = fopen(path,type);
+        char *path = (char *)registers[r1].address;
+        char *type = (char *)registers[r2].address;
+        p = fopen(path, type);
         if (!p)
         {
             RED
             printf("The file is not found");
             RESET
-            which_ram = OS ;
+            if (which_ram == OS) which_ram = OS;
         }
-        registers[r3].address = (void *) p;
-        os_eip++;
     }
-    else
+    if (r3 >= 0 && r3 < 30)
     {
-        int r1 = pr_ram[eip].v1,
-            r2 = pr_ram[eip].v2,
-            r3 = pr_ram[eip].v3;
-        char * path = (char *)registers[r1].address ,
-             * type = (char *)registers[r2].address;
-        FILE *p = fopen(path,type);
-        if (!p)
-        {
-            RED
-            printf("The file is not found");
-            RESET
-        }
-        registers[r3].address = (void *) p;
-        pr_eip++;
+        registers[r3].address = (void *)p;
     }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 //--------| CLOS |--------//
 void closeFile(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL)
     {
-        int r1 = os_ram[eip].v1;
-        FILE *p = (FILE *) registers[r1].address;
-        if (!p)
-        {
-            os_eip++;
-            return;
-        }
+        FILE *p = (FILE *)registers[r1].address;
         fclose(p);
         registers[r1].address = NULL;
-        os_eip++;
     }
-    else
-    {
-        int r1 = pr_ram[eip].v1;
-        FILE *p = (FILE *) registers[r1].address;
-        if (!p)
-        {
-            pr_eip++;
-            return;
-        }
-        fclose(p);
-        registers[r1].address = NULL;
-        pr_eip++;
-    }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
 //--------| READ |--------//
 void readFile(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL)
     {
-        int r1 = os_ram[eip].v1;
-        FILE *p = (FILE *) registers[r1].address;
-        if (!p)
-        {
-            os_eip++;
-            return;
-        }
+        FILE *p = (FILE *)registers[r1].address;
         int ch = fgetc(p);
         while (ch != EOF)
         {
             putchar(ch);
             ch = fgetc(p);
         }
-        os_eip++;
-		fseek(p,0,SEEK_SET);
+        fseek(p, 0, SEEK_SET);
     }
-    else
-    {
-        int r1 = pr_ram[eip].v1;
-        FILE *p = (FILE *) registers[r1].address;
-        if (!p)
-        {
-            pr_eip++;
-            return;
-        }
-        int ch = fgetc(p);
-        while (ch != EOF)
-        {
-            putchar(ch);
-            ch = fgetc(p);
-        }
-        pr_eip++;
-		fseek(p,0,SEEK_SET);
-    }
-	
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 //--------| FGET |--------//
 void getword(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    int r2 = (which_ram == OS) ? os_ram[eip].v2 : pr_ram[eip].v2;
+    if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 &&
+        registers[r1].address != NULL && registers[r2].address != NULL)
     {
-        int r1 = os_ram[eip].v1,
-			r2 = os_ram[eip].v2;
-        FILE *p = (FILE *) registers[r1].address;
-        if (!p)
-        {
-            RED
-            printf("The file is not found");
-            RESET
+        FILE *p = (FILE *)registers[r1].address;
+        int value = fgetc(p);
+        switch (registers[r2].type) {
+            case 'I':
+                *((int *)registers[r2].address) = value;
+                break;
+            default:
+                *((char *)registers[r2].address) = (char)value;
+                break;
         }
-		int value = fgetc(p) ;
-		switch (registers[r2].type) {
-			case 'I':
-				*((int * )registers[r2].address)= value ;
-				break;
-			default:
-				*((char * )registers[r2].address)= (char)value ;
-				break;
-		}
-        os_eip++;
     }
     else
     {
-        int r1 = pr_ram[eip].v1,
-			r2 = pr_ram[eip].v2;
-		
-        FILE *p = (FILE *) registers[r1].address;
-        if (!p)
-        {
-            RED
-            printf("The file is not found");
-            RESET
-        }
-		int value = fgetc(p) ;
-		switch (registers[r2].type) {
-			case 'I':
-				*((int * )registers[r2].address)= value ;
-				break;
-			default:
-				*((char * )registers[r2].address)= (char)value ;
-				break;
-        }
-        pr_eip++;
+        RED
+        printf("The file is not found");
+        RESET
     }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
 //--------| WRIT |--------//
 void writeFile(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    int r2 = (which_ram == OS) ? os_ram[eip].v2 : pr_ram[eip].v2;
+    if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 &&
+        registers[r1].address != NULL && registers[r2].address != NULL)
     {
-        int r1 = os_ram[eip].v1,
-            r2 = os_ram[eip].v2;
-        char *line = (char *) registers[r1].address;
-        FILE *p = (FILE *) registers[r2].address;
-        if (!p)
-        {
-            os_eip++;
-            return;
-        }
+        char *line = (char *)registers[r1].address;
+        FILE *p = (FILE *)registers[r2].address;
         unsigned long long len = strlen(line);
-        fwrite(line, sizeof(char),len,p);
-        os_eip++;
+        fwrite(line, sizeof(char), len, p);
     }
-    else
-    {
-        int r1 = pr_ram[eip].v1,
-            r2 = pr_ram[eip].v2;
-        char *line = (char *) registers[r1].address;
-        FILE *p = (FILE *) registers[r2].address;
-        if (!p)
-        {
-            pr_eip++;
-            return;
-        }
-        unsigned long long len = strlen(line);
-        fwrite(line, sizeof(char),len,p);
-        pr_eip++;
-    }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
-//--------| APND |--------//RED printf reset
-// just like writeFile. when you write THE OS be careful about the type of "fopen"
+//--------| APND |--------//
 void appendFile(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    int r2 = (which_ram == OS) ? os_ram[eip].v2 : pr_ram[eip].v2;
+    if (r1 >= 0 && r1 < 30 && r2 >= 0 && r2 < 30 &&
+        registers[r1].address != NULL && registers[r2].address != NULL)
     {
-        int r1 = os_ram[eip].v1,
-            r2 = os_ram[eip].v2;
-        char *line = (char *) registers[r1].address;
-        FILE *p = (FILE *) registers[r2].address;
-        if (!p)
-        {
-            os_eip++;
-            return;
-        }
+        char *line = (char *)registers[r1].address;
+        FILE *p = (FILE *)registers[r2].address;
         unsigned long long len = strlen(line);
-        fwrite(line, sizeof(char),len,p);
-        os_eip++;
+        fwrite(line, sizeof(char), len, p);
     }
-    else
-    {
-        int r1 = pr_ram[eip].v1,
-            r2 = pr_ram[eip].v2;
-        char *line = (char *) registers[r1].address;
-        FILE *p = (FILE *) registers[r2].address;
-        if (!p)
-        {
-            pr_eip++;
-            return;
-        }
-        unsigned long long len = strlen(line);
-        fwrite(line, sizeof(char),len,p);
-        pr_eip++;
-    }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
 //--------| MAKE |--------//
-// I changed the definition
 void makeFile(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL)
     {
-        int r1 = os_ram[eip].v1;
-        char *name = (char *) registers[r1].address;
+        char *name = (char *)registers[r1].address;
         FILE *p = fopen(name, "w");
         if (!p)
         {
             RED
             printf("can not make file");
             RESET
-            os_eip++;
-            return;
         }
-        fclose(p);
-		registers[r1].address = NULL;
-        os_eip++;
-    }
-    else
-    {
-        int r1 = pr_ram[eip].v1;
-        char *name = (char *) registers[r1].address;
-        FILE *p = fopen(name, "w");
-        if (!p)
+        else
         {
-            RED
-            printf("can not make file");
-            RESET
-            pr_eip++;
-            return;
+            fclose(p);
         }
-       	fclose(p);
-		registers[r1].address = NULL;
-        pr_eip++;
     }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
 //--------| KILL |--------//
 void deleteFile(int eip)
 {
-    if (which_ram==OS)
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL)
     {
-        int r1 = os_ram[eip].v1;
-        char *name = (char *) registers[r1].address;
+        char *name = (char *)registers[r1].address;
         int isAvailable = remove(name);
 
         if(isAvailable == 0)
@@ -370,55 +218,40 @@ void deleteFile(int eip)
         {
             printf("Error in removing. please check if the file exists in directory\n");
         }
-
-        os_eip++;
     }
-    else
-    {
-        int r1 = pr_ram[eip].v1;
-        char *name = (char *) registers[r1].address;
-        int isAvailable = remove(name);
-
-        if(isAvailable == 0)
-        {
-            printf("Successfully removed a file\n");
-        }
-        else
-        {
-            printf("Error in removing. please check if the file exists in directory\n");
-        }
-
-        pr_eip++;
-    }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 
 //--------| RUNF |--------//
 void runProgram(int eip)    // --------> we have only one pr_ram , so can't run os and 2 prg , at most os & 1 prg ...
 {
-    //puts("runf reached...");
     int r1 = os_ram[eip].v1;
-    char *name = (char *) registers[r1].address;
-    int i=0;
+    if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL)
+    {
+        char *name = (char *)registers[r1].address;
+        size_t len = strlen(name);
+        size_t cap = len + 35;
+        char *newName = (char *)malloc(cap);
+        if (newName != NULL)
+        {
+            newName[0] = '\0';  // ensure the buffer starts as an empty string for safe "strcat" operations
+            strcat(newName, RAW_ADDRESS);
+            strcat(newName, name);
+            strcat(newName, ".txt");
 
-    while (name[i] != '\0') i++;
-    size_t len = strlen(name);
-    size_t cap = len + 35;
-    char *newName = malloc(cap);
-    newName[0] = '\0';  // ensure the buffer starts as an empty string for safe "strcat" operations
-    strcat(newName,RAW_ADDRESS);
-    strcat(newName, name);
-    strcat(newName, ".txt");
-
-    which_ram = (!OS) ;
-    loader(newName);
-    free(newName);
-    pr_eip=0;
-    os_eip++ ;
-    //puts("runf passed...");
+            which_ram = (!OS);
+            loader(newName);
+            free(newName);
+            pr_eip = 0;
+        }
+    }
+    os_eip++;
 }
 
 //--------| CLER |--------//
 void clear_screen(int eip){
+    (void)eip;
     if (which_ram == OS){
         os_eip++ ;
     }
@@ -429,72 +262,50 @@ void clear_screen(int eip){
 }
 //--------| REST |--------//
 void rest(int eip){
-
-    int r1 ;
-
-    if( which_ram==OS){
-
-        r1 = os_ram[eip].v1;
-        os_eip++ ;
+    int r1 = (which_ram == OS) ? os_ram[eip].v1 : pr_ram[eip].v1;
+    int timeout = 0;
+    if (r1 >= 0 && r1 < 30 && registers[r1].address != NULL)
+    {
+        timeout = *(int *)registers[r1].address;
     }
-    else{
-
-        r1 = pr_ram[eip].v1;
-        pr_eip++ ;
+    if (which_ram == OS)
+    {
+        os_eip++;
     }
-    int timeout = *(int*)registers[r1].address ;
-    Sleep( timeout );
-    return ;
+    else
+    {
+        pr_eip++;
+    }
+    Sleep(timeout);
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //CTCT color(R/G/B/Y/0)			// change terminal color to R->red , G->green ,  B->blue , Y->yellow , 0->reset		be carefull if you don't reset , it will not reset atumaticly !!!!!
 
 //--------| CTCT |--------//
 void change_terminal_color_to( int eip ){
-    if (which_ram==OS){
-        char color = os_ram[eip].v1 ;
-        switch (color) {
-        case 'R' :
-            RED
-            break; 
-        case 'G' :
-            GREEN
-            break;
-        case 'B' :
-            BLUE
-            break;
-        case 'Y' :
-            YELLOW
-            break;
-        default :
-            RESET
-            break;
-        }
-        os_eip++ ;
+    char color = (which_ram == OS) ? (char)os_ram[eip].v1 : (char)pr_ram[eip].v1;
+    switch (color) {
+    case 'R':
+        RED
+        break; 
+    case 'G':
+        GREEN
+        break;
+    case 'B':
+        BLUE
+        break;
+    case 'Y':
+        YELLOW
+        break;
+    default:
+        RESET
+        break;
     }
-    else {
-        char color = pr_ram[eip].v1 ;
-        switch (color) {
-        case 'R' :
-            RED
-            break;
-        case 'G' :
-            GREEN
-            break;
-        case 'B' :
-            BLUE
-            break;
-        case 'Y' :
-            YELLOW
-            break;
-        default :
-            RESET
-            break;
-        }
-        pr_eip++;
-    }
+    if (which_ram == OS) os_eip++;
+    else pr_eip++;
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Created By MmdX 21:04
 // Edited  By Plutroin 
+
 

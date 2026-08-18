@@ -12,6 +12,10 @@
 //--------------------------------------------[  define  ]-------------------
 #define BOOT_ADDRESS "../.kernel/os.txt"
 //--------------------------------------------[   external var src  ] -----------------
+struct ram os_ram[10000];
+struct ram pr_ram[10000];
+struct heap_s heap;
+struct regs registers[30];
 int stck_mem[100] , // short for stack memory segment .
     os_eip=0 ,  // -> eip registers which tell us which line of program/os we are in .
     pr_eip=0 ,
@@ -50,6 +54,13 @@ int main(void) {
             RESET
         }
 
+
+        if (*eip < 0 || *eip >= 10000) {
+            RED
+            fprintf(stderr, "[!]Fatal Error: EIP out of bounds <%d>\n", *eip);
+            RESET
+            exit(3);
+        }
 
         printf("|\teip: <%d>\t|\tcommand: ",*eip);
         GREEN
@@ -162,18 +173,18 @@ int main(void) {
                 RED
                 fprintf(stderr, "[!]Fatal Error in < Operating System >\nInvalid disassembly command : <%s>\n",os_ram[os_eip].command);
                 RESET
-                char c ;
+                int c ;
                 puts("press Enter to exit...");
-                while( (c=getchar())!='\n');
+                while( (c=getchar())!='\n' && c!=EOF);
                 exit(1);
             }
             else {
                 RED
                 fprintf(stderr, "[!]Fatal Error in < Program >\nInvalid disassembly command : <%s>\n",pr_ram[pr_eip].command);
                 RESET
-                char c ;
+                int c ;
                 puts("press Enter to exit...");
-                while( (c=getchar())!='\n');
+                while( (c=getchar())!='\n' && c!=EOF);
                 exit(2);
             }
             

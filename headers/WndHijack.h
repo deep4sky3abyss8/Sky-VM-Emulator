@@ -41,14 +41,14 @@ Deep4SkyAbyss
 
 #include <windows.h>
 
-#define HIJACKED 1;
+#define HIJACKED 1
 
 static HWND hwnd = NULL ;
 static int  seen = 0 ;
 
 //------------------------------------------------------------
 
-static int Force_Full_screen(void){
+static inline int Force_Full_screen(void){
 
     // -> getting manual terminal wnd handel
     if ( !seen )
@@ -66,7 +66,7 @@ static int Force_Full_screen(void){
 } 
 //------------------------------------------------------------
 
-static int Force_Block_Maximize(void){
+static inline int Force_Block_Maximize(void){
 
     // -> getting manual terminal wnd handel
     if ( !seen )
@@ -89,7 +89,7 @@ static int Force_Block_Maximize(void){
 }
 //------------------------------------------------------------
 
-static int reset_btms(void){
+static inline int reset_btms(void){
 
     // -> getting manual terminal wnd handel
     if ( !seen )

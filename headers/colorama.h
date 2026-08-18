@@ -16,7 +16,7 @@ enum COLORS {
     WHITE = 7,
     RESET = 7
 };
-static void set_color(int color) {
+static inline void set_color(int color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, color);
 }

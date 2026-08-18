@@ -12,6 +12,10 @@
 //--------------------------------------------[  define  ]-------------------
 #define BOOT_ADDRESS "../.kernel/os.txt"
 //--------------------------------------------[   external var src  ] -----------------
+struct ram os_ram[10000];
+struct ram pr_ram[10000];
+struct heap_s heap;
+struct regs registers[30];
 int stck_mem[100] , // short for stack memory segment .
     os_eip=0 ,  // -> eip registers which tell us which line of program/os we are in .
     pr_eip=0 ,
@@ -39,7 +43,19 @@ int main(void) {
         if (which_ram==OS){     eip = &os_eip;  }
         else{                   eip = &pr_eip;  }
 
-
+        if (*eip < 0 || *eip >= 10000) {
+            if (which_ram==OS) {
+                RSOD("EIP out of bounds [Operating System]");
+                exit(1);
+            } else {
+                RED
+                printf("\n> [ERROR] EIP out of bounds in program: %d\n", *eip);
+                RESET
+                Beep( 850, 400 );
+                which_ram = OS;
+                continue;
+            }
+        }
 
         if(command_cmp(*eip , _ASSN_ ))
             assigne_num(*eip);
@@ -158,7 +174,7 @@ int main(void) {
                         "> Eip: <0x%x>\n\n"
                         "> @Bubble~root has killed Dangerous-task\n\n",
 
-                        pr_ram[*eip].command, *eip+1, eip
+                        pr_ram[*eip].command, *eip+1, (unsigned int)(*eip)
                     );
                 RESET
 

@@ -21,7 +21,7 @@ int main(void){
     RESET
     }
     printf("Press any key to quit ...") ;
-    int sleep = getchar() ;
+    (void)getchar() ;
     return 0 ;
          
 }
